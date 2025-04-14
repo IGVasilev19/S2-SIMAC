@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\davvi\\.nuget\\packages\\": {}
+    "C:\\Users\\maxva\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\davvi\\source\\repos\\NotificationApp\\NotificationApp\\NotificationApp.csproj",
+      "projectUniqueName": "C:\\Users\\maxva\\Documents\\Semester_2\\s2-simac\\NotificationApp\\NotificationApp\\NotificationApp.csproj",
       "projectName": "NotificationApp",
-      "projectPath": "C:\\Users\\davvi\\source\\repos\\NotificationApp\\NotificationApp\\NotificationApp.csproj",
-      "packagesPath": "C:\\Users\\davvi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\davvi\\source\\repos\\NotificationApp\\NotificationApp\\obj\\",
+      "projectPath": "C:\\Users\\maxva\\Documents\\Semester_2\\s2-simac\\NotificationApp\\NotificationApp\\NotificationApp.csproj",
+      "packagesPath": "C:\\Users\\maxva\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\maxva\\Documents\\Semester_2\\s2-simac\\NotificationApp\\NotificationApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\davvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\maxva\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
