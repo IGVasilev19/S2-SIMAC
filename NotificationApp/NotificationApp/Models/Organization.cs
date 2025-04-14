@@ -6,7 +6,7 @@ namespace NotificationApp.Models
     {
         public string Name { get; set; }
         public List<Device> Devices { get; set; }
-        public List<Account> Accounts { get; set }
+        public List<Account> Accounts { get; set; }
 
         public Organization(string name)
         {

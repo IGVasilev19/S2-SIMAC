@@ -6,7 +6,7 @@ namespace NotificationApp.Models
     {
         public int RoleId { get; set; }
         public string Name { get; set; }
-        public List<Permission> Permissions { get; set: }
+        public List<Permission> Permissions { get; set; }
 
         public Role(string name, List<Permission> permissions)
         {
