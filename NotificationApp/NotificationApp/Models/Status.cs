@@ -1,6 +1,8 @@
 ﻿namespace NotificationApp.Models
 {
-    public class Status
+    public enum Status
     {
+        ONLINE,
+        OFFLINE
     }
 }
