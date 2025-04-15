@@ -81,14 +81,6 @@ build/
 .next/
 .env
 .env.local
-*.css.map
-*.css
-!.tailwind.css
-tailwind.config.js
-tailwind.config.cjs
-tailwind.config.ts
-postcss.config.js
-input.css
 
 #########################
 # Logs and Databases #
