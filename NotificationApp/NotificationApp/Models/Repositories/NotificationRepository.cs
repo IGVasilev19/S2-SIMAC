@@ -17,6 +17,7 @@ namespace NotificationApp.Models.Repositories
                     while (reader.Read())
                     {
                         Notification notification = new Notification(
+                            reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
@@ -44,6 +45,7 @@ namespace NotificationApp.Models.Repositories
                     if (reader.Read())
                     {
                         Notification notification = new Notification(
+                            reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
