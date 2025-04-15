@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+html,
+body {
+  height: 100%;
+}
+
+@layer utilities {
+  .bg-custom-gradient {
+    background-image: linear-gradient(to bottom, #252e5a, #a50228);
+  }
+}
+/* checking if this will fix the problem*/
