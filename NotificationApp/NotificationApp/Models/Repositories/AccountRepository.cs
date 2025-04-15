@@ -108,9 +108,40 @@ namespace NotificationApp.Models.Repositories
             }
         }
 
-        private Role GetRoleById(int id)
+        public Role GetRoleById(int id)
         {
             return new Role(id, "DefaultRole", new List<Permission> { Permission.ViewReport });
+        }
+
+        public Account GetByEmail(string email)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT AccountId, Name, Email, Password, RoleId FROM Accounts WHERE Email = @email";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@email", email);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int roleId = reader.GetInt32(4);
+                        Role role = GetRoleById(roleId);
+
+                        Account account = new Account(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2),
+                            reader.GetString(3),
+                            role
+                        );
+
+                        return account;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
