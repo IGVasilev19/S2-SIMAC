@@ -9,8 +9,9 @@
         public bool Read {  get; set; }
         public DateTime Date { get; set; }
 
-        public Notification(string title, string content, bool important, bool read, DateTime date) 
+        public Notification(int id, string title, string content, bool important, bool read, DateTime date) 
         {
+            NotificationID = id;
             Title = title;
             Content = content;
             Important = important;

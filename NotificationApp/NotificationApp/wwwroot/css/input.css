@@ -9,5 +9,8 @@ body {
   .bg-custom-gradient {
     background-image: linear-gradient(to bottom, #252e5a, #a50228);
   }
+
+  /* .button-class {
+    @apply w-full h-[40px] bg-white/30 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[15%];
+  } */
 }
-/* checking if this will fix the problem*/
