@@ -3,9 +3,9 @@ using NotificationApp.Models;
 using System.Diagnostics;
 using BLL;
 
-public class AccountController : Controller
+public class DevicesController : Controller
 {
-    public IActionResult AccountPanel()
+    public IActionResult devicespanel()
     {
         return View();
     }
