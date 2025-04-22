@@ -258,6 +258,12 @@
   .h-\[40px\] {
     height: 40px;
   }
+<<<<<<< HEAD
+=======
+  .h-\[75px\] {
+    height: 75px;
+  }
+>>>>>>> main
   .h-\[82\%\] {
     height: 82%;
   }
@@ -266,6 +272,9 @@
   }
   .h-full {
     height: 100%;
+  }
+  .w-\[30px\] {
+    width: 30px;
   }
   .w-\[30px\] {
     width: 30px;
@@ -290,6 +299,12 @@
   }
   .w-\[250px\] {
     width: 250px;
+<<<<<<< HEAD
+=======
+  }
+  .w-fit {
+    width: fit-content;
+>>>>>>> main
   }
   .w-full {
     width: 100%;
