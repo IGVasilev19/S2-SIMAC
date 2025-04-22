@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NotificationApp.Models;
 using BLL;
 using Service;
 using DAL;
@@ -9,12 +8,12 @@ namespace NotificationApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountRepository accountRepository;
+        // private readonly AccountRepository accountRepository;
 
-        public AccountController(AccountRepository accountRepository)
-        {
-            this.accountRepository = accountRepository;
-        }
+        // public AccountController(AccountRepository accountRepository)
+        // {
+        //     this.accountRepository = accountRepository;
+        // }
 
         public AccountController()
         {
@@ -26,27 +25,27 @@ namespace NotificationApp.Controllers
             return View();
         }
 
-        public IActionResult Login(string email, string password)
-        {
-            Account account = accountRepository.GetByEmail(email);
+        // public IActionResult Login(string email, string password)
+        // {
+        //     Account account = accountRepository.GetByEmail(email);
 
-            if (account == null)
-            {
-                // Account not found
-                ViewBag.ErrorMessage = "Account not found.";
-                return View("Error");
-            }
+        //     if (account == null)
+        //     {
+        //         // Account not found
+        //         ViewBag.ErrorMessage = "Account not found.";
+        //         return View("Error");
+        //     }
 
-            if (account.Password != password)
-            {
-                // Invalid password
-                ViewBag.ErrorMessage = "Invalid password.";
-                return View("Error");
-            }
+        //     if (account.Password != password)
+        //     {
+        //         // Invalid password
+        //         ViewBag.ErrorMessage = "Invalid password.";
+        //         return View("Error");
+        //     }
 
-            // Successful login
-            return View("Success", account);
-        }
+        //     // Successful login
+        //     return View("Success", account);
+        // }
 
         public IActionResult Create(string name, string email, string password, Role role)
         {
