@@ -112,38 +112,48 @@ namespace DAL
 
         public Role GetRoleById(int id)
         {
-            return new Role(id, "DefaultRole", new List<Permission> { Permission.ViewReport });
-        }
+            string roleName = "";
+            List<Permission> permissions = new List<Permission>();
 
-        public Account GetByEmail(string email)
-        {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT AccountId, Name, Email, Password, RoleId FROM Accounts WHERE Email = @email";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@email", email);
+                // Get role name
+                string roleQuery = "SELECT Name FROM [Role] WHERE RoleId = @id";
+                SqlCommand roleCmd = new SqlCommand(roleQuery, conn);
+                roleCmd.Parameters.AddWithValue("@id", id);
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = roleCmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        int roleId = reader.GetInt32(4);
-                        Role role = GetRoleById(roleId);
+                        roleName = reader.GetString(0);
+                    }
+                }
 
-                        Account account = new Account(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
-                            reader.GetString(2),
-                            reader.GetString(3),
-                            role
-                        );
+                // Get permissions for this role
+                string permQuery = @"
+                    SELECT p.Name
+                    FROM RolePermission rp
+                    JOIN Permission p ON rp.PermissionId = p.PermissionId
+                    WHERE rp.RoleId = @id";
 
-                        return account;
+                SqlCommand permCmd = new SqlCommand(permQuery, conn);
+                permCmd.Parameters.AddWithValue("@id", id);
+
+                using (SqlDataReader reader = permCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string permName = reader.GetString(0);
+                        if (Enum.TryParse(permName, out Permission perm))
+                        {
+                            permissions.Add(perm);
+                        }
                     }
                 }
             }
 
-            return null;
+            return new Role(id, roleName, permissions);
         }
     }
 }
