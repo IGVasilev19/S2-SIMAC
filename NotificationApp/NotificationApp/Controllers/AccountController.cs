@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotificationApp.Models;
-using NotificationApp.Models.Repositories;
+using BLL;
 
 namespace NotificationApp.Controllers
 {
