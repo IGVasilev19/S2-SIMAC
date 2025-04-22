@@ -49,11 +49,18 @@ namespace Service
             Account account = _accountRepository.GetByEmail(email);
             if (account != null && BCrypt.Net.BCrypt.Verify(password, account.Password))
             {
+<<<<<<< Updated upstream
                 return account;
             }
             else
             {
                 return null;
+=======
+                if (account.Email == email &&  BCrypt.Net.BCrypt.Verify(password, account.Password))
+                {
+                    return account;
+                }
+>>>>>>> Stashed changes
             }
         }
     }
