@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Data;
+﻿using System.Data;
 
-namespace NotificationApp.Models
+namespace BLL
 {
     public class Account
     {

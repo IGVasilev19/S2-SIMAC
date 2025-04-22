@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace NotificationApp.Models
+namespace DAL
 
 {
     public class DBConnection
