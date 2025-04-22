@@ -25,27 +25,28 @@ namespace NotificationApp.Controllers
             return View();
         }
 
-        // public IActionResult Login(string email, string password)
-        // {
-        //     Account account = accountRepository.GetByEmail(email);
+        public IActionResult Login(string email, string password)
+        {
+            AccountService accountService = new AccountService();
+            Account account = accountService.LogIn(email, password);
 
-        //     if (account == null)
-        //     {
-        //         // Account not found
-        //         ViewBag.ErrorMessage = "Account not found.";
-        //         return View("Error");
-        //     }
+            if (account == null)
+            {
+                // Account not found
+                ViewBag.ErrorMessage = "Account not found.";
+                return View("Error");
+            }
 
-        //     if (account.Password != password)
-        //     {
-        //         // Invalid password
-        //         ViewBag.ErrorMessage = "Invalid password.";
-        //         return View("Error");
-        //     }
+            if (account.Password != password)
+            {
+                // Invalid password
+                ViewBag.ErrorMessage = "Invalid password.";
+                return View("Error");
+            }
 
-        //     // Successful login
-        //     return View("Success", account);
-        // }
+            // Successful login
+            return View("Success", account);
+        }
 
         public IActionResult Create(string name, string email, string password, Role role)
         {
