@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotificationApp.Models;
 using BLL;
+using Service;
+using DAL;
+using System.Reflection.Metadata;
 
 namespace NotificationApp.Controllers
 {
@@ -11,6 +14,11 @@ namespace NotificationApp.Controllers
         public AccountController(AccountRepository accountRepository)
         {
             this.accountRepository = accountRepository;
+        }
+
+        public AccountController()
+        {
+
         }
 
         public IActionResult Index()
@@ -38,6 +46,13 @@ namespace NotificationApp.Controllers
 
             // Successful login
             return View("Success", account);
+        }
+
+        public IActionResult Create(string name, string email, string password, Role role)
+        {
+            AccountService accountService = new AccountService();
+            accountService.SignUp(name, email, password, role);
+            return View("Success");
         }
 
         public IActionResult UpdateAccount(Account account, string name, string email, string password, Role role)
