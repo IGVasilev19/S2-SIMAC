@@ -71,7 +71,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Accounts (Name, Email, Password, RoleId) VALUES (@name, @email, @password, @roleId)";
+                string query = "INSERT INTO Account (Name, Email, Password, RoleId) VALUES (@name, @email, @password, @roleId)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
