@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using NotificationApp.Models;
+using System.Diagnostics;
 using BLL;
-using Service;
 using DAL;
 using System.Reflection.Metadata;
 
@@ -8,58 +9,7 @@ namespace NotificationApp.Controllers
 {
     public class AccountController : Controller
     {
-        // private readonly AccountRepository accountRepository;
-
-        // public AccountController(AccountRepository accountRepository)
-        // {
-        //     this.accountRepository = accountRepository;
-        // }
-
-        public AccountController()
-        {
-
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Login(string email, string password)
-        {
-            AccountService accountService = new AccountService();
-            Account account = accountService.LogIn(email, password);
-
-            if (account == null)
-            {
-                // Account not found
-                ViewBag.ErrorMessage = "Account not found.";
-                return View("Error");
-            }
-
-            if (account.Password != password)
-            {
-                // Invalid password
-                ViewBag.ErrorMessage = "Invalid password.";
-                return View("Error");
-            }
-
-            // Successful login
-            return View("Success", account);
-        }
-
-        public IActionResult Create(string name, string email, string password, Role role)
-        {
-            AccountService accountService = new AccountService();
-            accountService.SignUp(name, email, password, role);
-            return View("Success");
-        }
-
-        public IActionResult UpdateAccount(Account account, string name, string email, string password, Role role)
-        {
-            return View();
-        }
-        public IActionResult DeleteAccount(Account account)
+        public IActionResult accountpanel()
         {
             return View();
         }
