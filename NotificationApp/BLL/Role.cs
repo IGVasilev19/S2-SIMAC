@@ -1,6 +1,6 @@
 ﻿using System.Security;
 
-namespace NotificationApp.Models
+namespace BLL
 {
     public class Role
     {

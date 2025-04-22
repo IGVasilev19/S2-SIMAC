@@ -1,4 +1,4 @@
-﻿namespace NotificationApp.Models
+﻿namespace BLL
 {
     public class Notification
     {

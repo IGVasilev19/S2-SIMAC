@@ -1,4 +1,4 @@
-﻿namespace NotificationApp.Models.Repositories
+﻿namespace DAL
 {
     public interface IRepository<T>
     {

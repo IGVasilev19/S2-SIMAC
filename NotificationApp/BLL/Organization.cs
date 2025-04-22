@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace NotificationApp.Models
+namespace BLL
 {
     public class Organization
     {

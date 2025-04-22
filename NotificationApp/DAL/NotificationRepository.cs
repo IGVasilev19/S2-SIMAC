@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
+using BLL;
 
-namespace NotificationApp.Models.Repositories
+namespace DAL
 {
     public class NotificationRepository : IRepository<Notification>
     {
