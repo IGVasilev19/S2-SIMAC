@@ -1,4 +1,4 @@
-using NotificationApp.Models.Repositories;
+using BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
