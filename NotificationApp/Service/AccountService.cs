@@ -41,7 +41,6 @@ namespace Service
                 {
                     return account;
                 }
->>>>>>> Stashed changes
             }
             return null;
         }
