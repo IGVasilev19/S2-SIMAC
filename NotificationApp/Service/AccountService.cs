@@ -9,12 +9,17 @@ using BCrypt.Net;
 
 namespace Service
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly AccountRepository _accountRepository;
         public AccountService()
         {
             _accountRepository = new AccountRepository();
+        }
+
+        public IEnumerable<Account> GetAll()
+        {
+            return _accountRepository.GetAll();
         }
 
         public void SignUp(string name, string email, string password, Role role)
@@ -28,8 +33,6 @@ namespace Service
             // Add the account to the repository  
             _accountRepository.Add(newAccount);
         }
-
-
 
         public Account LogIn(string email, string password)
         {
