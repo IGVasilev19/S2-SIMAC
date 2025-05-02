@@ -10,18 +10,18 @@ namespace BLL
         public string Password { get; set; }
         public Role AccountRole { get; set; }
         //DATABASE TESTING---------------------------------------------
-        public int RoleId { get; set; }
+        //public int RoleId { get; set; }
 
 
 
         //DATABASE TESTING---------------------------------------------
-        public Account(string name, string email, string password, int role) // For creating account (no id)
-        {
-            Name = name;
-            Email = email;
-            Password = password;
-            RoleId = role;
-        }
+        //public Account(string name, string email, string password, int role) // For creating account (no id)
+        //{
+        //    Name = name;
+        //    Email = email;
+        //    Password = password;
+        //    RoleId = role;
+        //}
         //DATABASE TESTING---------------------------------------------
         
         public Account(string name, string email, string password, Role role) // For creating account (no id)
