@@ -18,14 +18,14 @@ namespace DAL
                     while (reader.Read())
                     {
                         int roleId = reader.GetInt32(4);
-                        Role role = GetRoleById(roleId); 
+                        Role role = GetRoleById(roleId);
 
                         Account account = new Account(
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
-                            reader.GetString(3), 
-                            role
+                            reader.GetString(3),
+                            reader.GetInt32(4)
                         );
 
                         accounts.Add(account);
