@@ -58,5 +58,10 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+        [Authorize]
+        public IActionResult AccountPanel()
+        {
+            return View();
+        }
     }
 }

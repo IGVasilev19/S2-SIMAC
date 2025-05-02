@@ -10,11 +10,11 @@ using System.Security.Claims;
 
 namespace NotificationApp.Controllers
 {
-    public class AccountController : Controller
+    public class AccessController : Controller
     {
         private readonly IAccountService accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccessController(IAccountService accountService)
         {
             this.accountService = accountService;
         }
@@ -67,14 +67,5 @@ namespace NotificationApp.Controllers
             await HttpContext.SignOutAsync("AuthCookie");
             return RedirectToAction("Index", "Home");
         }
-
-        //public IActionResult UpdateAccount(Account account, string name, string email, string password, Role role)
-        //{
-        //    return View();
-        //}
-        //public IActionResult DeleteAccount(Account account)
-        //{
-        //    return View();
-        //}
     }
 }
