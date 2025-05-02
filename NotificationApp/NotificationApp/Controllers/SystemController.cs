@@ -60,11 +60,18 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
 
         public IActionResult GetAllNotifications()
         {
             var notifications = _notificationService.GetAll();
             return 
+=======
+        [Authorize]
+        public IActionResult AccountPanel()
+        {
+            return View();
+>>>>>>> main
         }
     }
 }
