@@ -24,8 +24,8 @@ namespace Service
 
         public void SignUp(string name, string email, string password, Role role)
         {
-            // Hash the password with a salt using BCrypt  
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            // Hash the password with a salt using BCrypt 
+            string hashedPassword = PasswordHasher.Hash(password);
 
             // Create a new account with the hashed password  
             Account newAccount = new Account(name, email, hashedPassword, role);
@@ -40,7 +40,7 @@ namespace Service
 
             foreach (Account account in accounts)
             {
-                if (account.Email == email &&  BCrypt.Net.BCrypt.Verify(password, account.Password))
+                if (account.Email == email &&  PasswordHasher.Verify(password, account.Password))
                 {
                     return account;
                 }

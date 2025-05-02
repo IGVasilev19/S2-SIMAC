@@ -16,7 +16,7 @@ namespace NotificationApp.Controllers
             _accountService = accountService;
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Inbox()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
