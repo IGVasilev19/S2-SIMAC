@@ -11,6 +11,7 @@ namespace Service
     {
         void SignUp(string name, string email, string password, Role role);
         Account LogIn(string email, string password);
+        Account GetById(int id);
     }
 
 

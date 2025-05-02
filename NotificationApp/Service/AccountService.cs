@@ -47,5 +47,7 @@ namespace Service
             }
             return null;
         }
+
+        public Account GetById(int id) => _accountRepository.GetById(id);
     }
 }

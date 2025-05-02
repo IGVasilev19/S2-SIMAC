@@ -50,22 +50,15 @@ namespace NotificationApp.Controllers
             var identity = new ClaimsIdentity(claims, "AuthCookie");
             var principal = new ClaimsPrincipal(identity);
 
-            var vm = new AccountViewModel
-            {
-                AccountId = account.AccountId,
-                Name = account.Name,
-                Email = account.Email,
-                Role = account.AccountRole.ToString(),
-            };
             // Successful login
-            return View("Success", vm);
+            return RedirectToAction("Inbox", "System");
         }
 
         [HttpPost]
         public IActionResult SignUp(string name, string email, string password, Role role)
         {
             accountService.SignUp(name, email, password, role);
-            return View("Success");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
