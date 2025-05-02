@@ -13,6 +13,4 @@ namespace Service
         Account LogIn(string email, string password);
         Account GetById(int id);
     }
-
-
 }

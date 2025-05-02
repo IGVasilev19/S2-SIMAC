@@ -11,10 +11,10 @@ namespace Service
 {
     public class AccountService : IAccountService
     {
-        private readonly AccountRepository _accountRepository;
-        public AccountService()
+        private readonly IAccountRepository _accountRepository;
+        public AccountService(IAccountRepository accountRepository)
         {
-            _accountRepository = new AccountRepository();
+            _accountRepository = accountRepository;
         }
 
         public IEnumerable<Account> GetAll()

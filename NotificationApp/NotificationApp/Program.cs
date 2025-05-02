@@ -23,7 +23,8 @@ builder.Services.AddAuthentication("AuthCookie") //Implement this
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IRepository<Account>, AccountRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 var app = builder.Build();
 
