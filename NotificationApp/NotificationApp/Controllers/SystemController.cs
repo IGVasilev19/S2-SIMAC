@@ -19,29 +19,29 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if(accountId != null)
-            {
-                if (!int.TryParse(accountId, out int id))
-                {
-                    var account = _accountService.GetById(id);
+            //if(accountId != null)
+            //{
+            //    if (!int.TryParse(accountId, out int id))
+            //    {
+            //        var account = _accountService.GetById(id);
 
-                    var vm = new AccountViewModel
-                    {
-                        AccountId = account.AccountId,
-                        Name = account.Name,
-                        Email = account.Email,
-                        Role = account.AccountRole.ToString()
-                    };
+            //        var vm = new AccountViewModel
+            //        {
+            //            AccountId = account.AccountId,
+            //            Name = account.Name,
+            //            Email = account.Email,
+            //            Role = account.AccountRole.ToString()
+            //        };
                     return View();
-                }
-                else
-                {
-                    return View();
-                }
-            }
-            return View("Error");
+            //    }
+            //    else
+            //    {
+            //        return View();
+            //    }
+            //}
+            //return View("Error");
         }
         [Authorize]
         public IActionResult DevicesPanel()

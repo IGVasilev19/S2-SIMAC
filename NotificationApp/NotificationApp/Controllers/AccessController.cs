@@ -25,21 +25,22 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LogIn(string email, string password)
+        public async Task<IActionResult> LogIn(string email, string password)
         {
-            Account account = accountService.LogIn(email, password);
+            var account = accountService.LogIn(email, password);
+
             if (account == null)
             {
-                // Account not found
-                ViewBag.ErrorMessage = "Account not found.";
-                return View("Error");
+                var model = new LogInViewModel { Email = email, Password = password };
+                ModelState.AddModelError("Email", "Account not found.");
+                return View("Index", model);
             }
 
             if (account.Password != password)
             {
-                // Invalid password
-                ViewBag.ErrorMessage = "Invalid password.";
-                return View("Error");
+                var model = new LogInViewModel { Email = email, Password = password };
+                ModelState.AddModelError("Password", "Invalid password.");
+                return View("Index", model);
             }
 
             var claims = new List<Claim>
@@ -50,22 +51,24 @@ namespace NotificationApp.Controllers
             var identity = new ClaimsIdentity(claims, "AuthCookie");
             var principal = new ClaimsPrincipal(identity);
 
-            // Successful login
+            await HttpContext.SignInAsync("AuthCookie", principal);
+
             return RedirectToAction("Inbox", "System");
         }
+
 
         [HttpPost]
         public IActionResult SignUp(string name, string email, string password, Role role)
         {
             accountService.SignUp(name, email, password, role);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Access");
         }
 
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync("AuthCookie");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Access");
         }
     }
 }
