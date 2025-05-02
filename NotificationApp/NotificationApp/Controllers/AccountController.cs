@@ -58,7 +58,7 @@ namespace NotificationApp.Controllers
                 Role = account.AccountRole.ToString(),
             };
             // Successful login
-            return View("Success", account);
+            return View("Success", vm);
         }
 
         [HttpPost]
