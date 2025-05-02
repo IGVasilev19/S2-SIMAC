@@ -11,10 +11,10 @@ namespace Service
 {
     public class AccountService : IAccountService
     {
-        private readonly AccountRepository _accountRepository;
-        public AccountService()
+        private readonly IAccountRepository _accountRepository;
+        public AccountService(IAccountRepository accountRepository)
         {
-            _accountRepository = new AccountRepository();
+            _accountRepository = accountRepository;
         }
 
         public IEnumerable<Account> GetAll()
@@ -44,7 +44,12 @@ namespace Service
                 {
                     return account;
                 }
+                else if (account.Email == email && !BCrypt.Net.BCrypt.Verify(password, account.Password))
+                {
+                    return new Account("Invalid password");
+                }
             }
+
             return null;
         }
 

@@ -10,11 +10,11 @@ using System.Security.Claims;
 
 namespace NotificationApp.Controllers
 {
-    public class AccountController : Controller
+    public class AccessController : Controller
     {
         private readonly IAccountService accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccessController(IAccountService accountService)
         {
             this.accountService = accountService;
         }
@@ -25,21 +25,20 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LogIn(string email, string password)
+        public async Task<IActionResult> LogIn(string email, string password)
         {
-            Account account = accountService.LogIn(email, password);
+            var account = accountService.LogIn(email, password);
+
             if (account == null)
             {
-                // Account not found
-                ViewBag.ErrorMessage = "Account not found.";
-                return View("Error");
+                ModelState.AddModelError("Email", "Account not found.");
+                return View("Index");
             }
 
-            if (account.Password != password)
+            if (account.Password == "Invalid password")
             {
-                // Invalid password
-                ViewBag.ErrorMessage = "Invalid password.";
-                return View("Error");
+                ModelState.AddModelError("Password", "Invalid password");
+                return View("Index");
             }
 
             var claims = new List<Claim>
@@ -50,31 +49,24 @@ namespace NotificationApp.Controllers
             var identity = new ClaimsIdentity(claims, "AuthCookie");
             var principal = new ClaimsPrincipal(identity);
 
-            // Successful login
+            await HttpContext.SignInAsync("AuthCookie", principal);
+
             return RedirectToAction("Inbox", "System");
         }
+
 
         [HttpPost]
         public IActionResult SignUp(string name, string email, string password, Role role)
         {
             accountService.SignUp(name, email, password, role);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Access");
         }
 
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync("AuthCookie");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Access");
         }
-
-        //public IActionResult UpdateAccount(Account account, string name, string email, string password, Role role)
-        //{
-        //    return View();
-        //}
-        //public IActionResult DeleteAccount(Account account)
-        //{
-        //    return View();
-        //}
     }
 }

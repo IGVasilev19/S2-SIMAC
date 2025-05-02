@@ -1,0 +1,23 @@
+﻿@using NotificationApp.Models
+@{
+    ViewData["Title"] = "Sign in";
+}
+@model LogInViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="w-full h-full flex flex-col justify-center items-center bg-custom-gradient">
+    <div class="md:w-[85%] md:h-[85%] bg-white/10 backdrop-blur-md rounded-4xl p-10 shadow-xl border border-white/20 flex items-center justify-center">
+        <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
+        <form asp-action="LogIn" asp-controller="Access" method="post" class="w-[50%] h-full flex flex-col items-center">
+            <h1 class="text-white font-bold text-4xl max-md:mt-[30%] mt-[20%]">Sign in</h1>
+            <h2 class="text-white font-bold text-xl mt-[7%]">Email</h2>
+            <span asp-validation-for="Email" class="text-red-500"></span>
+            <span asp-validation-for="Password" class="text-red-500"></span>
+            <input asp-for="Email" class="w-[60%] h-[8%] bg-white mt-[3%] border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            <h2 class="text-white font-bold text-xl mt-[7%]">Password</h2>
+            <input asp-for="Password" class="w-[60%] h-[8%] bg-white mt-[3%] border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none" />
+            <button type="submit" class="w-[45%] h-[8%] bg-blue-400 rounded text-lg text-white font-bold mt-[8%] hover:scale-[1.02]">Sing in</button>
+        </form>
+    </div>
+</div>
+

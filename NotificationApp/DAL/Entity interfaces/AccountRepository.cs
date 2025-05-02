@@ -3,7 +3,7 @@ using BLL;
 
 namespace DAL
 {
-    public class AccountRepository : IRepository<Account>
+    public class AccountRepository : IAccountRepository
     {
         public List<Account> GetAll()
         {
@@ -11,21 +11,21 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())       {
      
-                string query = "SELECT AccountId, Name, Email, Password, RoleId FROM Accounts";
+                string query = "SELECT AccountId, [Name], Email, [Password], RoleId FROM Account";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         int roleId = reader.GetInt32(4);
-                        Role role = GetRoleById(roleId); 
+                        Role role = GetRoleById(roleId);
 
                         Account account = new Account(
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
-                            reader.GetString(3), 
-                            role
+                            reader.GetString(3),
+                            reader.GetInt32(4)
                         );
 
                         accounts.Add(account);

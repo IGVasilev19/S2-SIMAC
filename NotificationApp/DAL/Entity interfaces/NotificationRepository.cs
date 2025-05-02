@@ -3,7 +3,7 @@ using BLL;
 
 namespace DAL
 {
-    public class NotificationRepository : IRepository<Notification>
+    public class NotificationRepository : INotificationRepository
     {
         public List<Notification> GetAll()
         {
