@@ -10,10 +10,12 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService)
+        public SystemController(IAccountService accountService, INotificationService notificationService)
         {
             _accountService = accountService;
+            _notificationService = notificationService;
         }
 
         [Authorize]
@@ -58,10 +60,18 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
+
+        public IActionResult GetAllNotifications()
+        {
+            var notifications = _notificationService.GetAll();
+            return 
+=======
         [Authorize]
         public IActionResult AccountPanel()
         {
             return View();
+>>>>>>> main
         }
     }
 }
