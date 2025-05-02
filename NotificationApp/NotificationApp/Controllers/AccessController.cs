@@ -31,16 +31,14 @@ namespace NotificationApp.Controllers
 
             if (account == null)
             {
-                var model = new LogInViewModel { Email = email, Password = password };
                 ModelState.AddModelError("Email", "Account not found.");
-                return View("Index", model);
+                return View("Index");
             }
 
-            if (account.Password != password)
+            if (account.Password == "Invalid password")
             {
-                var model = new LogInViewModel { Email = email, Password = password };
-                ModelState.AddModelError("Password", "Invalid password.");
-                return View("Index", model);
+                ModelState.AddModelError("Password", "Invalid password");
+                return View("Index");
             }
 
             var claims = new List<Claim>

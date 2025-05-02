@@ -52,5 +52,10 @@ namespace BLL
             Email = email;
             AccountRole = role;
         }
+
+        public Account(string password) 
+        {
+            Password = password;
+        }
     }
 }

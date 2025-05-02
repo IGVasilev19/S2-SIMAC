@@ -44,7 +44,12 @@ namespace Service
                 {
                     return account;
                 }
+                else if (account.Email == email && !BCrypt.Net.BCrypt.Verify(password, account.Password))
+                {
+                    return new Account("Invalid password");
+                }
             }
+
             return null;
         }
 

@@ -11,7 +11,7 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())       {
      
-                string query = "SELECT AccountId, Name, Email, Password, RoleId FROM Account";
+                string query = "SELECT AccountId, [Name], Email, [Password], RoleId FROM Account";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

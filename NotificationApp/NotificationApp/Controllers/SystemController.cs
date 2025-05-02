@@ -10,40 +10,40 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly INotificationService _notificationService;
+        //private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService, INotificationService notificationService)
+        public SystemController(IAccountService accountService/*, INotificationService notificationService*/)
         {
             _accountService = accountService;
-            _notificationService = notificationService;
+            //_notificationService = notificationService;
         }
 
         [Authorize]
         public IActionResult Inbox()
         {
-            //var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            //if(accountId != null)
-            //{
-            //    if (!int.TryParse(accountId, out int id))
-            //    {
-            //        var account = _accountService.GetById(id);
+            if (accountId != null)
+            {
+                if (!int.TryParse(accountId, out int id))
+                {
+                    var account = _accountService.GetById(id);
 
-            //        var vm = new AccountViewModel
-            //        {
-            //            AccountId = account.AccountId,
-            //            Name = account.Name,
-            //            Email = account.Email,
-            //            Role = account.AccountRole.ToString()
-            //        };
+                    var vm = new AccountViewModel
+                    {
+                        AccountId = account.AccountId,
+                        Name = account.Name,
+                        Email = account.Email,
+                        Role = account.AccountRole.ToString()
+                    };
                     return View();
-            //    }
-            //    else
-            //    {
-            //        return View();
-            //    }
-            //}
-            //return View("Error");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            return View("Error");
         }
         [Authorize]
         public IActionResult DevicesPanel()
@@ -60,18 +60,16 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
-<<<<<<< HEAD
 
-        public IActionResult GetAllNotifications()
-        {
-            var notifications = _notificationService.GetAll();
-            return 
-=======
+        //public IActionResult GetAllNotifications()
+        //{
+        //    var notifications = _notificationService.GetAll();
+        //    return 
+        //}
         [Authorize]
         public IActionResult AccountPanel()
         {
             return View();
->>>>>>> main
         }
     }
 }
