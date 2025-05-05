@@ -1,5 +1,6 @@
 ﻿using BLL;
 using DAL;
+using DAL.Interfaces;
 using Microsoft.Identity.Client;
 using Service.Interfaces;
 using System;
@@ -12,24 +13,29 @@ namespace Service
 {
     public class OrganizationService : IOrganizationService
     {
-        OrganizationRepository organizationRepository = new OrganizationRepository();
+        IOrganizationRepository _organizationRepository;
+
+        public OrganizationService(IOrganizationRepository organizationRepository)
+        {
+            _organizationRepository = organizationRepository;
+        }
         public IEnumerable<Organization> GetAll()
         {
            
-            IEnumerable<Organization> OrganizationList = organizationRepository.GetAll();
+            IEnumerable<Organization> OrganizationList = _organizationRepository.GetAll();
             return OrganizationList;
         }
         public void Add(Organization organization)
         {
-            organizationRepository.Add(organization);
+            _organizationRepository.Add(organization);
         }
         public void Delete(Organization organization) 
         {
-            organizationRepository.Delete(organization.OrganizationId);
+            _organizationRepository.Delete(organization.OrganizationId);
         }
         public Organization GetById(int id) 
         {
-            Organization organization = organizationRepository.GetById(id);
+            Organization organization = _organizationRepository.GetById(id);
             return organization;
         }
     }
