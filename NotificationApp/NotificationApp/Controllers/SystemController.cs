@@ -12,18 +12,18 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly INotificationService _notificationService;
+        //private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService, INotificationService notificationService)
+        public SystemController(IAccountService accountService) //, INotificationService notificationService)
         {
             _accountService = accountService;
-            _notificationService = notificationService;
+            //_notificationService = notificationService;
         }
 
         [Authorize]
         public IActionResult Inbox()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
             {
@@ -68,14 +68,17 @@ namespace NotificationApp.Controllers
                     //    Notifications = vmNotifications
                     //};
 
-                    return View(vm);
+            //        return View(vm);
+            //    }
+            //    else
+            //    {
+            //        return View();
+            //    }
+            //}
+                return View();
                 }
-                else
-                {
-                    return View();
-                }
+        
             }
-            return View("Error");
         }
         [Authorize]
         public IActionResult DevicesPanel()
@@ -93,8 +96,21 @@ namespace NotificationApp.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult AccountPanel()
+        {
+            return View();
+        }
+        public IActionResult Analytics()
+        {
+            return View();
+        }
+
+        public IActionResult RolesPanel()
+        {
+            return View();
+        }
+
+        public IActionResult RolesCreateEditPanel()
         {
             return View();
         }
