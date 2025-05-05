@@ -10,20 +10,18 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
-        //private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService/*, INotificationService notificationService*/)
+        public SystemController(IAccountService accountService)
         {
             _accountService = accountService;
-            //_notificationService = notificationService;
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Inbox()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (accountId != null)
+            if(accountId != null)
             {
                 if (!int.TryParse(accountId, out int id))
                 {
@@ -60,14 +58,8 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
-
-        //public IActionResult GetAllNotifications()
-        //{
-        //    var notifications = _notificationService.GetAll();
-        //    return 
-        //}
         [Authorize]
-        public IActionResult AccountPanel()
+        public IActionResult RolesPanel()
         {
             return View();
         }
