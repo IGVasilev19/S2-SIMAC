@@ -94,14 +94,20 @@ namespace DAL
             }
         }
 
-        public void AssignPermission(Role role, IEnumerable<Permission> permissions)
+        public void AssignPermissions(Role role, IEnumerable<Permission> permissions)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
+                string query = "DELETE FROM RolePermission " +
+                        "WHERE RoleId = @roleId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@roleId", role.RoleId);
+                cmd.ExecuteNonQuery();
+
                 foreach (Permission permission in permissions)
                 {
-                    string query = "INSERT INTO RolePermission (RoleId, PermissionId) VALUES (@roleId, @permissionId)";
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    query = "INSERT INTO RolePermission (RoleId, PermissionId) VALUES (@roleId, @permissionId)";
+                    cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@roleId", role.RoleId);
                     cmd.Parameters.AddWithValue("@permissionId", (int)permission);
                     cmd.ExecuteNonQuery();

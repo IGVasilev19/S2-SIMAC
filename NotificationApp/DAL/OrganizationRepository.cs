@@ -36,7 +36,7 @@ namespace DAL
             }
         }
 
-        public List<Organization> GetAll()
+        public IEnumerable<Organization> GetAll()
         {
             List<Organization> organizations = new List<Organization>();
             using (SqlConnection conn = DBConnection.GetConnection())

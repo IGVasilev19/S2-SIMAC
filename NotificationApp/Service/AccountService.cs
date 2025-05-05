@@ -52,7 +52,7 @@ namespace Service
 
         public Account LogIn(string email, string password)
         {
-            List<Account> accounts = _accountRepository.GetAll();
+            IEnumerable<Account> accounts = _accountRepository.GetAll();
 
             foreach (Account account in accounts)
             {
