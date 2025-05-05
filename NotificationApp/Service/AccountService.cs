@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
-using DAL;
 using BCrypt.Net;
+using Service.Interfaces;
+using DAL.Interfaces;
 
 namespace Service
 {
@@ -22,17 +23,32 @@ namespace Service
             return _accountRepository.GetAll();
         }
 
-        public void SignUp(string name, string email, string password, Role role)
+        public void SignUp(string name, string email, string password, Organization organization, Role role)
+        {
+            // Hash the password with a salt using BCrypt 
+            string hashedPassword = PasswordHasher.Hash(password);
+
+            // Create a new account with the hashed password  
+            Account newAccount = new Account(name, email, hashedPassword, organization, role);
+
+            // Add the account to the repository  
+            _accountRepository.Add(newAccount);
+        }
+
+        //DATABASE TESTING---------------------------------------------
+        public void SignUp(string name, string email, string password, int organization, int role)
         {
             // Hash the password with a salt using BCrypt  
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
             // Create a new account with the hashed password  
-            Account newAccount = new Account(name, email, hashedPassword, role);
+            Account newAccount = new Account(name, email, hashedPassword, organization, role);
 
             // Add the account to the repository  
             _accountRepository.Add(newAccount);
         }
+        //DATABASE TESTING---------------------------------------------
+
 
         public Account LogIn(string email, string password)
         {
@@ -40,7 +56,7 @@ namespace Service
 
             foreach (Account account in accounts)
             {
-                if (account.Email == email &&  BCrypt.Net.BCrypt.Verify(password, account.Password))
+                if (account.Email == email &&  PasswordHasher.Verify(password, account.Password))
                 {
                     return account;
                 }

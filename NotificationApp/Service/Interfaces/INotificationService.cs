@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 
-namespace DAL
+namespace Service.Interfaces
 {
-    public interface INotificationRepository : IRepository<Notification>
+    public interface INotificationService : IService<Notification>
     {
+        Notification GetById(int id);
     }
-
 }

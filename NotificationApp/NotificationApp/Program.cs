@@ -1,6 +1,8 @@
 using BLL;
 using DAL;
+using DAL.Interfaces;
 using Service;
+using Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
@@ -50,8 +53,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 //DATABASE TESTING---------------------------------------------
-//AccountService accountService = new AccountService();
-//accountService.SignUp("admin", "admin@gmail.com", "admin", 1);
+//AccountRepository ar = new AccountRepository();
+//AccountService accountService = new AccountService(ar);
+//accountService.SignUp("test", "test@gmail.com", "test", 1, 1);
 //DATABASE TESTING---------------------------------------------
 
 app.Run();

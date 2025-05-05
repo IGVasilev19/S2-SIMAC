@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using BLL;
+using DAL.Interfaces;
 
 namespace DAL
 {
@@ -11,7 +12,7 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notifications";
+                string query = "SELECT NotificationID, Title, Content, Important, Date FROM Notification";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -22,8 +23,7 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
-                            reader.GetBoolean(4),
-                            reader.GetDateTime(5)
+                            reader.GetDateTime(4)
                         );
 
                         notifications.Add(notification);
@@ -37,7 +37,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notifications WHERE NotificationID = @id";
+                string query = "SELECT NotificationID, Title, Content, Important, Date FROM Notification WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -50,8 +50,7 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
-                            reader.GetBoolean(4),
-                            reader.GetDateTime(5)
+                            reader.GetDateTime(4)
                         );
 
                         return notification;
@@ -65,12 +64,11 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Notifications (Title, Content, Important, Read, Date) VALUES (@title, @content, @important, @read, @date)";
+                string query = "INSERT INTO Notification (Title, Content, Important, Date) VALUES (@title, @content, @important, @date)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
                 cmd.Parameters.AddWithValue("@important", entity.Important);
-                cmd.Parameters.AddWithValue("@read", entity.Read);
                 cmd.Parameters.AddWithValue("@date", entity.Date);
 
                 cmd.ExecuteNonQuery();
@@ -81,12 +79,11 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Notifications SET Title = @title, Content = @content, Important = @important, Read = @read, Date = @date WHERE NotificationID = @id";
+                string query = "UPDATE Notification SET Title = @title, Content = @content, Important = @important, Date = @date WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
                 cmd.Parameters.AddWithValue("@important", entity.Important);
-                cmd.Parameters.AddWithValue("@read", entity.Read);
                 cmd.Parameters.AddWithValue("@date", entity.Date);
                 cmd.Parameters.AddWithValue("@id", entity.NotificationID);
 
@@ -98,12 +95,14 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "DELETE FROM Notifications WHERE NotificationID = @id";
+                string query = "DELETE FROM Notification WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
                 cmd.ExecuteNonQuery();
             }
         }
+
+        
     }
 }
