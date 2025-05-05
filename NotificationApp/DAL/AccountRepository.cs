@@ -6,7 +6,7 @@ namespace DAL
 {
     public class AccountRepository : IAccountRepository
     {
-        public List<Account> GetAll()
+        public IEnumerable<Account> GetAll()
         {
             List<Account> accounts = new List<Account>();
 

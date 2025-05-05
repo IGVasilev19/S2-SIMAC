@@ -4,9 +4,9 @@ using DAL.Interfaces;
 
 namespace DAL
 {
-    public class DeviceRepository : IRepository<Device>
+    public class DeviceRepository : IDeviceRepository
     {
-        public List<Device> GetAll()
+        public IEnumerable<Device> GetAll()
         {
             List<Device> devices = new List<Device>();
 

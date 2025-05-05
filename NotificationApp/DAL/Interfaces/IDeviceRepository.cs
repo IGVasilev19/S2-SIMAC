@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 
-namespace Service.Interfaces
+namespace DAL.Interfaces
 {
-    public interface IRoleService : IService<Role>
+    public interface IDeviceRepository : IRepository<Device>
     {
-        void AssignPermission(int roleId, Permission permission);
+
     }
 }

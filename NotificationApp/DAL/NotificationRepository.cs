@@ -6,7 +6,7 @@ namespace DAL
 {
     public class NotificationRepository : INotificationRepository
     {
-        public List<Notification> GetAll()
+        public IEnumerable<Notification> GetAll()
         {
             List<Notification> notifications = new List<Notification>();
 
