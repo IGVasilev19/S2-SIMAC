@@ -1,14 +1,13 @@
-﻿using System;
+﻿using BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL;
 
 namespace Service.Interfaces
 {
-    public interface IRoleService : IService<Role>
+    public interface IOrganizationService : IService<Organization>
     {
-        void AssignPermission(int roleId, Permission permission);
     }
 }
