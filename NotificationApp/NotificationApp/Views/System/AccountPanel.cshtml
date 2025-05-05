@@ -3,19 +3,7 @@
 }
 
 <div class="w-full h-full flex">
-    <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
-        <div class="flex flex-col gap-20">
-            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
-            <div class="flex flex-col gap-4 mt-[80px]">
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Inbox</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Analytics</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Device</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Account</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Roles</button>
-            </div>
-        </div>
-        <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Sign out</button>
-    </div>
+    @Html.Partial("_Navbar")
     <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
         <div class="w-[94%] flex items-center justify-between bg-white shadow-md p-4 mt-8">   
             <div class="flex items-center gap-2 w-full max-w-md">

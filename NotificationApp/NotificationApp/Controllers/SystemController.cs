@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BLL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using NotificationApp.Models;
@@ -10,10 +11,12 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService)
+        public SystemController(IAccountService accountService, INotificationService notificationService)
         {
             _accountService = accountService;
+            _notificationService = notificationService;
         }
 
         [Authorize]
@@ -23,18 +26,36 @@ namespace NotificationApp.Controllers
 
             if(accountId != null)
             {
-                if (!int.TryParse(accountId, out int id))
+                if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
+                    var notifications = _notificationService.GetAll();
+                    var vmNotifications = new List<NotificationViewModel>();
 
-                    var vm = new AccountViewModel
+                    foreach (var notification in notifications)
+                    {
+                        vmNotifications.Add(new NotificationViewModel
+                        {
+                            NotificationID = notification.NotificationID,
+                            Title = notification.Title,
+                            Content = notification.Content,
+                            Important = notification.Important,
+                            Read = notification.Read,
+                            Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
+                        });
+                    }
+
+                    InboxViewModel vm = new InboxViewModel
                     {
                         AccountId = account.AccountId,
-                        Name = account.Name,
-                        Email = account.Email,
-                        Role = account.AccountRole.ToString()
+                        AccountName = account.Name,
+                        AccountEmail = account.Email,
+                        AccountPassword = account.Password,
+                        AccountRole = account.AccountRole.ToString(),
+                        Notifications = vmNotifications
                     };
-                    return View();
+
+                    return View(vm);
                 }
                 else
                 {
