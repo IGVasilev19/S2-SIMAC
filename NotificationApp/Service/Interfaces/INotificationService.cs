@@ -10,5 +10,6 @@ namespace Service.Interfaces
     public interface INotificationService : IService<Notification>
     {
         Notification GetById(int id);
+        List<Notification> GetByPermission(int permissionId);
     }
 }

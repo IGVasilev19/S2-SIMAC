@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BLL;
 using Service.Interfaces;
 using DAL.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Service
 {
@@ -26,6 +27,16 @@ namespace Service
         public Notification GetById(int id)
         {
             return _notificationRepository.GetById(id);
+        }
+
+        public List<Notification> GetByPermission(int permissionId)
+        {
+            List<Notification> listOfNotifications = _notificationRepository.GetByPermission(permissionId);
+            if (listOfNotifications.IsNullOrEmpty())
+            {
+                return null;
+            }
+            return listOfNotifications;
         }
     }
 }

@@ -103,6 +103,34 @@ namespace DAL
             }
         }
 
-        
+        public List<Notification> GetByPermission(int permissionId)
+        {
+            List<Notification> notifications = new List<Notification>();
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT NotificationID, Title, Content, Important, Date " +
+                                "FROM Notification " +
+                                "WHERE PermissionId = @permissionId OR PermissionId IS NULL";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@permissionId", permissionId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Notification notification = new Notification(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2),
+                            reader.GetBoolean(3),
+                            reader.GetDateTime(4)
+                        );
+                        notifications.Add(notification);
+                    }
+                }
+            }
+            return notifications;
+        }
     }
 }
