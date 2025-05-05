@@ -36,7 +36,7 @@ namespace DAL
             }
         }
 
-        public List<Organization> GetAll()
+        public IEnumerable<Organization> GetAll()
         {
             List<Organization> organizations = new List<Organization>();
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -84,9 +84,17 @@ namespace DAL
 
         }
 
-        public void Update(Organization entity)
+        public void Update(Organization organization)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "UPDATE Organization SET Name = @name";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@name", organization.Name);
+
+                cmd.ExecuteNonQuery();
+            }
         }
+
     }
 }
