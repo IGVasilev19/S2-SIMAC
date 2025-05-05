@@ -4,9 +4,9 @@ using System.Diagnostics;
 using BLL;
 using DAL;
 using System.Reflection.Metadata;
-using Service;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Service.Interfaces;
 
 namespace NotificationApp.Controllers
 {
@@ -56,9 +56,9 @@ namespace NotificationApp.Controllers
 
 
         [HttpPost]
-        public IActionResult SignUp(string name, string email, string password, Role role)
+        public IActionResult SignUp(string name, string email, string password, Organization organization, Role role)
         {
-            accountService.SignUp(name, email, password, role);
+            accountService.SignUp(name, email, password, organization, role);
             return RedirectToAction("Index", "Access");
         }
 

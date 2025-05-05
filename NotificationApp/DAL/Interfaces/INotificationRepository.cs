@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL;
 
-namespace Service
+namespace DAL.Interfaces
 {
-    public interface IService<T>
+    public interface INotificationRepository : IRepository<Notification>
     {
-        IEnumerable<T> GetAll();
     }
+
 }

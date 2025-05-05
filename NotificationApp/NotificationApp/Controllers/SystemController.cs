@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using NotificationApp.Models;
-using Service;
+using Service.Interfaces;
 using System.Security.Claims;
 
 namespace NotificationApp.Controllers
@@ -32,28 +32,39 @@ namespace NotificationApp.Controllers
             //        var notifications = _notificationService.GetAll();
             //        var vmNotifications = new List<NotificationViewModel>();
 
-            //        foreach (var notification in notifications)
-            //        {
-            //            vmNotifications.Add(new NotificationViewModel
-            //            {
-            //                NotificationID = notification.NotificationID,
-            //                Title = notification.Title,
-            //                Content = notification.Content,
-            //                Important = notification.Important,
-            //                Read = notification.Read,
-            //                Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
-            //            });
-            //        }
+                    foreach (var notification in notifications)
+                    {
+                        vmNotifications.Add(new NotificationViewModel
+                        {
+                            NotificationID = notification.NotificationID,
+                            Title = notification.Title,
+                            Content = notification.Content,
+                            Important = notification.Important,
+                            Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
+                        });
+                    }
 
-            //        InboxViewModel vm = new InboxViewModel
-            //        {
-            //            AccountId = account.AccountId,
-            //            AccountName = account.Name,
-            //            AccountEmail = account.Email,
-            //            AccountPassword = account.Password,
-            //            AccountRole = account.AccountRole.ToString(),
-            //            Notifications = vmNotifications
-            //        };
+                    //DATABASE TESTING---------------------------------------------
+                    InboxViewModel vm = new InboxViewModel
+                    {
+                        AccountId = account.AccountId,
+                        AccountName = account.Name,
+                        AccountEmail = account.Email,
+                        AccountPassword = account.Password,
+                        AccountRole = "DummyRole",
+                        Notifications = vmNotifications
+                    };
+                    //DATABASE TESTING---------------------------------------------
+
+                    //InboxViewModel vm = new InboxViewModel
+                    //{
+                    //    AccountId = account.AccountId,
+                    //    AccountName = account.Name,
+                    //    AccountEmail = account.Email,
+                    //    AccountPassword = account.Password,
+                    //    AccountRole = account.AccountRole.Name(),
+                    //    Notifications = vmNotifications
+                    //};
 
             //        return View(vm);
             //    }

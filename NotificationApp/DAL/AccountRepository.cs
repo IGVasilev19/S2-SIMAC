@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using BLL;
+using DAL.Interfaces;
 
 namespace DAL
 {
@@ -11,7 +12,7 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())       {
      
-                string query = "SELECT AccountId, [Name], Email, [Password], RoleId FROM Account";
+                string query = "SELECT AccountId, [Name], Email, [Password], OrganizationId, RoleId FROM Account";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -25,7 +26,8 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetString(3),
-                            reader.GetInt32(4)
+                            reader.GetInt32(4),
+                            reader.GetInt32(5)
                         );
 
                         accounts.Add(account);
@@ -40,7 +42,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT AccountId, Name, Email, Password, RoleId FROM Accounts WHERE AccountId = @id";
+                string query = "SELECT AccountId, Name, Email, Password, OrganizationId, RoleId FROM Account WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -56,7 +58,8 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetString(3),
-                            role
+                            reader.GetInt32(4),
+                            reader.GetInt32(5)
                         );
 
                         return account;
@@ -67,26 +70,44 @@ namespace DAL
             return null;
         }
 
+        //public void Add(Account account)
+        //{
+        //    using (SqlConnection conn = DBConnection.GetConnection())
+        //    {
+        //        string query = "INSERT INTO Account (Name, Email, Password, RoleId) VALUES (@name, @email, @password, @roleId)";
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        cmd.Parameters.AddWithValue("@name", account.Name);
+        //        cmd.Parameters.AddWithValue("@email", account.Email);
+        //        cmd.Parameters.AddWithValue("@password", account.Password);
+        //        cmd.Parameters.AddWithValue("@roleId", account.AccountRole.RoleId); // Remove AccountRole for DB testing
+
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
+
+        //DATABASE TESTING---------------------------------------------
         public void Add(Account account)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Account (Name, Email, Password, RoleId) VALUES (@name, @email, @password, @roleId)";
+                string query = "INSERT INTO Account (Name, Email, Password, OrganizationId, RoleId) VALUES (@name, @email, @password, @organizationId, @roleId)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
                 cmd.Parameters.AddWithValue("@password", account.Password);
-                cmd.Parameters.AddWithValue("@roleId", account.AccountRole.RoleId); // Remove AccountRole for DB testing
+                cmd.Parameters.AddWithValue("@organizationId", account.OrganizationId);
+                cmd.Parameters.AddWithValue("@roleId", account.RoleId);
 
                 cmd.ExecuteNonQuery();
             }
         }
+        //DATABASE TESTING---------------------------------------------
 
         public void Update(Account account)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Accounts SET Name = @name, Email = @email, Password = @password, RoleId = @roleId WHERE AccountId = @id";
+                string query = "UPDATE Account SET Name = @name, Email = @email, Password = @password, RoleId = @roleId WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
@@ -102,7 +123,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "DELETE FROM Accounts WHERE AccountId = @id";
+                string query = "DELETE FROM Account WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
