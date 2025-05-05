@@ -13,11 +13,18 @@ namespace BLL
             Name = name;
             Permissions = permissions;
         }
-        public Role(int id, string name) // Taking from DB
+        public Role(int id, string name, List<Permission>) // Taking from DB
         {
             RoleId = id;
             Name = name;
             Permissions = new List<Permission>();
+        }
+
+        public Role(int id, string name, List<Permission> permissions) // Taking from DB
+        {
+            RoleId = id;
+            Name = name;
+            Permissions = permissions;
         }
     }
 }

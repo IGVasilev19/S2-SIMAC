@@ -171,10 +171,11 @@ namespace DAL
                             permissions.Add(perm);
                         }
                     }
-                }
-            }
 
-            return new Role(id, roleName, permissions);
+
+                }
+                return new Role(id, roleName, permissions);
+            }
         }
     }
 }
