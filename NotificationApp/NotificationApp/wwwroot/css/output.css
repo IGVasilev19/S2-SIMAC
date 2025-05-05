@@ -266,6 +266,9 @@
   .h-\[92\%\] {
     height: 92%;
   }
+  .h-\[96\%\] {
+    height: 96%;
+  }
   .h-\[100px\] {
     height: 100px;
   }
@@ -310,6 +313,9 @@
   }
   .min-w-full {
     min-width: 100%;
+  }
+  .transform {
+    transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
   }
   .flex-col {
     flex-direction: column;
@@ -672,6 +678,31 @@ html, body {
     background-image: linear-gradient(to bottom, #252e5a, #a50228);
   }
 }
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateX(0);
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateY(0);
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: rotateZ(0);
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: skewX(0);
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: skewY(0);
+}
 @property --tw-space-x-reverse {
   syntax: "*";
   inherits: false;
@@ -802,6 +833,11 @@ html, body {
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: rotateX(0);
+      --tw-rotate-y: rotateY(0);
+      --tw-rotate-z: rotateZ(0);
+      --tw-skew-x: skewX(0);
+      --tw-skew-y: skewY(0);
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
       --tw-leading: initial;

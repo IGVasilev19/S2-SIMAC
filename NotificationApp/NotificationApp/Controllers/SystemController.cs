@@ -85,5 +85,9 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+        public IActionResult Analytics()
+        {
+            return View();
+        }
     }
 }
