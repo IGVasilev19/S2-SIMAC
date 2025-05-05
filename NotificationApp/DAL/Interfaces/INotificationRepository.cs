@@ -9,6 +9,7 @@ namespace DAL.Interfaces
 {
     public interface INotificationRepository : IRepository<Notification>
     {
+        public List<Notification> GetByPermission(int permissionId);
     }
 
 }

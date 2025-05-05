@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using NotificationApp.Models;
 using Service.Interfaces;
+using System.Collections.Specialized;
 using System.Security.Claims;
 
 namespace NotificationApp.Controllers
@@ -29,7 +30,7 @@ namespace NotificationApp.Controllers
                 if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
-                    var notifications = _notificationService.GetAll();
+                    var notifications = _notificationService.GetByPermission(account.RoleId); // Needs to be PermissionId later this is for testing
                     var vmNotifications = new List<NotificationViewModel>();
 
                     foreach (var notification in notifications)
@@ -51,7 +52,8 @@ namespace NotificationApp.Controllers
                         AccountName = account.Name,
                         AccountEmail = account.Email,
                         AccountPassword = account.Password,
-                        AccountRole = "DummyRole",
+                        AccountOrganization = account.OrganizationId.ToString(),
+                        AccountRole = account.RoleId.ToString(),
                         Notifications = vmNotifications
                     };
                     //DATABASE TESTING---------------------------------------------
