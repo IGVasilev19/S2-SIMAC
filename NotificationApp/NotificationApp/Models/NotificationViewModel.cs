@@ -1,4 +1,6 @@
-﻿namespace NotificationApp.Models
+﻿using BLL;
+
+namespace NotificationApp.Models
 {
     public class NotificationViewModel
     {
@@ -8,5 +10,6 @@
         public bool Important { get; set; }
         public bool Read { get; set; }
         public string Date { get; set; }
+        //public List<Notification> Notifications { get; set; }
     }
 }

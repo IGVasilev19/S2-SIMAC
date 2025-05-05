@@ -11,6 +11,7 @@ namespace BLL
         public Role AccountRole { get; set; }
         //DATABASE TESTING---------------------------------------------
         public int RoleId { get; set; }
+        public List<Notification> Notifications { get; set; }
 
         //DATABASE TESTING---------------------------------------------
         public Account(string name, string email, string password, int role) // For creating account (no id)
@@ -19,6 +20,7 @@ namespace BLL
             Email = email;
             Password = password;
             RoleId = role;
+            Notifications = new List<Notification>();   
         }
 
         public Account(int accountId, string name, string email, string password, int role) // For creating account (no id)
