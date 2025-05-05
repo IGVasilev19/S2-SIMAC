@@ -1,15 +1,15 @@
-﻿@model string
+﻿
 
-<div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
+<div class="bg-custom-gradient flex h-full w-[200px] flex-col items-center justify-between px-5">
     <div class="flex flex-col gap-20">
         <img src="/images/simac-logo-removebg.png" asp-append-version="true" />
-        <div class="flex flex-col gap-4 mt-[80px]">
-            <a asp-action="Inbox" asp-controller="System" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Inbox</a>
-            <a asp-action="Inbox" asp-controller="System" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Analytics</a>
-            <a asp-action="DevicesPanel" asp-controller="System" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Device</a>
-            <a asp-action="AccountPanel" asp-controller="System" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Account</a>
-            <a asp-action="Inbox" asp-controller="System" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Roles</a>
+        <div class="mt-[80px] flex flex-col gap-4">
+            <a asp-action="Inbox" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Inbox</a>
+            <a asp-action="Inbox" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Analytics</a>
+            <a asp-action="DevicesPanel" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Device</a>
+            <a asp-action="AccountPanel" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Account</a>
+            <a asp-action="Inbox" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Roles</a>
         </div>
     </div>
-    <a asp-action="LogOut" asp-controller="Access" class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Sign out</a>
+    <a asp-action="LogOut" asp-controller="Access" class="text-md mb-[10%] flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Sign out</a>
 </div>

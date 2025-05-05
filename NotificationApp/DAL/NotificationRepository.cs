@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using BLL;
+using DAL.Interfaces;
 
 namespace DAL
 {

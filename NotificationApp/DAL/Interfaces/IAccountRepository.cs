@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 
-namespace DAL
+namespace DAL.Interfaces
 {
     public interface IAccountRepository : IRepository<Account>
     {
