@@ -12,18 +12,18 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
-        //private readonly INotificationService _notificationService;
+        private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService) //, INotificationService notificationService)
+        public SystemController(IAccountService accountService, INotificationService notificationService)
         {
             _accountService = accountService;
-            //_notificationService = notificationService;
+            _notificationService = notificationService;
         }
 
         [Authorize]
         public IActionResult Inbox()
         {
-            //var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
             {
@@ -58,28 +58,26 @@ namespace NotificationApp.Controllers
                     };
                     //DATABASE TESTING---------------------------------------------
 
-                    //InboxViewModel vm = new InboxViewModel
-                    //{
-                    //    AccountId = account.AccountId,
-                    //    AccountName = account.Name,
-                    //    AccountEmail = account.Email,
-                    //    AccountPassword = account.Password,
-                    //    AccountRole = account.AccountRole.Name(),
-                    //    Notifications = vmNotifications
-                    //};
+                    /*InboxViewModel vm = new InboxViewModel
+                    {
+                        AccountId = account.AccountId,
+                        AccountName = account.Name,
+                        AccountEmail = account.Email,
+                        AccountPassword = account.Password,
+                        AccountRole = account.AccountRole.Name,
+                        Notifications = vmNotifications
+                    };*/
 
-            //        return View(vm);
-            //    }
-            //    else
-            //    {
-            //        return View();
-            //    }
-            //}
-                return View();
+                    return View(vm);
                 }
-        
+                else
+                {
+                    return View();
+                }
             }
+                return View();
         }
+        
         [Authorize]
         public IActionResult DevicesPanel()
         {
