@@ -40,7 +40,6 @@ namespace NotificationApp.Controllers
                             Title = notification.Title,
                             Content = notification.Content,
                             Important = notification.Important,
-                            Read = notification.Read,
                             Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
                         });
                     }
