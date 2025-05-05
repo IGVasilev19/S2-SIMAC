@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function showNotificationPreview(el)
+{
+    const title = el.dataset.title;
+    const date = el.dataset.date;
+    const body = el.dataset.body;
 
-// Write your JavaScript code.
+    document.getElementById('preview-title').innerText = title;
+    document.getElementById('preview-date').innerText = date;
+    document.getElementById('preview-body').innerText = body;
+}
