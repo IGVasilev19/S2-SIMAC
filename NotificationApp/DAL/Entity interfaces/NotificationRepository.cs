@@ -11,7 +11,7 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notifications";
+                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notification";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -37,7 +37,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notifications WHERE NotificationID = @id";
+                string query = "SELECT NotificationID, Title, Content, Important, Read, Date FROM Notification WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -65,7 +65,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Notifications (Title, Content, Important, Read, Date) VALUES (@title, @content, @important, @read, @date)";
+                string query = "INSERT INTO Notification (Title, Content, Important, Read, Date) VALUES (@title, @content, @important, @read, @date)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
@@ -81,7 +81,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Notifications SET Title = @title, Content = @content, Important = @important, Read = @read, Date = @date WHERE NotificationID = @id";
+                string query = "UPDATE Notification SET Title = @title, Content = @content, Important = @important, Read = @read, Date = @date WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
@@ -98,7 +98,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "DELETE FROM Notifications WHERE NotificationID = @id";
+                string query = "DELETE FROM Notification WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 

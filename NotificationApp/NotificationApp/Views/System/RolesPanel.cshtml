@@ -3,19 +3,7 @@
 }
 
 <div class="w-full h-full flex">
-    <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
-        <div class="flex flex-col gap-20">
-            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
-            <div class="flex flex-col gap-4 mt-[80px]">
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Inbox</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Analytics</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Device</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Account</button>
-                <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Roles</button>
-            </div>
-        </div>
-        <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05] hover:bg-white/40">Sign out</button>
-    </div>
+    @Html.Partial("_Navbar")
     <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
         <div class="w-[94%] flex items-center justify-between bg-white shadow-md p-4 mt-8">   
             <div class="flex items-center gap-2 w-full max-w-md">
@@ -23,7 +11,7 @@
                 <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
             </div>
             <div class="w-1/2 h-full flex justify-end gap-3"> 
-                <button class="bg-white hover:bg-gray-100 text-black font-semibold rounded-lg shadow-sm px-5 border border-gray-300 hover:cursor-pointer">Create new Role</button>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold rounded-lg shadow-sm px-5 border border-gray-300 hover:cursor-pointer">Create</button>
             </div>
             
         </div>
@@ -32,17 +20,15 @@
                 <table class="min-w-full">
                     <thead class="bg-white">
                         <tr>
-                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Device Name</th>
-                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Location</th>
-                            <th class="text-right px-6 py-3 text-sm font-bold text-black pr-25">Status</th>
+                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Role Name</th>
                         </tr>
                     </thead>
                     <tbody class="font-semibold text-gray-700 text-sm">
                         <tr class="bg-gray-100 even:bg-white">
-                            <td class="px-6 py-3">Device Name</td>
-                            <td class="px-6 py-3">Location</td>
-                            <td class="px-6 py-3 pr-27 flex justify-end">
-                                <div class="bg-green-500 w-[25px] h-[25px] shadow-md rounded-4xl"></div>
+                            <td class="px-6 py-3">Role Name</td>
+                            <td class="px-6 py-3 space-x-2 text-right">
+                                <button class="bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
+                                <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                             </td>
                         </tr>
                     </tbody>

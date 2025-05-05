@@ -11,59 +11,59 @@ namespace NotificationApp.Controllers
     public class SystemController : Controller
     {
         private readonly IAccountService _accountService;
-        private readonly INotificationService _notificationService;
+        //private readonly INotificationService _notificationService;
 
-        public SystemController(IAccountService accountService, INotificationService notificationService)
+        public SystemController(IAccountService accountService) //, INotificationService notificationService)
         {
             _accountService = accountService;
-            _notificationService = notificationService;
+            //_notificationService = notificationService;
         }
 
         [Authorize]
         public IActionResult Inbox()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if(accountId != null)
-            {
-                if (int.TryParse(accountId, out int id))
-                {
-                    var account = _accountService.GetById(id);
-                    var notifications = _notificationService.GetAll();
-                    var vmNotifications = new List<NotificationViewModel>();
+            //if(accountId != null)
+            //{
+            //    if (int.TryParse(accountId, out int id))
+            //    {
+            //        var account = _accountService.GetById(id);
+            //        var notifications = _notificationService.GetAll();
+            //        var vmNotifications = new List<NotificationViewModel>();
 
-                    foreach (var notification in notifications)
-                    {
-                        vmNotifications.Add(new NotificationViewModel
-                        {
-                            NotificationID = notification.NotificationID,
-                            Title = notification.Title,
-                            Content = notification.Content,
-                            Important = notification.Important,
-                            Read = notification.Read,
-                            Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
-                        });
-                    }
+            //        foreach (var notification in notifications)
+            //        {
+            //            vmNotifications.Add(new NotificationViewModel
+            //            {
+            //                NotificationID = notification.NotificationID,
+            //                Title = notification.Title,
+            //                Content = notification.Content,
+            //                Important = notification.Important,
+            //                Read = notification.Read,
+            //                Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
+            //            });
+            //        }
 
-                    InboxViewModel vm = new InboxViewModel
-                    {
-                        AccountId = account.AccountId,
-                        AccountName = account.Name,
-                        AccountEmail = account.Email,
-                        AccountPassword = account.Password,
-                        AccountRole = account.AccountRole.ToString(),
-                        Notifications = vmNotifications
-                    };
+            //        InboxViewModel vm = new InboxViewModel
+            //        {
+            //            AccountId = account.AccountId,
+            //            AccountName = account.Name,
+            //            AccountEmail = account.Email,
+            //            AccountPassword = account.Password,
+            //            AccountRole = account.AccountRole.ToString(),
+            //            Notifications = vmNotifications
+            //        };
 
-                    return View(vm);
-                }
-                else
-                {
-                    return View();
-                }
-            }
-            return View("Error");
-        }
+            //        return View(vm);
+            //    }
+            //    else
+            //    {
+            //        return View();
+            //    }
+            //}
+            return View();
+}
         [Authorize]
         public IActionResult DevicesPanel()
         {
@@ -79,8 +79,18 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
-        [Authorize]
+
+        public IActionResult AccountPanel()
+        {
+            return View();
+        }
+
         public IActionResult RolesPanel()
+        {
+            return View();
+        }
+
+        public IActionResult RolesCreateEditPanel()
         {
             return View();
         }
