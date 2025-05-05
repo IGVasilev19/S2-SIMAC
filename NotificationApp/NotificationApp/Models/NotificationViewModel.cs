@@ -7,6 +7,6 @@
         public string Content { get; set; }
         public bool Important { get; set; }
         public bool Read { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }
