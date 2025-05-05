@@ -30,6 +30,7 @@ namespace BLL
             Email = email;
             Password = password;
             RoleId = role;
+            Notifications = new List<Notification>();
         }
         //DATABASE TESTING---------------------------------------------
 
@@ -39,6 +40,7 @@ namespace BLL
             Email = email;
             Password = password;
             AccountRole = role;
+            Notifications = new List<Notification>();
         }
         public Account(int accountId, string name, string email, Role role) // For displaying (no password)
         {
@@ -46,6 +48,7 @@ namespace BLL
             Name = name;
             Email = email;
             AccountRole = role;
+            Notifications = new List<Notification>();
         }
         public Account(int accountId, string name, string email, string password, Role role) // For logging in (all data)
         {
@@ -53,6 +56,7 @@ namespace BLL
             Name = name;
             Email = email;
             AccountRole = role;
+            Notifications = new List<Notification>();
         }
 
         public Account(string password) 
