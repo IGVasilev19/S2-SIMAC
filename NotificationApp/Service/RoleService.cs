@@ -15,9 +15,9 @@ namespace Service
         {
             _roleService = roleService;
         }
-        public void AssignPermission(int roleId, Permission permission)
+        public void AssignPermission(int roleId, IEnumerable<Permission> permissions)
         {
-            throw new NotImplementedException();
+            _roleService.AssignPermission(roleId, permissions);
         }
 
         public IEnumerable<Role> GetAll()
