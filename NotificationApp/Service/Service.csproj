@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
-  </ItemGroup>
+	  <ProjectReference Include="..\Service\Service.csproj" />
+	  <ProjectReference Include="..\Service\Service.csproj" />  </ItemGroup>
 
 </Project>

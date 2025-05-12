@@ -7,6 +7,7 @@ using BLL;
 using BCrypt.Net;
 using Service.Interfaces;
 using DAL.Interfaces;
+using Service.Utility;
 
 namespace Service
 {

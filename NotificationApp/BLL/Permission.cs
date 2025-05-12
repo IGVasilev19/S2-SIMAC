@@ -1,12 +1,16 @@
-﻿namespace BLL
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace BLL
 {
-    public enum Permission
+    public class Permission
     {
-        Admin = 1,
-        Manager = 2,
-        ViewSecurity = 3,
-        ViewMaintenance = 4,
-        ViewCrash = 5,
-        ViewReport = 6
+        public int PermissionId { get; set; }
+        public string Name { get; set; }
+
+        public Permission(int permissionId, string name)
+        {
+            PermissionId = permissionId;
+            Name = name;
+        }
     }
 }

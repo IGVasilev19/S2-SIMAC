@@ -21,7 +21,7 @@ namespace Service
         }
         public IEnumerable<Organization> GetAll()
         {
-           
+
             IEnumerable<Organization> OrganizationList = _organizationRepository.GetAll();
             return OrganizationList;
         }
@@ -29,11 +29,11 @@ namespace Service
         {
             _organizationRepository.Add(organization);
         }
-        public void Delete(Organization organization) 
+        public void Delete(Organization organization)
         {
             _organizationRepository.Delete(organization.OrganizationId);
         }
-        public Organization GetById(int id) 
+        public Organization GetById(int id)
         {
             Organization organization = _organizationRepository.GetById(id);
             return organization;
