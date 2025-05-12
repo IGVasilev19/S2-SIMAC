@@ -1,4 +1,6 @@
 ﻿namespace BLL
+
+
 {
     public class Device
     {

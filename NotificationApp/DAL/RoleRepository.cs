@@ -94,7 +94,7 @@ namespace DAL
             }
         }
 
-        public void AssignPermissions(Role role, IEnumerable<Permission> permissions)
+        public void AssignPermission(Role role, IEnumerable<Permission> permissions)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
@@ -109,7 +109,7 @@ namespace DAL
                     query = "INSERT INTO RolePermission (RoleId, PermissionId) VALUES (@roleId, @permissionId)";
                     cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@roleId", role.RoleId);
-                    cmd.Parameters.AddWithValue("@permissionId", (int)permission);
+                    cmd.Parameters.AddWithValue("@permissionId", permission.PermissionId);
                     cmd.ExecuteNonQuery();
                 }
             }
