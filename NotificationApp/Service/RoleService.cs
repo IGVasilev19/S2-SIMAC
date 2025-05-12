@@ -21,9 +21,9 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void AssignPermission(int roleId, Permission permission)
+        public void AssignPermission(int roleId, IEnumerable<Permission> permissions)
         {
-            throw new NotImplementedException();
+            _roleService.AssignPermission(roleId, permissions);
         }
 
         public void Delete(int roleId)
