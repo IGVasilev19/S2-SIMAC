@@ -83,6 +83,10 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+        public IActionResult DevicesCreateEditPanel()
+        {
+            return View();
+        }
         [Authorize]
         public IActionResult AdminPanel()
         {
@@ -95,6 +99,10 @@ namespace NotificationApp.Controllers
         }
 
         public IActionResult AccountPanel()
+        {
+            return View();
+        }
+        public IActionResult AccountCreateEditPanel()
         {
             return View();
         }

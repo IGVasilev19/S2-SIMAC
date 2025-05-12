@@ -193,9 +193,6 @@
   }
 }
 @layer utilities {
-  .static {
-    position: static;
-  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -274,6 +271,9 @@
   .h-\[40px\] {
     height: 40px;
   }
+  .h-\[60px\] {
+    height: 60px;
+  }
   .h-\[82\%\] {
     height: 82%;
   }
@@ -340,6 +340,9 @@
   .w-\[650px\] {
     width: 650px;
   }
+  .w-\[800px\] {
+    width: 800px;
+  }
   .w-fit {
     width: fit-content;
   }
@@ -378,9 +381,6 @@
   }
   .justify-end {
     justify-content: flex-end;
-  }
-  .gap-1 {
-    gap: calc(var(--spacing) * 1);
   }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
