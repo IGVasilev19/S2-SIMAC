@@ -133,49 +133,50 @@ namespace DAL
 
         public Role GetRoleById(int id)
         {
-            string roleName = "";
-            List<Permission> permissions = new List<Permission>();
+            //string roleName = "";
+            //List<Permission> permissions = new List<Permission>();
 
-            using (SqlConnection conn = DBConnection.GetConnection())
-            {
-                // Get role name
-                string roleQuery = "SELECT Name FROM [Role] WHERE RoleId = @id";
-                SqlCommand roleCmd = new SqlCommand(roleQuery, conn);
-                roleCmd.Parameters.AddWithValue("@id", id);
+            //using (SqlConnection conn = DBConnection.GetConnection())
+            //{
+            //    // Get role name
+            //    string roleQuery = "SELECT Name FROM [Role] WHERE RoleId = @id";
+            //    SqlCommand roleCmd = new SqlCommand(roleQuery, conn);
+            //    roleCmd.Parameters.AddWithValue("@id", id);
 
-                using (SqlDataReader reader = roleCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        roleName = reader.GetString(0);
-                    }
-                }
+            //    using (SqlDataReader reader = roleCmd.ExecuteReader())
+            //    {
+            //        if (reader.Read())
+            //        {
+            //            roleName = reader.GetString(0);
+            //        }
+            //    }
 
-                // Get permissions for this role
-                string permQuery = @"
-                    SELECT p.Name
-                    FROM RolePermission rp
-                    JOIN Permission p ON rp.PermissionId = p.PermissionId
-                    WHERE rp.RoleId = @id";
+            //    // Get permissions for this role
+            //    string permQuery = @"
+            //        SELECT p.Name
+            //        FROM RolePermission rp
+            //        JOIN Permission p ON rp.PermissionId = p.PermissionId
+            //        WHERE rp.RoleId = @id";
 
-                SqlCommand permCmd = new SqlCommand(permQuery, conn);
-                permCmd.Parameters.AddWithValue("@id", id);
+            //    SqlCommand permCmd = new SqlCommand(permQuery, conn);
+            //    permCmd.Parameters.AddWithValue("@id", id);
 
-                using (SqlDataReader reader = permCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        string permName = reader.GetString(0);
-                        if (Enum.TryParse(permName, out Permission perm))
-                        {
-                            permissions.Add(perm);
-                        }
-                    }
+            //    using (SqlDataReader reader = permCmd.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            string permName = reader.GetString(0);
+            //            if (Enum.TryParse(permName, out Permission perm))
+            //            {
+            //                permissions.Add(perm);
+            //            }
+            //        }
 
 
-                }
-                return new Role(id, roleName, permissions);
-            }
+            //    }
+            //    return new Role(id, roleName, permissions);
+            //}
+            return new Role();
         }
     }
 }
