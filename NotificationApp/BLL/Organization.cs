@@ -6,22 +6,21 @@ namespace BLL
     {
         public int OrganizationId { get; set; }
         public string Name { get; set; }
-        public List<Device> Devices { get; set; }
-        public List<Account> Accounts { get; set; }
+        //public List<Device> Devices { get; set; }
+        //public List<Account> Accounts { get; set; }
 
-        public Organization(int id, string name)
+        public Organization(string name) // Creating new org
         {
-            OrganizationId = id;
             Name = name;
-            Devices = new List<Device>();
-            Accounts = new List<Account>();
+            //Devices = new List<Device>();
+            //Accounts = new List<Account>();
         }
-        public Organization(int id, string name, List<Device> devices, List<Account> accounts)
+        public Organization(int id, string name/*, List<Device> devices, List<Account> accounts*/) // Pulling from DB
         {
             OrganizationId = id;
             Name = name;
-            Devices = devices;
-            Accounts = accounts;
+            //Devices = devices;
+            //Accounts = accounts;
         }
     }
 }

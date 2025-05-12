@@ -24,19 +24,18 @@ namespace Service
             return _accountRepository.GetAll();
         }
 
-        public void SignUp(string name, string email, string password, Organization organization, Role role)
-        {
-            // Hash the password with a salt using BCrypt 
-            string hashedPassword = PasswordHasher.Hash(password);
+        //public void SignUp(string name, string email, string password, Organization organization, Role role)
+        //{
+        //    // Hash the password with a salt using BCrypt 
+        //    string hashedPassword = PasswordHasher.Hash(password);
 
-            // Create a new account with the hashed password  
-            Account newAccount = new Account(name, email, hashedPassword, organization, role);
+        //    // Create a new account with the hashed password  
+        //    Account newAccount = new Account(name, email, hashedPassword, organization, role);
 
-            // Add the account to the repository  
-            _accountRepository.Add(newAccount);
-        }
+        //    // Add the account to the repository  
+        //    _accountRepository.Add(newAccount);
+        //}
 
-        //DATABASE TESTING---------------------------------------------
         public void SignUp(string name, string email, string password, int organization, int role)
         {
             // Hash the password with a salt using BCrypt  
@@ -48,7 +47,6 @@ namespace Service
             // Add the account to the repository  
             _accountRepository.Add(newAccount);
         }
-        //DATABASE TESTING---------------------------------------------
 
 
         public Account LogIn(string email, string password)

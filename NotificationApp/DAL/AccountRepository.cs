@@ -112,7 +112,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
                 cmd.Parameters.AddWithValue("@password", account.Password);
-                cmd.Parameters.AddWithValue("@roleId", account.AccountRole.RoleId);
+                cmd.Parameters.AddWithValue("@roleId", account.RoleId.RoleId);
                 cmd.Parameters.AddWithValue("@id", account.AccountId);
 
                 cmd.ExecuteNonQuery();

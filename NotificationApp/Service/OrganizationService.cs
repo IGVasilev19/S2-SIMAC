@@ -21,7 +21,6 @@ namespace Service
         }
         public IEnumerable<Organization> GetAll()
         {
-
             IEnumerable<Organization> OrganizationList = _organizationRepository.GetAll();
             return OrganizationList;
         }

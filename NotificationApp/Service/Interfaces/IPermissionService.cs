@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    internal interface IPermissionService : IService<Permission>
+    public interface IPermissionService : IService<Permission>
     {
     }
 }

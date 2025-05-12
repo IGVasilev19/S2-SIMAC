@@ -63,7 +63,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT * FROM Role WHERE OrganizationId = @id";
+                string query = "SELECT * FROM Organization WHERE OrganizationId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -95,6 +95,5 @@ namespace DAL
                 cmd.ExecuteNonQuery();
             }
         }
-
     }
 }
