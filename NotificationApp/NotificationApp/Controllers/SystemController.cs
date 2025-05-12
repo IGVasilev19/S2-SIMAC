@@ -83,12 +83,12 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
-        [Authorize]
+        
         public IActionResult AdminPanel()
         {
             return View();
         }
-        [Authorize]
+        
         public IActionResult AdminCreateEditPanel()
         {
             return View();
