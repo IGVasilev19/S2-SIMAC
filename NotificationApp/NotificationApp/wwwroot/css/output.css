@@ -193,9 +193,6 @@
   }
 }
 @layer utilities {
-  .static {
-    position: static;
-  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -274,8 +271,14 @@
   .h-\[40px\] {
     height: 40px;
   }
+  .h-\[60px\] {
+    height: 60px;
+  }
   .h-\[82\%\] {
     height: 82%;
+  }
+  .h-\[90px\] {
+    height: 90px;
   }
   .h-\[92\%\] {
     height: 92%;
@@ -283,11 +286,17 @@
   .h-\[93\%\] {
     height: 93%;
   }
+  .h-\[95px\] {
+    height: 95px;
+  }
   .h-\[96\%\] {
     height: 96%;
   }
   .h-\[100px\] {
     height: 100px;
+  }
+  .h-\[120px\] {
+    height: 120px;
   }
   .h-\[500px\] {
     height: 500px;
@@ -328,17 +337,38 @@
   .w-\[96\%\] {
     width: 96%;
   }
+  .w-\[100px\] {
+    width: 100px;
+  }
+  .w-\[120px\] {
+    width: 120px;
+  }
+  .w-\[150px\] {
+    width: 150px;
+  }
   .w-\[200px\] {
     width: 200px;
   }
   .w-\[250px\] {
     width: 250px;
   }
+  .w-\[400px\] {
+    width: 400px;
+  }
   .w-\[600px\] {
     width: 600px;
   }
   .w-\[650px\] {
     width: 650px;
+  }
+  .w-\[700px\] {
+    width: 700px;
+  }
+  .w-\[800px\] {
+    width: 800px;
+  }
+  .w-\[1000px\] {
+    width: 1000px;
   }
   .w-fit {
     width: fit-content;
@@ -438,6 +468,10 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
