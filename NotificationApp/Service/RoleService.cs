@@ -15,12 +15,38 @@ namespace Service
         {
             _roleService = roleService;
         }
+
+        public void Add(Role role)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AssignPermission(int roleId, Permission permission)
         {
             throw new NotImplementedException();
         }
 
+        public void Delete(int roleId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Role> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Role GetById(int roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePermission(int roleId, Permission permission)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Role role)
         {
             throw new NotImplementedException();
         }

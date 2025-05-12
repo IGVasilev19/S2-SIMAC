@@ -1,8 +1,7 @@
 using BLL;
-using DAL;
-using DAL.Interfaces;
 using Service;
 using Service.Interfaces;
+using Service.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,13 +22,14 @@ builder.Services.AddAuthentication("AuthCookie") //Implement this
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddServices();
 
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-builder.Services.AddScoped<IOrganizationService, OrganizationService>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
+//builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+//builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+//builder.Services.AddScoped<INotificationService, NotificationService>();
+//builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+//builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 
 var app = builder.Build();
 
@@ -52,7 +52,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Access}/{action=Index}/{id?}");
 
 //DATABASE TESTING---------------------------------------------
 //AccountRepository ar = new AccountRepository();
