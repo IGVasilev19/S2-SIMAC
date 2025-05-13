@@ -10,7 +10,6 @@ namespace BLL
         public string Password { get; set; }
         public int OrganizationId { get; set; }
         public int RoleId { get; set; }
-        //public List<Notification> Notifications { get; set; }
 
         //DATABASE TESTING---------------------------------------------
 

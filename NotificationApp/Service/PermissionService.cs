@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    internal class PermissionService : IPermissionService
+    public class PermissionService : IPermissionService
     {
         private readonly IPermissionRepository _permissionRepository;
 
@@ -26,6 +26,10 @@ namespace Service
         public Permission GetById(int id)
         {
             return _permissionRepository.GetById(id);
+        }
+        public IEnumerable<Permission> GetPermissionsByRoleId(int roleId)
+        {
+            return _permissionRepository.GetPermissionsByRoleId(roleId);
         }
     }
 }
