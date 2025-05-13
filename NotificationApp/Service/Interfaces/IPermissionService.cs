@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    internal interface IPermissionService : IService<Permission>
+    public interface IPermissionService : IService<Permission>
     {
+        IEnumerable<Permission> GetAll();
+        Permission GetById(int id);
     }
 }

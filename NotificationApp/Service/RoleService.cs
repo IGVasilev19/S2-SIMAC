@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL.Interfaces;
 using Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,45 +11,39 @@ namespace Service
 {
     public class RoleService : IRoleService
     {
-        private readonly IRoleService _roleService;
-        public RoleService(IRoleService roleService)
+        private readonly IRoleRepository _roleRepository;
+        public RoleService(IRoleRepository roleRepository)
         {
-            _roleService = roleService;
+            _roleRepository = roleRepository;
         }
 
         public void Add(Role role)
         {
-            throw new NotImplementedException();
+            _roleRepository.Add(role);
         }
 
-        public void AssignPermission(int roleId, IEnumerable<Permission> permissions)
+        public void AssignPermission(Role role, IEnumerable<Permission> permissions)
         {
-            _roleService.AssignPermission(roleId, permissions);
+            _roleRepository.AssignPermission(role, permissions);
         }
 
         public void Delete(int roleId)
         {
-            throw new NotImplementedException();
+            _roleRepository.Delete(roleId);
         }
 
         public IEnumerable<Role> GetAll()
         {
-            throw new NotImplementedException();
+            return _roleRepository.GetAll();
         }
 
         public Role GetById(int roleId)
         {
-            throw new NotImplementedException();
+            return _roleRepository.GetById(roleId);
         }
-
-        public void RemovePermission(int roleId, Permission permission)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(Role role)
         {
-            throw new NotImplementedException();
+            _roleRepository.Update(role);
         }
     }
 }

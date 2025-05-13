@@ -9,8 +9,7 @@ namespace Service.Interfaces
 {
     public interface IRoleService : IService<Role>
     {
-        void AssignPermission(int roleId, IEnumerable<Permission> permissions);
-        void RemovePermission(int roleId, Permission permission);
+        void AssignPermission(Role role, IEnumerable<Permission> permissions);
         void Add(Role role);
         void Delete(int roleId);
         void Update(Role role);

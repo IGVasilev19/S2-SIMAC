@@ -9,5 +9,9 @@ namespace Service.Interfaces
 {
     public interface IOrganizationService : IService<Organization>
     {
+        IEnumerable<Organization> GetAll();
+        void Add(Organization organization);
+        void Delete(Organization organization);
+        Organization GetById(int id);
     }
 }

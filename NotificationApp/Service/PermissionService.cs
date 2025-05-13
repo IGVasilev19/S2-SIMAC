@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    internal class PermissionService : IPermissionService
+    public class PermissionService : IPermissionService
     {
         private readonly IPermissionRepository _permissionRepository;
 

@@ -27,10 +27,11 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "DELETE FROM Role WHERE RoleId = @id";
+                string query = @"
+                    DELETE FROM RolePermission WHERE RoleId = @id;
+                    DELETE FROM Role WHERE RoleId = @id;";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
-
                 cmd.ExecuteNonQuery();
             }
         }

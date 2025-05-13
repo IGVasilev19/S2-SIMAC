@@ -12,7 +12,7 @@ namespace DAL
 
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Date FROM Notification";
+                string query = "SELECT NotificationID, Title, Content, Important, OrganizationId, Date FROM Notification";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -23,7 +23,8 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
-                            reader.GetDateTime(4)
+                            reader.GetInt32(4),
+                            reader.GetDateTime(5)
                         );
 
                         notifications.Add(notification);
@@ -33,11 +34,11 @@ namespace DAL
             return notifications;
         }
 
-        public Notification GetById(int id)
+        public Notification GetById(int id) // This method doesn't do anything, don't work with it please
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Date FROM Notification WHERE NotificationID = @id";
+                string query = "SELECT NotificationID, Title, Content, Important, OrganizationId, Date FROM Notification WHERE NotificationID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -50,7 +51,8 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
-                            reader.GetDateTime(4)
+                            reader.GetInt32(4),
+                            reader.GetDateTime(5)
                         );
 
                         return notification;
@@ -64,11 +66,12 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Notification (Title, Content, Important, Date) VALUES (@title, @content, @important, @date)";
+                string query = "INSERT INTO Notification (Title, Content, Important, OrganizationId, Date) VALUES (@title, @content, @important, @organizationId, @date)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
                 cmd.Parameters.AddWithValue("@important", entity.Important);
+                cmd.Parameters.AddWithValue("@organizationId", entity.OrganizationId);
                 cmd.Parameters.AddWithValue("@date", entity.Date);
 
                 cmd.ExecuteNonQuery();
@@ -108,7 +111,7 @@ namespace DAL
             List<Notification> notifications = new List<Notification>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT NotificationID, Title, Content, Important, Date " +
+                string query = "SELECT NotificationID, Title, Content, Important, NotificationID, Date " +
                                 "FROM Notification " +
                                 "WHERE PermissionId = @permissionId OR PermissionId IS NULL";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -124,7 +127,8 @@ namespace DAL
                             reader.GetString(1),
                             reader.GetString(2),
                             reader.GetBoolean(3),
-                            reader.GetDateTime(4)
+                            reader.GetInt32(4),
+                            reader.GetDateTime(5)
                         );
                         notifications.Add(notification);
                     }
