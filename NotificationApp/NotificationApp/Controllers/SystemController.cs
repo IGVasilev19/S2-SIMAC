@@ -123,7 +123,7 @@ namespace NotificationApp.Controllers
                 {
                     var account = _accountService.GetById(id);
                     List<Role> allRolesInOrg = (List<Role>)_roleService.GetAll(); //Call all roles by org id
-                    RolesPanelViewModel vm = new RolesPanelViewModel();
+                    RolesCreateEditPanelViewModel vm = new RolesCreateEditPanelViewModel();
                     vm.RoleId = null;
                     foreach(var role in allRolesInOrg)
                     {

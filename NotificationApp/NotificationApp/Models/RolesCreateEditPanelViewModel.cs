@@ -1,6 +1,6 @@
 ﻿namespace NotificationApp.Models
 {
-    public class RolesPanelViewModel
+    public class RolesCreateEditPanelViewModel
     {
         public int? RoleId { get; set; }
         public List<PermissionViewModel> Permissions { get; set; }
