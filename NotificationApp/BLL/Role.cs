@@ -8,6 +8,8 @@ namespace BLL
         public string Name { get; set; }
         public List<Permission> Permissions { get; set; }
 
+        public Role() { }
+
         public Role(string name, List<Permission> permissions)
         {
             Name = name;
