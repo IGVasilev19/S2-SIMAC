@@ -57,7 +57,7 @@ app.MapControllerRoute(
 //DATABASE TESTING---------------------------------------------
 //AccountRepository ar = new AccountRepository();
 //AccountService accountService = new AccountService(ar);
-//accountService.SignUp("manager", "manager@gmail.com", "test", 1, 2);
+//accountService.SignUp("admin", "admin@gmail.com", "test", 1, 2);
 //DATABASE TESTING---------------------------------------------
 
 app.Run();
