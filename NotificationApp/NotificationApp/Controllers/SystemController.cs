@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using NotificationApp.Models;
+using NotificationApp.Models.DTO_View_Models;
 using Service.Interfaces;
 using System.Collections.Specialized;
 using System.Security.Claims;
@@ -117,28 +118,57 @@ namespace NotificationApp.Controllers
         public IActionResult RolesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (accountId != null)
+
+            if (int.TryParse(accountId, out int id))
             {
-                if (int.TryParse(accountId, out int id))
+                Account account = _accountService.GetById(id);
+                int orgId = account.OrganizationId;
+                List<RoleViewModel> allRoles = new();
+                foreach(Role role in _roleService.GetAllRolesByOrganisationId(orgId))
                 {
-                    var account = _accountService.GetById(id);
-                    List<Role> allRolesInOrg = (List<Role>)_roleService.GetAll(); //Call all roles by org id
-                    RolesCreateEditPanelViewModel vm = new RolesCreateEditPanelViewModel();
-                    vm.RoleId = null;
-                    foreach(var role in allRolesInOrg)
+                    allRoles.Add(new RoleViewModel
                     {
-                            vm.RoleId = role.RoleId;
-                    }
-
-
-                    return View(vm);
+                        RoleId = role.RoleId,
+                        Name = role.Name
+                    });
                 }
-                else
+                RolesPanelViewModel vm = new RolesPanelViewModel
                 {
-                    return View();
-                }
+                    Roles = allRoles
+                };
+
+                return View(vm);
             }
-            return View();
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+
+        public IActionResult UpdateRole(int roleId, string roleName, IEnumerable<int> permissionIds)
+        {
+            if (string.IsNullOrEmpty(roleName) || permissionIds == null)
+            {
+                return BadRequest("Invalid role name or permissions.");
+            }
+
+            Role role = _roleService.GetById(roleId);
+            role.Name = roleName;
+            _roleService.Update(role);
+
+            //List<Permission> permissions = permissionIds
+            //    .Select(permissionId => _permissionService.GetById(permissionId))
+            //    .ToList();
+
+            var permissions = permissionIds
+            .Select(id => _permissionService.GetById(id))
+            .Where(p => p != null);
+
+            _roleService.AssignPermission(roleId, permissions);
+
+            return RedirectToAction("RolesPanel");
         }
 
         public IActionResult RolesCreateEditPanel()
