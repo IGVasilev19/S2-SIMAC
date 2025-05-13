@@ -22,9 +22,9 @@ namespace Service
             _roleRepository.Add(role);
         }
 
-        public void AssignPermission(Role role, IEnumerable<Permission> permissions)
+        public void AssignPermission(int roleId, IEnumerable<Permission> permissions)
         {
-            _roleRepository.AssignPermission(role, permissions);
+            _roleRepository.AssignPermission(roleId, permissions);
         }
 
         public void Delete(int roleId)

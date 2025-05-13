@@ -9,6 +9,6 @@ namespace DAL.Interfaces
 {
     public interface IRoleRepository : IRepository<Role>
     {
-        void AssignPermission(Role role, IEnumerable<Permission> permissions);
+        void AssignPermission(int roleId, IEnumerable<Permission> permissions);
     }
 }

@@ -27,5 +27,9 @@ namespace Service
         {
             return _permissionRepository.GetById(id);
         }
+        public IEnumerable<Permission> GetPermissionsByRoleId(int roleId)
+        {
+            return _permissionRepository.GetPermissionsByRoleId(roleId);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Service.Interfaces
     {
         IEnumerable<Permission> GetAll();
         Permission GetById(int id);
+        IEnumerable<Permission> GetPermissionsByRoleId(int roleId);
     }
 }
