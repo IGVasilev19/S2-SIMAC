@@ -122,7 +122,14 @@ namespace NotificationApp.Controllers
                 if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
-                    List<Role> allRoles = (List<Role>)_roleService.GetAll();
+                    List<Role> allRolesInOrg = (List<Role>)_roleService.GetAll(); //Call all roles by org id
+                    RolesPanelViewModel vm = new RolesPanelViewModel();
+                    vm.RoleId = null;
+                    foreach(var role in allRolesInOrg)
+                    {
+                            vm.RoleId = role.RoleId;
+                    }
+
 
                     return View(vm);
                 }
