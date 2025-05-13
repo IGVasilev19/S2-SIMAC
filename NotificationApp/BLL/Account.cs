@@ -44,7 +44,6 @@ namespace BLL
             Password = password;
             OrganizationId = organizationId;
             RoleId = roleId;
-            Notifications = new();
         }
 
         public Account(int accountId, string name, string email, string password, int organizationId, int roleId) // For logging in (all data)
@@ -55,7 +54,6 @@ namespace BLL
             Password = password;
             OrganizationId = organizationId;
             RoleId = roleId;
-            Notifications = new();
         }
 
         public Account(string password) 
