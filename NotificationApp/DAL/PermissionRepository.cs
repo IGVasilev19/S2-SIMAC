@@ -58,6 +58,34 @@ namespace DAL
             return null;
         }
 
+        public List<Permission> GetPermissionsByRoleId(int roleId)
+        {
+            List<Permission> permissions = new List<Permission>();
+
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = @"
+                    SELECT p.PermissionId, p.Name
+                    FROM RolePermission rp
+                    JOIN Permission p ON rp.PermissionId = p.PermissionId
+                    WHERE rp.RoleId = @roleId";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@roleId", roleId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        permissions.Add(new Permission(id, name));
+                    }
+                }
+            }
+            return permissions;
+        }
+
         public void Add(Permission permission)
         {
             throw new NotImplementedException();

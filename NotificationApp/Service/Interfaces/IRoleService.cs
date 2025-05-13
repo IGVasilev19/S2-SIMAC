@@ -14,5 +14,6 @@ namespace Service.Interfaces
         void Delete(int roleId);
         void Update(Role role);
         Role GetById(int roleId);
+        IEnumerable<Role> GetAllRolesByOrganisationId(int userId);
     }
 }
