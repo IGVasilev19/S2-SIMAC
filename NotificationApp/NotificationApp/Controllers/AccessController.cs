@@ -55,9 +55,9 @@ namespace NotificationApp.Controllers
 
 
         [HttpPost]
-        public IActionResult SignUp(string name, string email, string password, Organization organization, Role role)
+        public IActionResult SignUp(string name, string email, string password, int organizationId, int roleId)
         {
-            accountService.SignUp(name, email, password, organization, role);
+            accountService.SignUp(name, email, password, organizationId, roleId);
             return RedirectToAction("Index", "Access");
         }
 
