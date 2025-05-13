@@ -9,5 +9,6 @@ namespace DAL.Interfaces
 {
     public interface IPermissionRepository : IRepository<Permission>
     {
+        List<Permission> GetPermissionsByRoleId(int roleId);
     }
 }
