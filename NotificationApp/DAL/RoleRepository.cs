@@ -40,7 +40,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT RoleId, Name FROM Role WHERE RoleId = @id";
+                string query = "SELECT RoleId, Name, OrganisationId FROM Role WHERE RoleId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -50,7 +50,8 @@ namespace DAL
                     {
                         Role role = new Role(
                             reader.GetInt32(0),
-                            reader.GetString(1)
+                            reader.GetString(1),
+                            reader.GetInt32(2)
                         );
 
                         return role;
@@ -65,7 +66,7 @@ namespace DAL
             List<Role> roles = new List<Role>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT RoleId, Name FROM Role";
+                string query = "SELECT RoleId, Name, OrganisationId FROM Role";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -73,7 +74,8 @@ namespace DAL
                     {
                         Role organization = new Role(
                             reader.GetInt32(0),
-                            reader.GetString(1)
+                            reader.GetString(1),
+                            reader.GetInt32(2)
                         );
 
                         roles.Add(organization);
@@ -115,33 +117,30 @@ namespace DAL
                 }
             }
         }
-
-        public List<Permission> GetPermissionsByRoleId(int roleId)
+        public IEnumerable<Role> GetAllRolesByOrganisationId(int organizationId)
         {
-            List<Permission> permissions = new List<Permission>();
-
+            List<Role> roles = new List<Role>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = @"
-                    SELECT p.PermissionId, p.Name
-                    FROM RolePermission rp
-                    JOIN Permission p ON rp.PermissionId = p.PermissionId
-                    WHERE rp.RoleId = @roleId";
-
+                string query = "SELECT RoleId, Name, OrganizationId FROM Role WHERE OrganizationId = @organizationId";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@roleId", roleId);
+                cmd.Parameters.AddWithValue("@organizationId", organizationId);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        permissions.Add(new Permission(id, name));
+                        Role role = new Role(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetInt32(2)
+                        );
+
+                        roles.Add(role);
                     }
                 }
             }
-            return permissions;
+            return roles;
         }
     }
 }

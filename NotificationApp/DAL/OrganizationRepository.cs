@@ -81,7 +81,6 @@ namespace DAL
                 }
             }
             return null;
-
         }
 
         public void Update(Organization organization)

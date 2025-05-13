@@ -45,5 +45,10 @@ namespace Service
         {
             _roleRepository.Update(role);
         }
+
+        public IEnumerable<Role> GetAllRolesByOrganisationId(int organizationId)
+        {
+            return _roleRepository.GetAllRolesByOrganisationId(organizationId);
+        }
     }
 }
