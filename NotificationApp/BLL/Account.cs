@@ -10,7 +10,6 @@ namespace BLL
         public string Password { get; set; }
         public int OrganizationId { get; set; }
         public int RoleId { get; set; }
-        //public List<Notification> Notifications { get; set; }
 
         //DATABASE TESTING---------------------------------------------
 
@@ -44,7 +43,6 @@ namespace BLL
             Password = password;
             OrganizationId = organizationId;
             RoleId = roleId;
-            Notifications = new();
         }
 
         public Account(int accountId, string name, string email, string password, int organizationId, int roleId) // For logging in (all data)
@@ -55,7 +53,6 @@ namespace BLL
             Password = password;
             OrganizationId = organizationId;
             RoleId = roleId;
-            Notifications = new();
         }
 
         public Account(string password) 
