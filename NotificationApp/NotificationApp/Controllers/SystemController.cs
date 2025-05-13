@@ -13,11 +13,15 @@ namespace NotificationApp.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly INotificationService _notificationService;
+        private readonly IRoleService _roleService;
+        private readonly IPermissionService _permissionService;
 
-        public SystemController(IAccountService accountService, INotificationService notificationService)
+        public SystemController(IAccountService accountService, INotificationService notificationService, IRoleService roleService, IPermissionService permissionService)
         {
             _accountService = accountService;
             _notificationService = notificationService;
+            _roleService = roleService;
+            _permissionService = permissionService;
         }
 
         [Authorize]
@@ -112,6 +116,21 @@ namespace NotificationApp.Controllers
 
         public IActionResult RolesPanel()
         {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (accountId != null)
+            {
+                if (int.TryParse(accountId, out int id))
+                {
+                    var account = _accountService.GetById(id);
+                    List<Role> allRoles = (List<Role>)_roleService.GetAll();
+
+                    return View(vm);
+                }
+                else
+                {
+                    return View();
+                }
+            }
             return View();
         }
 
