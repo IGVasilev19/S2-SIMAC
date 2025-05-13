@@ -82,7 +82,6 @@ namespace NotificationApp.Controllers
                 return View();
         }
         
-        [Authorize]
         public IActionResult DevicesPanel()
         {
             return View();
