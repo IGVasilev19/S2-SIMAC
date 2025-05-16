@@ -11,15 +11,17 @@ namespace DAL
 {
     public class RoleRepository : IRoleRepository
     {
-        public void Add(Role role)
+        public int AddRole(Role role)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Role (Name) VALUES (@name)";
+                string query = "INSERT INTO Role (Name, OrganizationId) VALUES (@name, @organizationId); SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", role.Name);
+                cmd.Parameters.AddWithValue("@organizationId", role.OrganizationId);
 
-                cmd.ExecuteNonQuery();
+                int newId = (int)cmd.ExecuteScalar();
+                return newId;
             }
         }
 
@@ -113,6 +115,7 @@ namespace DAL
                     cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@roleId", roleId);
                     cmd.Parameters.AddWithValue("@permissionId", permission.PermissionId);
+                    
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -148,6 +151,11 @@ namespace DAL
         }
 
         public void AssignPermission(Role role, IEnumerable<Permission> permissions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Role entity)
         {
             throw new NotImplementedException();
         }

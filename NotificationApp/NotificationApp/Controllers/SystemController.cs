@@ -204,7 +204,6 @@ namespace NotificationApp.Controllers
         //    return RedirectToAction("RolesPanel");
         //}
 
-        //TODO: IMPLEMENT FRONT END
         public IActionResult RolesCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -229,9 +228,8 @@ namespace NotificationApp.Controllers
             throw new Exception("User Not Found");
         }
 
-        //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -239,13 +237,20 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 Role newRole = new Role(vm.RoleName, account.OrganizationId);
-                _roleService.Add(newRole);
+                newRole.RoleId = _roleService.Add(newRole);
                 List<Permission> selectedPermissions = new();
+
+                foreach (var permissionId in permissionIds)
+                {
+                    selectedPermissions.Add(_permissionService.GetById(permissionId));
+                }
+
                 foreach (var vmSelectedPermission in vm.SelectedPermissions)
                 {
                     Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
                     selectedPermissions.Add(p);
                 }
+
                 _roleService.AssignPermission(newRole.RoleId, selectedPermissions);
                 return RedirectToAction("RolesPanel");
             }

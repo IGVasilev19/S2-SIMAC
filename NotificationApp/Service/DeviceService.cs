@@ -19,6 +19,11 @@ namespace Service
             this._deviceRepository = deviceRepository;
         }
 
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Device> GetAll()
         {
             return _deviceRepository.GetAll();
