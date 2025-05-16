@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Roles Panel";
 }
+@model RolesPanelViewModel
 
 <div class="w-full h-full flex">
     @Html.Partial("_Navbar")
@@ -23,15 +24,18 @@
                             <th class="text-left px-6 py-3 text-sm font-bold text-black">Role Name</th>
                         </tr>
                     </thead>
-                    <tbody class="font-semibold text-gray-700 text-sm">
-                        <tr class="bg-gray-100 even:bg-white">
-                            <td class="px-6 py-3">Role Name</td>
-                            <td class="px-6 py-3 space-x-2 text-right">
-                                <a asp-action="RolesCreateEditPanel" asp-controller="System" class="bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tbody class="font-semibold text-gray-700 text-sm">
+                            <tr class="bg-gray-100 even:bg-white">
+                                <td class="px-6 py-3">@role.Name</td>
+                                <td class="px-6 py-3 space-x-2 text-right">
+                                    <a asp-action="RolesCreateEditPanel" asp-controller="System" class="bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                    <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
                 </table>
             </div>
         </div>
