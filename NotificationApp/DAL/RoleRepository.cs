@@ -117,11 +117,11 @@ namespace DAL
                 }
             }
         }
-<<<<<<< HEAD
         public List<Permission> GetPermissionsByRoleId(int roleId)
-=======
+        {
+            return new List<Permission> { };
+        }
         public IEnumerable<Role> GetAllRolesByOrganisationId(int organizationId)
->>>>>>> main
         {
             List<Role> roles = new List<Role>();
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -146,13 +146,10 @@ namespace DAL
             }
             return roles;
         }
-<<<<<<< HEAD
 
         public void AssignPermission(Role role, IEnumerable<Permission> permissions)
         {
             throw new NotImplementedException();
         }
-=======
->>>>>>> main
     }
 }
