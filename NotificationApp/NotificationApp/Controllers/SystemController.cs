@@ -16,18 +16,22 @@ namespace NotificationApp.Controllers
         private readonly INotificationService _notificationService;
         private readonly IRoleService _roleService;
         private readonly IPermissionService _permissionService;
+        private readonly IDeviceService _deviceService;
 
-        public SystemController(IAccountService accountService, INotificationService notificationService, IRoleService roleService, IPermissionService permissionService)
+        public SystemController(IAccountService accountService, INotificationService notificationService, IRoleService roleService, IPermissionService permissionService, IDeviceService deviceService)
         {
             _accountService = accountService;
             _notificationService = notificationService;
             _roleService = roleService;
             _permissionService = permissionService;
+            _deviceService = deviceService;
         }
 
         [Authorize]
         public IActionResult Inbox()
         {
+
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
