@@ -40,7 +40,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT RoleId, Name, OrganisationId FROM Role WHERE RoleId = @id";
+                string query = "SELECT RoleId, [Name], OrganizationId FROM Role WHERE RoleId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -51,14 +51,14 @@ namespace DAL
                         Role role = new Role(
                             reader.GetInt32(0),
                             reader.GetString(1),
-                            reader.GetInt32(2)
+                            reader.IsDBNull(2) ? (int?)null : reader.GetInt32(2)
                         );
 
                         return role;
                     }
                 }
             }
-            return null;
+            return null!;
         }
 
         public IEnumerable<Role> GetAll()
@@ -66,7 +66,7 @@ namespace DAL
             List<Role> roles = new List<Role>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT RoleId, Name, OrganisationId FROM Role";
+                string query = "SELECT RoleId, [Name], OrganizationId FROM Role";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -89,7 +89,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Role SET Name = @name";
+                string query = "UPDATE Role SET [Name] = @name";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", role.Name);
 
@@ -126,7 +126,7 @@ namespace DAL
             List<Role> roles = new List<Role>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT RoleId, Name, OrganizationId FROM Role WHERE OrganizationId = @organizationId";
+                string query = "SELECT RoleId, [Name], OrganizationId FROM Role WHERE OrganizationId = @organizationId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@organizationId", organizationId);
 
