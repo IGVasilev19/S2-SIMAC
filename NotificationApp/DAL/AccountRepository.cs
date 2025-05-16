@@ -178,5 +178,33 @@ namespace DAL
             //}
             return new Role();
         }
+
+        public Account GetByEmail(string email)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+
+                string query = "SELECT AccountId, Name, Email, Password, OrganizationId, RoleId FROM Account WHERE Email = @email";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@email", email);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Account user = new Account(
+                            reader.GetInt32(reader.GetOrdinal("AccountId")),
+                            reader.GetString(reader.GetOrdinal("Name")),
+                            reader.GetString(reader.GetOrdinal("Email")),
+                            reader.GetString(reader.GetOrdinal("Password")),
+                            reader.GetInt32(reader.GetOrdinal("OrganizationId")),
+                            reader.GetInt32(reader.GetOrdinal("RoleId"))
+                        );
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }
