@@ -1,4 +1,5 @@
 ﻿using BLL;
+using NotificationApp.Models.DTO_View_Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace NotificationApp.Models
@@ -9,6 +10,6 @@ namespace NotificationApp.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password {  get; set; }
-        public string Role { get; set; }
+        public RoleViewModel Role { get; set; }
     }
 }
