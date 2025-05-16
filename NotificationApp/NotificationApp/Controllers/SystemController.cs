@@ -144,35 +144,148 @@ namespace NotificationApp.Controllers
             }
         }
 
+
+        //[HttpPost]
+
+        //public IActionResult UpdateRole(int roleId, string roleName, IEnumerable<int> permissionIds)
+        //{
+        //    if (string.IsNullOrEmpty(roleName) || permissionIds == null)
+        //    {
+        //        return BadRequest("Invalid role name or permissions.");
+        //    }
+
+        //    Role role = _roleService.GetById(roleId);
+        //    role.Name = roleName;
+        //    _roleService.Update(role);
+
+        //    //List<Permission> permissions = permissionIds
+        //    //    .Select(permissionId => _permissionService.GetById(permissionId))
+        //    //    .ToList();
+
+        //    var permissions = permissionIds
+        //    .Select(id => _permissionService.GetById(id))
+        //    .Where(p => p != null);
+
+        //    _roleService.AssignPermission(roleId, permissions);
+
+        //    return RedirectToAction("RolesPanel");
+        //}
+
+        //TODO: IMPLEMENT FRONT END
+        public IActionResult RolesCreatePanel()
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
+                RolePanelViewModel vm = new();
+                vm.SelectedPermissions = new List<PermissionViewModel>();
+                foreach (var permission in allPermissions)
+                {
+                    PermissionViewModel pVM = new();
+                    pVM.PermissionId = permission.PermissionId;
+                    pVM.Name = permission.Name;
+                    vm.Permissions.Add(pVM);
+                }
+                return View("RolesCreatePanel", vm);
+            }
+            throw new Exception("User Not Found");
+        }
+
+        //TODO: IMPLEMENT FRONT END
+        [HttpPost]
+        public IActionResult CreateRole(RolePanelViewModel vm)
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                Role newRole = new Role(vm.RoleName, account.OrganizationId);
+                _roleService.Add(newRole);
+                List<Permission> selectedPermissions = new();
+                foreach (var vmSelectedPermission in vm.SelectedPermissions)
+                {
+                    Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
+                    selectedPermissions.Add(p);
+                }
+                _roleService.AssignPermission(newRole.RoleId, selectedPermissions);
+                return RedirectToAction("RolesPanel");
+            }
+            throw new Exception("UserId Not Found");
+        }
+
+        //TODO: IMPLEMENT FRONT END
+
+        public IActionResult RolesEditPanel(int roleId)
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
+                List<Permission> selectedPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
+                RolePanelViewModel vm = new();
+
+                vm.Permissions = new();
+                foreach (var permission in allPermissions)
+                {
+                    PermissionViewModel pVM = new();
+                    pVM.PermissionId = permission.PermissionId;
+                    pVM.Name = permission.Name;
+                    vm.Permissions.Add(pVM);
+                }
+
+                vm.SelectedPermissions = new List<PermissionViewModel>();
+                foreach(var permission in selectedPermissions)
+                {
+                    PermissionViewModel pVM = new();
+                    pVM.PermissionId = permission.PermissionId;
+                    pVM.Name = permission.Name;
+                    vm.SelectedPermissions.Add(pVM);
+                }
+                return View("RolesEditPanel", vm);
+            }
+            throw new Exception("UserId Not Found");
+        }
+
         [HttpPost]
 
-        public IActionResult UpdateRole(int roleId, string roleName, IEnumerable<int> permissionIds)
+        public IActionResult EditRole(RolePanelViewModel vm)
         {
-            if (string.IsNullOrEmpty(roleName) || permissionIds == null)
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
             {
-                return BadRequest("Invalid role name or permissions.");
+                Account account = _accountService.GetById(id);
+                Role role = new Role(id, vm.RoleName, account.OrganizationId);
+                _roleService.Update(role);
+                List<Permission> selectedPermissions = new();
+                foreach (var vmSelectedPermission in vm.SelectedPermissions)
+                {
+                    Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
+                    selectedPermissions.Add(p);
+                }
+                _roleService.AssignPermission(role.RoleId, selectedPermissions);
+                return RedirectToAction("RolesPanel");
             }
+            throw new Exception("UserId Not Found");
+        }
 
-            Role role = _roleService.GetById(roleId);
-            role.Name = roleName;
-            _roleService.Update(role);
+        [HttpPost]
 
-            //List<Permission> permissions = permissionIds
-            //    .Select(permissionId => _permissionService.GetById(permissionId))
-            //    .ToList();
-
-            var permissions = permissionIds
-            .Select(id => _permissionService.GetById(id))
-            .Where(p => p != null);
-
-            _roleService.AssignPermission(roleId, permissions);
-
+        public IActionResult DeleteRole(int roleId)
+        {
+            _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel");
         }
 
+        //TODO: DELETE THIS LATER
         public IActionResult RolesCreateEditPanel()
         {
             return View();
         }
     }
 }
+  
