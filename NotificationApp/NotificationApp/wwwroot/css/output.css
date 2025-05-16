@@ -8,7 +8,10 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
+<<<<<<< HEAD
     --color-red-600: oklch(57.7% 0.245 27.325);
+=======
+>>>>>>> main
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-blue-200: oklch(88.2% 0.059 254.128);
     --color-blue-300: oklch(80.9% 0.105 251.813);
@@ -263,9 +266,12 @@
   .inline-block {
     display: inline-block;
   }
+<<<<<<< HEAD
   .h-48 {
     height: calc(var(--spacing) * 48);
   }
+=======
+>>>>>>> main
   .h-\[8\%\] {
     height: 8%;
   }
@@ -308,9 +314,12 @@
   .h-full {
     height: 100%;
   }
+<<<<<<< HEAD
   .h-screen {
     height: 100vh;
   }
+=======
+>>>>>>> main
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -368,10 +377,13 @@
   .min-w-full {
     min-width: 100%;
   }
+<<<<<<< HEAD
   .translate-y-full {
     --tw-translate-y: 100%;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+=======
+>>>>>>> main
   .transform {
     transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
   }
@@ -777,6 +789,7 @@
       }
     }
   }
+<<<<<<< HEAD
   .hover\:bg-red-600 {
     &:hover {
       @media (hover: hover) {
@@ -784,6 +797,8 @@
       }
     }
   }
+=======
+>>>>>>> main
   .hover\:bg-white\/40 {
     &:hover {
       @media (hover: hover) {
