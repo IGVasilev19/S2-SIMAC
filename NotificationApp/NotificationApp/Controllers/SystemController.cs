@@ -105,8 +105,34 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
-            return View();
+            var accounts = _accountService.GetAll();
+            List<AccountViewModel> vmAccounts = new();
+            foreach (var account in accounts)
+            {
+                var role = _roleService.GetById(account.RoleId);
+                var vmRole = new RoleViewModel
+                {
+                    RoleId = role.RoleId,
+                    Name = role.Name
+                };
+                vmAccounts.Add(new AccountViewModel
+                {
+                    AccountId = account.AccountId,
+                    Name = account.Name,
+                    Email = account.Email,
+                    Password = account.Password,
+                    Role = vmRole
+                });
+            }
+
+            var viewmodel = new AccountPanelViewModel
+            {
+                Accounts = vmAccounts
+            };
+            
+            return View(viewmodel);
         }
+
         public IActionResult AccountCreateEditPanel()
         {
             return View();
