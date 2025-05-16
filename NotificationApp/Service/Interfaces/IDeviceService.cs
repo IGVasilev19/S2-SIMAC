@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    public interface IService<T>
+    public interface IDeviceService : IService<Device>
     {
-        IEnumerable<T> GetAll();
-        void DeleteById(int id);
+
     }
 }

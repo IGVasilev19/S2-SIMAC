@@ -56,5 +56,7 @@ namespace Service
         }
 
         public Account GetById(int id) => _accountRepository.GetById(id);
+
+        public void DeleteById(int id) => _accountRepository.Delete(id);
     }
 }
