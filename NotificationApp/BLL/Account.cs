@@ -59,5 +59,15 @@ namespace BLL
         {
             Password = password;
         }
+
+        public Account()
+        {
+            AccountId = 0;
+            Name = string.Empty;
+            Email = string.Empty;
+            Password = string.Empty;
+            OrganizationId = 0;
+            RoleId = 0;
+        }
     }
 }

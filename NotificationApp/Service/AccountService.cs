@@ -65,7 +65,7 @@ namespace Service
                 }
             }
 
-            return null;
+            return new Account();
         }
 
         public Account GetById(int id) => _accountRepository.GetById(id);
