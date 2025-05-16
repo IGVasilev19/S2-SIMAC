@@ -170,7 +170,12 @@ namespace NotificationApp.Controllers
             return RedirectToAction("RolesPanel");
         }
 
-        public IActionResult RolesCreateEditPanel()
+        public IActionResult RolesCreatePanel()
+        {
+            return View();
+        }
+
+        public IActionResult RolesEditPanel()
         {
             return View();
         }
