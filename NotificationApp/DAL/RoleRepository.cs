@@ -115,7 +115,6 @@ namespace DAL
                 }
             }
         }
-<<<<<<< HEAD
         public List<Permission> GetPermissionsByRoleId(int roleId)
         {
             List<Permission> permissions = new List<Permission>();
@@ -143,7 +142,10 @@ namespace DAL
             }
             return permissions;
         }
-=======
->>>>>>> main
+
+        public void AssignPermission(Role role, IEnumerable<Permission> permissions)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
