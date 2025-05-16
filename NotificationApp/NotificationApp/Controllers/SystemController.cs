@@ -302,11 +302,18 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-
         public IActionResult DeleteRole(int roleId)
         {
             _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAccount(int id)
+        {
+            _accountService.DeleteById(id);
+
+            return RedirectToAction("AccountPanel");
         }
     }
 }

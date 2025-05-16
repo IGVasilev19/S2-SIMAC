@@ -20,11 +20,11 @@
             <p class="text-left text-md font-bold text-black">Role Name</p>
             <div class="overflow-y-auto max-h-[93%]">
                 <table class="min-w-full">
-                    @for (int i = 0; i < Model.Roles.Count(); i++)
-                    {
-                        @if (i%2 == 0)
+                    <tbody class="font-semibold text-gray-700 text-sm">
+                        @for (int i = 0; i < Model.Roles.Count(); i++)
                         {
-                            <tbody class="font-semibold text-gray-700 text-sm">
+                            @if (i%2 == 0)
+                            {
                                 <tr class="bg-gray-200 even:bg-white">
                                     <td class="px-6 py-3">@Model.Roles[i].Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
@@ -32,11 +32,9 @@
                                         <button class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
-                            </tbody>
-                        }
-                        else
-                        {
-                            <tbody class="font-semibold text-gray-700 text-sm">
+                            }
+                            else
+                            {
                                 <tr class="bg-gray-100 even:bg-white">
                                     <td class="px-6 py-3">@Model.Roles[i].Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
@@ -44,9 +42,9 @@
                                         <button class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
-                            </tbody>
+                            }
                         }
-                    }
+                    </tbody>
                 </table>
             </div>
         </div>

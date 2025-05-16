@@ -9,5 +9,6 @@ namespace Service.Interfaces
     public interface IService<T>
     {
         IEnumerable<T> GetAll();
+        void DeleteById(int id);
     }
 }

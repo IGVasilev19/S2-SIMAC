@@ -50,5 +50,10 @@ namespace Service
         {
             return _roleRepository.GetAllRolesByOrganisationId(organizationId);
         }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
