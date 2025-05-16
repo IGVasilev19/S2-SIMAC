@@ -87,10 +87,12 @@ namespace NotificationApp.Controllers
         {
             return View();
         }
+        
         public IActionResult DevicesCreateEditPanel()
         {
             return View();
         }
+
         public IActionResult AdminPanel()
         {
             return View();
