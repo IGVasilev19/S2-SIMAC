@@ -35,7 +35,7 @@ namespace NotificationApp.Controllers
             {
                 //ModelState.AddModelError("Email", "Account not found.");  
                 ViewBag.Error = "Invalid e-mail or password";
-                return View("Index", ViewBag.Error);
+                return View("Index");
             }
 
             var claims = new List<Claim>
