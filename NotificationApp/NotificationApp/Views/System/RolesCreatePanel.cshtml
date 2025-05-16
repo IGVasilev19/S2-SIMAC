@@ -1,14 +1,16 @@
 @{
     ViewData["Title"] = "Roles Create panel";
 }
+@using NotificationApp.Models
+@model RoleCreateEditPanelViewModel
 
 <div class="w-full h-full flex">
 @Html.Partial("_Navbar")
-    <div class="w-full h-full flex flex-col items-center gap-4 bg-gray-300">
+    <form asp-action="CreateRole" asp-controller="System" method="post" class="w-full h-full flex flex-col items-center gap-4 bg-gray-300">
         <div class="w-[94%] h-[93%] flex flex-col items-center gap-6">
             <div class="w-full flex items-center justify-center bg-white gap-2 shadow-md p-4 mt-2">   
                 <p class="w-fit text-md font-semibold m-0 text-black">Role Name: </p>
-                <input type="text" placeholder="Type role name" class="w-[600px] px-2 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>          
+                <input asp-for="RoleName" type="text" placeholder="Type role name" class="w-[600px] px-2 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>          
             </div>
             <div class="w-full h-full bg-white shadow-md p-4 mx-5">
                 <div class="w-full h-full flex flex-col items-center gap-5">
@@ -59,6 +61,6 @@
             <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</button>
             <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
         </div>
-    </div>
+    </form>
     
 </div>

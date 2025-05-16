@@ -208,8 +208,8 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
-                RolePanelViewModel vm = new();
-                vm.SelectedPermissions = new List<PermissionViewModel>();
+                RoleCreateEditPanelViewModel vm = new();
+                vm.Permissions = new();
                 foreach (var permission in allPermissions)
                 {
                     PermissionViewModel pVM = new();
@@ -217,6 +217,9 @@ namespace NotificationApp.Controllers
                     pVM.Name = permission.Name;
                     vm.Permissions.Add(pVM);
                 }
+
+                vm.SelectedPermissions = new();
+                
                 return View("RolesCreatePanel", vm);
             }
             throw new Exception("User Not Found");
@@ -224,7 +227,7 @@ namespace NotificationApp.Controllers
 
         //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RolePanelViewModel vm)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -255,9 +258,8 @@ namespace NotificationApp.Controllers
             {
                 List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
                 List<Permission> selectedPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
-                RolePanelViewModel vm = new();
+                RoleCreateEditPanelViewModel vm = new();
 
-                vm.Permissions = new();
                 foreach (var permission in allPermissions)
                 {
                     PermissionViewModel pVM = new();
@@ -280,8 +282,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-
-        public IActionResult EditRole(RolePanelViewModel vm)
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
