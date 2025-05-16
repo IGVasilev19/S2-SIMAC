@@ -51,17 +51,8 @@ namespace Service
 
         public Account LogIn(string email, string password)
         {
-            IEnumerable<Account> accounts = _accountRepository.GetAll();
-
-            foreach (Account account in accounts)
-            {
-                if (account.Email == email &&  PasswordHasher.Verify(password, account.Password))
-                {
-                    return account;
-                }
-            }
-
-            return new Account();
+            Account account = _accountRepository.GetByEmail(email);
+            return account;
         }
 
         public Account GetById(int id) => _accountRepository.GetById(id);
