@@ -12,5 +12,7 @@ namespace DAL.Interfaces
         public Role GetRoleById(int id);
 
         public Account GetByEmail(string email);
+
+        public Account GetByOrganization(int organizationId);
     }
 }
