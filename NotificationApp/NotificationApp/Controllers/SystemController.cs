@@ -1,4 +1,5 @@
-﻿using BLL;
+﻿using Azure.Identity;
+using BLL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -39,7 +40,7 @@ namespace NotificationApp.Controllers
                 if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
-                    var notifications = _notificationService.GetByPermission(account.RoleId); // Needs to be PermissionId later this is for testing
+                    var notifications = _notificationService.GetByPermission(account.RoleId); //TODO: This needs to use PermissionId note RoleId
                     var vmNotifications = new List<NotificationViewModel>();
 
                     foreach (var notification in notifications)
