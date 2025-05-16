@@ -308,16 +308,6 @@ namespace NotificationApp.Controllers
             _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel");
         }
-
-        public IActionResult RolesCreatePanel()
-        {
-            return View();
-        }
-
-        public IActionResult RolesEditPanel()
-        {
-            return View();
-        }
     }
 }
   
