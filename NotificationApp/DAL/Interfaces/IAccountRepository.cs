@@ -10,5 +10,7 @@ namespace DAL.Interfaces
     public interface IAccountRepository : IRepository<Account>
     {
         public Role GetRoleById(int id);
+
+        public Account GetByEmail(string email);
     }
 }
