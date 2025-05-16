@@ -21,6 +21,10 @@ namespace Service.Utility
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IPermissionService, PermissionService>();
 
             return services;
         }
