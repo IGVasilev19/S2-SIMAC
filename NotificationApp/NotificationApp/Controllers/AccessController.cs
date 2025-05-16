@@ -24,8 +24,6 @@ namespace NotificationApp.Controllers
             return View();
         }
 
-
-        //TODO: Implement Viewbag in the front-end
         [HttpPost]
         public async Task<IActionResult> LogIn(string email, string password)
         {
@@ -33,7 +31,6 @@ namespace NotificationApp.Controllers
 
             if (account == null)
             {
-                //ModelState.AddModelError("Email", "Account not found.");  
                 ViewBag.Error = "Invalid e-mail or password";
                 return View("Index");
             }
