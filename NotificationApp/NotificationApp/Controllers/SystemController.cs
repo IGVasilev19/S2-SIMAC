@@ -51,7 +51,6 @@ namespace NotificationApp.Controllers
                         });
                     }
 
-                    //DATABASE TESTING---------------------------------------------
                     InboxViewModel vm = new InboxViewModel
                     {
                         AccountId = account.AccountId,
@@ -62,17 +61,6 @@ namespace NotificationApp.Controllers
                         AccountRole = account.RoleId.ToString(),
                         Notifications = vmNotifications
                     };
-                    //DATABASE TESTING---------------------------------------------
-
-                    /*InboxViewModel vm = new InboxViewModel
-                    {
-                        AccountId = account.AccountId,
-                        AccountName = account.Name,
-                        AccountEmail = account.Email,
-                        AccountPassword = account.Password,
-                        AccountRole = account.AccountRole.Name,
-                        Notifications = vmNotifications
-                    };*/
 
                     return View(vm);
                 }
@@ -224,7 +212,7 @@ namespace NotificationApp.Controllers
 
         //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RolePanelViewModel vm)
+        public IActionResult CreateRole(RoleCreatePanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
