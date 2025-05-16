@@ -16,5 +16,10 @@ namespace BLL
             Name = name;
             OrganizationId = organizationId;
         }
+        public Role(string name, int organizationId) // Taking from DB
+        {
+            Name = name;
+            OrganizationId = organizationId;
+        }
     }
 }
