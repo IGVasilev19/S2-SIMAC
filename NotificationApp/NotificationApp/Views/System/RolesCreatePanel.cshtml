@@ -20,46 +20,33 @@
                         </div>
                     <table class="w-[650px]">
                         <tbody>
-                            <tr class="flex w-full flex-col justify-center">
-                                <td>
-                                    <div class="border-b py-1.5 flex justify-between items-center">
-                                        <div>
-                                            <input type="checkbox" class="w-[20px] bg-white hover:bg-gray-100 text-black font-semibold px-8 py-2 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer" />
-                                            <label
-                                                class="inline-block ps-[0.15rem] hover:cursor-pointer">
-                                                Inbox
-                                            </label>
+                            @foreach (var permission in Model.Permissions)
+                            {
+                                <tr class="flex w-full flex-col justify-center">
+                                    <td>
+                                        <div class="border-b py-1.5 flex justify-between items-center">
+                                            <div>
+                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[20px] bg-white hover:bg-gray-100 text-black font-semibold px-8 py-2 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer" />
+                                                <label
+                                                    class="inline-block ps-[0.15rem] hover:cursor-pointer">
+                                                    @permission.Name
+                                                </label>
+                                            </div>
+                                            <button class="flex hover:cursor-pointer justify-center items-center pr-1">
+                                                <img src="../images/plus.svg" class="h-[15px]"/>
+                                            </button>
                                         </div>
-                                        <button class="flex hover:cursor-pointer justify-center items-center pr-1">
-                                            <img src="../images/plus.svg" class="h-[15px]"/>
-                                        </button>
-                                    </div>
-                                </td>  
-                            </tr>
-                            <tr class="flex w-full flex-col justify-center">
-                                <td>
-                                    <div class="border-b py-1.5 flex justify-between items-center">
-                                        <div>
-                                            <input type="checkbox" class="w-[20px] bg-white hover:bg-gray-100 text-black font-semibold px-8 py-2 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer" />
-                                            <label
-                                                class="inline-block ps-[0.15rem] hover:cursor-pointer">
-                                                Analytics
-                                            </label>
-                                        </div>
-                                        <button class="flex hover:cursor-pointer justify-center items-center pr-1">
-                                            <img src="../images/plus.svg" class="h-[15px]"/>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr> 
+                                    </td>  
+                                </tr>
+                            }
                         </tbody> 
                     </table>
                 </div>
             </div>
         </div>
         <div class="w-[94%] h-fit flex justify-end items-center gap-2">
-            <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</button>
-            <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
+            <a asp-action="RolesPanel" asp-controller="System" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</a>
+            <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
         </div>
     </form>
     

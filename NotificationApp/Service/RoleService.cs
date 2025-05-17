@@ -17,9 +17,9 @@ namespace Service
             _roleRepository = roleRepository;
         }
 
-        public void Add(Role role)
+        public int Add(Role role)
         {
-            _roleRepository.Add(role);
+            return _roleRepository.AddRole(role);
         }
 
         public void AssignPermission(int roleId, IEnumerable<Permission> permissions)
