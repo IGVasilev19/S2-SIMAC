@@ -12,10 +12,10 @@
                 <input type="text" placeholder="Search" class="w-full px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
                 <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
             </div>
-            <a asp-action="AccountCreateEditPanel" aps-controller="System" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
+            <a asp-action="AccountCreatePanel" aps-controller="System" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
         </div>
-        <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
-            <div class="overflow-x-auto">
+        <form class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
+            <div method="post" class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-white">
                         <tr>
@@ -29,23 +29,25 @@
                         {
                             if (i%2==0)
                             {
-                                <tr class="bg-gray-100 even:bg-white">
+                                <tr class="bg-gray-100 hover:bg-gray-300 hover:cursor-pointer even:bg-white">
                                     <td class="px-6 py-3">@Model.Accounts[i].Name</td>
                                     <td class="px-6 py-3">@Model.Accounts[i].Role.Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
+                                        <input type="hidden" name="id" value="@Model.Accounts[i].AccountId" />
                                         <a asp-action="AccountCreateEditPanel" asp-controller="System" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                        <a class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</a>
+                                        <button type="submit" formaction="/System/DeleteAccount" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
                             }
                             else
                             {
-                                <tr class="bg-gray-200 even:bg-white">
+                                <tr class="bg-gray-200 hover:bg-gray-300 hover:cursor-pointer even:bg-white">
                                     <td class="px-6 py-3">@Model.Accounts[i].Name</td>
                                     <td class="px-6 py-3">@Model.Accounts[i].Role.Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
+                                        <input type="hidden" name="id" value="@Model.Accounts[i].AccountId" />
                                         <a asp-action="AccountCreateEditPanel" asp-controller="System" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                        <a class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</a>
+                                        <button type="submit" formaction="/System/DeleteAccount" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
                             }
@@ -53,6 +55,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </form>
     </div>
 </div>
