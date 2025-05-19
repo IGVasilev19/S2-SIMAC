@@ -11,31 +11,6 @@ namespace BLL
         public int OrganizationId { get; set; }
         public int RoleId { get; set; }
 
-        //DATABASE TESTING---------------------------------------------
-
-
-        //public Account(string name, string email, string password, int organization, int role) // For creating account (no id)
-        //{
-        //    Name = name;
-        //    Email = email;
-        //    Password = password;
-        //    OrganizationId = organization;
-        //    RoleId = role;
-        //    Notifications = new List<Notification>();   
-        //}
-
-        //public Account(int accountId, string name, string email, string password, int organization, int role) // For creating account (no id)
-        //{
-        //    AccountId = accountId;
-        //    Name = name;
-        //    Email = email;
-        //    Password = password;
-        //    OrganizationId = organization;
-        //    RoleId = role;
-        //    Notifications = new List<Notification>();
-        //}
-        //DATABASE TESTING---------------------------------------------
-
         public Account(string name, string email, string password, int organizationId, int roleId) // For creating account (no id)
         {
             Name = name;
@@ -58,6 +33,16 @@ namespace BLL
         public Account(string password) 
         {
             Password = password;
+        }
+
+        public Account()
+        {
+            AccountId = 0;
+            Name = string.Empty;
+            Email = string.Empty;
+            Password = string.Empty;
+            OrganizationId = 0;
+            RoleId = 0;
         }
     }
 }

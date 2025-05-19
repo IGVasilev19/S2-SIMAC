@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace Service.Interfaces
 {
-    public interface IOrganizationRepository : IRepository<Organization>
+    public interface IDeviceService : IService<Device>
     {
+
     }
 }

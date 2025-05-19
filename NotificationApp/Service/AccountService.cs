@@ -51,23 +51,12 @@ namespace Service
 
         public Account LogIn(string email, string password)
         {
-            IEnumerable<Account> accounts = _accountRepository.GetAll();
-
-            foreach (Account account in accounts)
-            {
-                if (account.Email == email &&  PasswordHasher.Verify(password, account.Password))
-                {
-                    return account;
-                }
-                else if (account.Email == email && !BCrypt.Net.BCrypt.Verify(password, account.Password))
-                {
-                    return new Account("Invalid password");
-                }
-            }
-
-            return null;
+            Account account = _accountRepository.GetByEmail(email);
+            return account;
         }
 
         public Account GetById(int id) => _accountRepository.GetById(id);
+
+        public void DeleteById(int id) => _accountRepository.Delete(id);
     }
 }

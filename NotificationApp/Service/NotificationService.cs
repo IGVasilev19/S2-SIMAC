@@ -19,6 +19,11 @@ namespace Service
             _notificationRepository = notificationRepository;
         }
 
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Notification> GetAll()
         {
             return _notificationRepository.GetAll();
