@@ -108,6 +108,8 @@ namespace NotificationApp.Controllers
             
             return View(viewmodel);
         }
+
+
         
         public IActionResult DevicesCreateEditPanel()
         {
