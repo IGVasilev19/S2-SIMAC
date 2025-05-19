@@ -87,7 +87,25 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
-            return View();
+            var allDevices = _deviceService.GetAll();
+            List<DeviceViewModel> vmDevices = new();
+            var viewmodel = new DevicePanelViewModel();
+            viewmodel.Devices = new();
+            foreach (var device in allDevices)
+            {
+                var vm = new DeviceViewModel
+                {
+                    DeviceID = device.DeviceID,
+                    Name = device.Name,
+                    Location = device.Location,
+                    OrganizationID = device.OrganizationID,
+                    DeviceStatus = device.DeviceStatus
+                };
+
+                viewmodel.Devices.Add(vm);
+            }
+            
+            return View(viewmodel);
         }
         
         public IActionResult DevicesCreateEditPanel()
