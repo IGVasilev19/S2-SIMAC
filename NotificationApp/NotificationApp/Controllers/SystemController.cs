@@ -31,17 +31,6 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-            //foreach (Device device in _deviceService.GetAll())
-            //{
-            //    Console.WriteLine(device.ToString());
-            //    Console.WriteLine("---------------------");
-            //    Console.WriteLine($"Status:------------ {_deviceService.GetDeviceStatus(device)}");
-            //    Console.WriteLine($"Device by ID:----------- {_deviceService.GetById(device.DeviceID).ToString()}");
-            //}
-            //List<Device> devices = _deviceService.GetAll().ToList();
-            //devices[1].SetStatus(Status.ONLINE);
-            //_deviceService.Update(devices[1]);
-
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
@@ -234,7 +223,7 @@ namespace NotificationApp.Controllers
         //TODO: IMPLEMENT FRONT END
         public IActionResult RolesCreatePanel()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var accountId = User.FindFirst("Name")?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
@@ -337,7 +326,15 @@ namespace NotificationApp.Controllers
         public IActionResult DeleteRole(int roleId)
         {
             _roleService.Delete(roleId);
-            return RedirectToAction("RolesPanel");
+            return RedirectToAction("RolesPanel", "System");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAccount(int id)
+        {
+            _accountService.DeleteById(id);
+
+            return RedirectToAction("AccountPanel", "System");
         }
     }
 }
