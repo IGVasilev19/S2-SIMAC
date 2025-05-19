@@ -20,6 +20,10 @@
             DeviceStatus = (Status)status;
         }
 
+        public void SetStatus(Status status)
+        {
+            DeviceStatus = status;
+        }
         public override string ToString()
         {
             string devicestring = "";

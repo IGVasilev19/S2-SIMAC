@@ -9,6 +9,8 @@ namespace Service.Interfaces
 {
     public interface IDeviceService : IService<Device>
     {
-
+        Device GetById(int deviceID);
+        Status GetDeviceStatus(Device device);
+        void Update(Device device);
     }
 }

@@ -31,7 +31,16 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-
+            //foreach (Device device in _deviceService.GetAll())
+            //{
+            //    Console.WriteLine(device.ToString());
+            //    Console.WriteLine("---------------------");
+            //    Console.WriteLine($"Status:------------ {_deviceService.GetDeviceStatus(device)}");
+            //    Console.WriteLine($"Device by ID:----------- {_deviceService.GetById(device.DeviceID).ToString()}");
+            //}
+            List<Device> devices = _deviceService.GetAll().ToList();
+            devices[1].SetStatus(Status.ONLINE);
+            _deviceService.Update(devices[1]);
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -321,4 +330,3 @@ namespace NotificationApp.Controllers
         }
     }
 }
-  

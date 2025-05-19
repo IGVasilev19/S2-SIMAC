@@ -23,5 +23,19 @@ namespace Service
         {
             return _deviceRepository.GetAll();
         }
+
+        public Status GetDeviceStatus(Device device)
+        {
+            return _deviceRepository.GetStatus(device); 
+        }
+        public Device GetById(int ID) 
+        {
+            return _deviceRepository.GetById(ID);
+        }
+        public void Update(Device device)
+        {
+            _deviceRepository.Update(device);
+        }
+
     }
 }

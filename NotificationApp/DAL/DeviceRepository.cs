@@ -35,7 +35,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT DeviceID, Name, Location FROM Devices WHERE DeviceID = @id";
+                string query = "SELECT * FROM Device WHERE DeviceID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -47,8 +47,8 @@ namespace DAL
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
-                            reader.GetInt32(3),
-                            reader.GetInt32(4)
+                            reader.GetInt32(4),
+                            reader.GetInt32(3)
                         );
 
                         return device;
@@ -77,11 +77,13 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Devices SET Name = @name, Location = @location WHERE DeviceID = @id";
+                string query = "UPDATE Device SET Name = @name, Location = @location, StatusId = @StatusID, OrganizationId = @OrganizationID WHERE DeviceID = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", entity.Name);
                 cmd.Parameters.AddWithValue("@location", entity.Location);
                 cmd.Parameters.AddWithValue("@id", entity.DeviceID);
+                cmd.Parameters.AddWithValue("@OrganizationID", entity.OrganizationID);
+                cmd.Parameters.AddWithValue("@StatusID", (int)entity.DeviceStatus);
 
                 cmd.ExecuteNonQuery();
             }
@@ -117,18 +119,19 @@ namespace DAL
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
-                            reader.GetInt32(3),
-                            reader.GetInt32(4)
+                            reader.GetInt32(4),
+                            reader.GetInt32(3)
                         );
 
                         devices.Add(device);
                     }
 
                 }
-            return devices;
+                return devices;
+            }
         }
         
-        }
+        
         public Status GetStatus(Device device)
         {
             Status status = new Status();
@@ -145,6 +148,7 @@ namespace DAL
                     {
                         int statusId = reader.GetInt32(0);
                         return (Status)statusId; // cast int to Status enum
+                        
                     }
                     else
                     {
@@ -153,5 +157,6 @@ namespace DAL
                 }
             }
         }
+
     }
 }

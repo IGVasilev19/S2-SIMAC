@@ -9,6 +9,6 @@ namespace DAL.Interfaces
 {
     public interface IDeviceRepository : IRepository<Device>
     {
-
+        Status GetStatus(Device device);
     }
 }
