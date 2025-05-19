@@ -83,7 +83,7 @@ namespace DAL
                         int id = reader.GetInt32(0);
                         string name = reader.GetString(1);
                         int? parentId = reader.IsDBNull(2) ? (int?)null : reader.GetInt32(2);
-                        permissions.Add(new Permission(id, name, ));
+                        permissions.Add(new Permission(id, name, parentId));
                     }
                 }
             }

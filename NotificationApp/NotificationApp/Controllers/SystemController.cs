@@ -217,6 +217,13 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
         {
+
+            if (string.IsNullOrEmpty(vm.RoleName) || permissionIds == null)
+            {
+                ViewBag.Error = "Invalid role name or permissions."; // TODO: ADd this viewbag
+                return RedirectToAction("RolesCreatePanel");
+            }
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
