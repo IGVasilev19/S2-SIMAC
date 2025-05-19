@@ -31,8 +31,6 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-
-
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
@@ -78,7 +76,25 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
-            return View();
+            var allDevices = _deviceService.GetAll();
+            List<DeviceViewModel> vmDevices = new();
+            var viewmodel = new DevicePanelViewModel();
+            viewmodel.Devices = new();
+            foreach (var device in allDevices)
+            {
+                var vm = new DeviceViewModel
+                {
+                    DeviceID = device.DeviceID,
+                    Name = device.Name,
+                    Location = device.Location,
+                    OrganizationID = device.OrganizationID,
+                    DeviceStatus = device.DeviceStatus
+                };
+
+                viewmodel.Devices.Add(vm);
+            }
+            
+            return View(viewmodel);
         }
         
         public IActionResult DevicesCreateEditPanel()
@@ -98,24 +114,29 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
+            var loggedInUserName = User.FindFirst(ClaimTypes.Name)?.Value;
             var accounts = _accountService.GetAll();
             List<AccountViewModel> vmAccounts = new();
+            
             foreach (var account in accounts)
             {
-                var role = _roleService.GetById(account.RoleId);
-                var vmRole = new RoleViewModel
+                if (account.Name != loggedInUserName)
                 {
-                    RoleId = role.RoleId,
-                    Name = role.Name
-                };
-                vmAccounts.Add(new AccountViewModel
-                {
-                    AccountId = account.AccountId,
-                    Name = account.Name,
-                    Email = account.Email,
-                    Password = account.Password,
-                    Role = vmRole
-                });
+                    var role = _roleService.GetById(account.RoleId);
+                    var vmRole = new RoleViewModel
+                    {
+                        RoleId = role.RoleId,
+                        Name = role.Name
+                    };
+                    vmAccounts.Add(new AccountViewModel
+                    {
+                        AccountId = account.AccountId,
+                        Name = account.Name,
+                        Email = account.Email,
+                        Password = account.Password,
+                        Role = vmRole
+                    });
+                }
             }
 
             var viewmodel = new AccountPanelViewModel
@@ -194,7 +215,7 @@ namespace NotificationApp.Controllers
 
         public IActionResult RolesCreatePanel()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var accountId = User.FindFirst("Name")?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
@@ -217,8 +238,15 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
         {
+
+            if (string.IsNullOrEmpty(vm.RoleName) || permissionIds == null)
+            {
+                ViewBag.Error = "Invalid role name or permissions."; // TODO: ADd this viewbag
+                return RedirectToAction("RolesCreatePanel");
+            }
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
@@ -245,9 +273,7 @@ namespace NotificationApp.Controllers
             throw new Exception("UserId Not Found");
         }
 
-        //TODO: IMPLEMENT FRONT END
-
-        public IActionResult RolesEditPanel(int roleId)
+        public IActionResult RolesEditPanel(int roleId) //TODO: Permission displaying in front end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -279,7 +305,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -304,7 +330,7 @@ namespace NotificationApp.Controllers
         public IActionResult DeleteRole(int roleId)
         {
             _roleService.Delete(roleId);
-            return RedirectToAction("RolesPanel");
+            return RedirectToAction("RolesPanel", "System");
         }
 
         [HttpPost]
@@ -312,8 +338,7 @@ namespace NotificationApp.Controllers
         {
             _accountService.DeleteById(id);
 
-            return RedirectToAction("AccountPanel");
+            return RedirectToAction("AccountPanel", "System");
         }
     }
 }
-  
