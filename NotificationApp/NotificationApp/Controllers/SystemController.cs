@@ -99,8 +99,25 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
+            var allDevices = _deviceService.GetAll();
+            List<DeviceViewModel> vmDevices = new();
+            var viewmodel = new DevicePanelViewModel();
+            viewmodel.Devices = new();
+            foreach (var device in allDevices)
+            {
+                var vm = new DeviceViewModel
+                {
+                    DeviceID = device.DeviceID,
+                    Name = device.Name,
+                    Location = device.Location,
+                    OrganizationID = device.OrganizationID,
+                    DeviceStatus = device.DeviceStatus
+                };
+
+                viewmodel.Devices.Add(vm);
+            }
             
-            return View();
+            return View(viewmodel);
         }
         
         public IActionResult DevicesCreateEditPanel()
@@ -238,7 +255,7 @@ namespace NotificationApp.Controllers
 
         //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -294,8 +311,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -322,12 +338,6 @@ namespace NotificationApp.Controllers
         {
             _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel");
-        }
-
-        //TODO: DELETE THIS LATER
-        public IActionResult RolesCreateEditPanel()
-        {
-            return View();
         }
     }
 }

@@ -18,8 +18,8 @@
             <div class="flex h-full flex-col items-center bg-white p-2">
                 @foreach (var notification in Model.Notifications)
                 {
-                    <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
-                        <div class="flex h-full w-full items-center justify-center gap-2 p-2">
+                    <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="mx-2 mt-2 flex h-[100px] w-[250px] cursor-pointer flex-col items-center justify-between rounded-md border-t border-r border-l">
+                        <div class="flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-100 hover:cursor-pointer">
                             @if (!notification.Important)
                             {
                                 <div class="rounded-4xl h-[25px] w-[30px] border"></div>
@@ -29,8 +29,8 @@
                                 <div class="rounded-4xl h-[25px] w-[30px] border bg-[#FF6F6F]"></div>
                             }
                             <div class="flex h-full w-full flex-col items-center justify-center gap-2">
-                                <p class="select-none text-sm font-bold">@notification.Title</p>
-                                <p class="select-none text-[12px]">@notification.Date</p>
+                                <p class="text-sm font-bold select-none">@notification.Title</p>
+                                <p class="text-[12px] select-none">@notification.Date</p>
                             </div>
                         </div>
                         <div class="h-[8px] w-full rounded-b-md border bg-[#7AA0FF]"></div>     
