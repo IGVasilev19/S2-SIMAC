@@ -99,13 +99,13 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
-            var allDevices = _deviceService.GetAll();
+            IEnumerable<Device> allDevices = _deviceService.GetAll();
             List<DeviceViewModel> vmDevices = new();
-            var viewmodel = new DevicePanelViewModel();
+            DevicePanelViewModel viewmodel = new DevicePanelViewModel();
             viewmodel.Devices = new();
-            foreach (var device in allDevices)
+            foreach (Device device in allDevices)
             {
-                var vm = new DeviceViewModel
+                DeviceViewModel vm = new DeviceViewModel
                 {
                     DeviceID = device.DeviceID,
                     Name = device.Name,
