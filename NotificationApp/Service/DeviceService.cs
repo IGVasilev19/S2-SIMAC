@@ -28,7 +28,6 @@ namespace Service
         {
             return _deviceRepository.GetAll();
         }
-
         public Status GetDeviceStatus(Device device)
         {
             return _deviceRepository.GetStatus(device); 
@@ -39,8 +38,11 @@ namespace Service
         }
         public void Update(Device device)
         {
-            _deviceRepository.Update(device);
+            //_deviceRepository.Update(device);
         }
-
+        public IEnumerable<Device> GetByOrganization(Organization organization) 
+        {
+            return _deviceRepository.GetByOrganization(organization);
+        }
     }
 }

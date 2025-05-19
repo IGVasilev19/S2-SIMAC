@@ -250,9 +250,6 @@
   .flex {
     display: flex;
   }
-  .hidden {
-    display: none;
-  }
   .inline-block {
     display: inline-block;
   }
@@ -336,9 +333,6 @@
   }
   .w-\[250px\] {
     width: 250px;
-  }
-  .w-\[400px\] {
-    width: 400px;
   }
   .w-\[600px\] {
     width: 600px;
@@ -509,9 +503,6 @@
   }
   .bg-green-500 {
     background-color: var(--color-green-500);
-  }
-  .bg-red-500 {
-    background-color: var(--color-red-500);
   }
   .bg-white {
     background-color: var(--color-white);
@@ -752,6 +743,10 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-300);
+  .hover\:bg-gray-200 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-200);
       }
     }
   }

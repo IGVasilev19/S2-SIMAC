@@ -2,6 +2,6 @@ namespace NotificationApp.Models
 {
     public class DevicePanelViewModel
     {
-        public List<DeviceViewModel> Devices {get; set;}
+        public List<DeviceViewModel> Devices { get; set; }
     }
 }

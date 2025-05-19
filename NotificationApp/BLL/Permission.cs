@@ -6,13 +6,11 @@ namespace BLL
     {
         public int PermissionId { get; set; }
         public string Name { get; set; }
-        public int? ParentId { get; set; }
 
-        public Permission(int permissionId, string name, int? parentId)
+        public Permission(int permissionId, string name)
         {
             PermissionId = permissionId;
             Name = name;
-            ParentId = parentId;
         }
     }
 }
