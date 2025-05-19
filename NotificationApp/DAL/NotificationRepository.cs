@@ -136,5 +136,82 @@ namespace DAL
             }
             return notifications;
         }
+
+        public void MarkAsRead(int notificationId, int accountId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "INSERT INTO UserReadNotification (NotificationID, AccountID) VALUES (@notificationId, @accountId)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@notificationId", notificationId);
+                cmd.Parameters.AddWithValue("@accountId", accountId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool IsRead(int notificationId, int accountId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT FROM UserReadNotification WHERE NotificationID = @notificationId AND AccountID = @accountId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@notificationId", notificationId);
+                cmd.Parameters.AddWithValue("@accountId", accountId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public List<Notification> GetNotificationsForUser(int organizationId, List<int> permissionIds)
+        {
+            List<Notification> notifications = new();
+
+            if (permissionIds == null || permissionIds.Count == 0)
+            {
+                return notifications; // Return empty list if no permissions
+            }
+
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = $@"
+            SELECT NotificationID, Title, Content, Important, OrganizationId, Date
+            FROM Notification
+            WHERE OrganizationId = @orgId
+              AND PermissionId IN ({string.Join(",", permissionIds)})
+            ORDER BY Important DESC, Date DESC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@orgId", organizationId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Notification n = new Notification(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2),
+                            reader.GetBoolean(3),
+                            reader.GetInt32(4),
+                            reader.GetDateTime(5)
+                        );
+                        notifications.Add(n);
+                    }
+                }
+            }
+
+            return notifications;
+        }
     }
 }
