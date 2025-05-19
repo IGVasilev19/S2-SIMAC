@@ -99,10 +99,6 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
-<<<<<<< HEAD
-            
-            return View();
-=======
             var allDevices = _deviceService.GetAll();
             List<DeviceViewModel> vmDevices = new();
             var viewmodel = new DevicePanelViewModel();
@@ -122,7 +118,6 @@ namespace NotificationApp.Controllers
             }
             
             return View(viewmodel);
->>>>>>> main
         }
         
         public IActionResult DevicesCreateEditPanel()
@@ -265,11 +260,7 @@ namespace NotificationApp.Controllers
 
         //TODO: IMPLEMENT FRONT END
         [HttpPost]
-<<<<<<< HEAD
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm)
-=======
         public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
->>>>>>> main
         {
 
             if (string.IsNullOrEmpty(vm.RoleName) || permissionIds == null)
@@ -330,12 +321,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
-
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
-=======
         public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
->>>>>>> main
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -362,18 +348,6 @@ namespace NotificationApp.Controllers
         {
             _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel", "System");
-        }
-
-        //TODO: DELETE THIS LATER
-        public IActionResult RolesCreateEditPanel()
-        {
-<<<<<<< HEAD
-            return View();
-=======
-            _accountService.DeleteById(id);
-
-            return RedirectToAction("AccountPanel", "System");
->>>>>>> main
         }
     }
 }
