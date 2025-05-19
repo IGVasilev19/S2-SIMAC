@@ -9,6 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IDeviceRepository : IRepository<Device>
     {
+        IEnumerable<Device> GetByOrganization(Organization organization);
         Status GetStatus(Device device);
     }
 }

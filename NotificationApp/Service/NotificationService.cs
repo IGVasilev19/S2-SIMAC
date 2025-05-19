@@ -43,5 +43,20 @@ namespace Service
             }
             return listOfNotifications;
         }
+
+        public void MarkNotificationAsRead(int accountId, int notificationId)
+        {
+            _notificationRepository.MarkAsRead(notificationId, accountId);
+        }
+
+        public bool HasUserReadNotification(int accountId, int notificationId)
+        {
+            return _notificationRepository.IsRead(notificationId, accountId);
+        }
+
+        public List<Notification> GetNotificationsForUser(Account account, List<int> permissionIds)
+        {
+            return _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
+        }
     }
 }
