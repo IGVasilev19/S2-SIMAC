@@ -114,37 +114,45 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
-            var loggedInUserName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var accounts = _accountService.GetAll();
-            List<AccountViewModel> vmAccounts = new();
-            
-            foreach (var account in accounts)
-            {
-                if (account.Name != loggedInUserName)
-                {
-                    var role = _roleService.GetById(account.RoleId);
-                    var vmRole = new RoleViewModel
-                    {
-                        RoleId = role.RoleId,
-                        Name = role.Name
-                    };
-                    vmAccounts.Add(new AccountViewModel
-                    {
-                        AccountId = account.AccountId,
-                        Name = account.Name,
-                        Email = account.Email,
-                        Password = account.Password,
-                        Role = vmRole
-                    });
-                }
-            }
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var viewmodel = new AccountPanelViewModel
+            if (int.TryParse(accountId, out int id))
             {
-                Accounts = vmAccounts
-            };
-            
-            return View(viewmodel);
+                var accounts = _accountService.GetAll();
+                List<AccountViewModel> vmAccounts = new();
+                
+                foreach (var account in accounts)
+                {
+                    if (account.AccountId != id)
+                    {
+                        var role = _roleService.GetById(account.RoleId);
+                        var vmRole = new RoleViewModel
+                        {
+                            RoleId = role.RoleId,
+                            Name = role.Name
+                        };
+                        vmAccounts.Add(new AccountViewModel
+                        {
+                            AccountId = account.AccountId,
+                            Name = account.Name,
+                            Email = account.Email,
+                            Password = account.Password,
+                            Role = vmRole
+                        });
+                    }
+                }
+
+                var viewmodel = new AccountPanelViewModel
+                {
+                    Accounts = vmAccounts
+                };
+                
+                return View(viewmodel);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public IActionResult AccountCreateEditPanel()
@@ -215,7 +223,7 @@ namespace NotificationApp.Controllers
 
         public IActionResult RolesCreatePanel()
         {
-            var accountId = User.FindFirst("Name")?.Value;
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {

@@ -734,13 +734,6 @@
       }
     }
   }
-  .hover\:rounded {
-    &:hover {
-      @media (hover: hover) {
-        border-radius: 0.25rem;
-      }
-    }
-  }
   .hover\:bg-blue-200 {
     &:hover {
       @media (hover: hover) {
@@ -752,13 +745,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-100);
-      }
-    }
-  }
-  .hover\:bg-gray-200 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-200);
       }
     }
   }
