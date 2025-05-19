@@ -38,7 +38,13 @@ namespace NotificationApp.Controllers
                 if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
-                    var notifications = _notificationService.GetByPermission(account.RoleId); //TODO: This needs to use PermissionId note RoleId
+                    //OLD//var notifications = _notificationService.GetByPermission(account.RoleId); //shows hardcoded notifications
+
+                    var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
+                    var permissionIds = permissions.Select(p => p.PermissionId).ToList();
+                    var notifications = _notificationService.GetNotificationsForUser(account, permissionIds);
+                    
+
                     var vmNotifications = new List<NotificationViewModel>();
 
                     foreach (var notification in notifications)
@@ -83,9 +89,9 @@ namespace NotificationApp.Controllers
                     return View();
                 }
             }
-                return View();
+            return View();
         }
-        
+
         public IActionResult DevicesPanel()
         {
             IEnumerable<Device> allDevices = _deviceService.GetAll();
