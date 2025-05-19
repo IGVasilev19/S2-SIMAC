@@ -16,10 +16,6 @@
         </div>
         <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
             <div class="overflow-x-auto">
-                @for(int i = 0; i < Model.Accounts.Count(); i++) 
-                {
-                    
-                }
                 <table class="min-w-full">
                     <thead class="bg-white">
                         <tr>
@@ -29,14 +25,31 @@
                         </tr>
                     </thead>
                     <tbody class="font-semibold text-gray-700 text-sm">
-                        <tr class="bg-gray-100 even:bg-white">
-                            <td class="px-6 py-3">Account Name</td>
-                            <td class="px-6 py-3">Role</td>
-                            <td class="px-6 py-3 space-x-2 text-right">
-                                <a asp-action="AccountCreateEditPanel" asp-controller="System" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                <button class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                            </td>
-                        </tr>
+                        @for(int i = 0; i < Model.Accounts.Count(); i++) 
+                        {
+                            if (i%2==0)
+                            {
+                                <tr class="bg-gray-100 even:bg-white">
+                                    <td class="px-6 py-3">@Model.Accounts[i].Name</td>
+                                    <td class="px-6 py-3">@Model.Accounts[i].Role.Name</td>
+                                    <td class="px-6 py-3 space-x-2 text-right">
+                                        <a asp-action="AccountCreateEditPanel" asp-controller="System" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                        <a class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="bg-gray-200 even:bg-white">
+                                    <td class="px-6 py-3">@Model.Accounts[i].Name</td>
+                                    <td class="px-6 py-3">@Model.Accounts[i].Role.Name</td>
+                                    <td class="px-6 py-3 space-x-2 text-right">
+                                        <a asp-action="AccountCreateEditPanel" asp-controller="System" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                        <a class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

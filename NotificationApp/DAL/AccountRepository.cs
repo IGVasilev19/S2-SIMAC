@@ -19,7 +19,6 @@ namespace DAL
                     while (reader.Read())
                     {
                         int roleId = reader.GetInt32(4);
-                        Role role = GetRoleById(roleId);
 
                         Account account = new Account(
                             reader.GetInt32(0),
@@ -51,7 +50,6 @@ namespace DAL
                     if (reader.Read())
                     {
                         int roleId = reader.GetInt32(4);
-                        Role role = GetRoleById(roleId);
 
                         Account account = new Account(
                             reader.GetInt32(0),
@@ -70,22 +68,6 @@ namespace DAL
             return null;
         }
 
-        //public void Add(Account account)
-        //{
-        //    using (SqlConnection conn = DBConnection.GetConnection())
-        //    {
-        //        string query = "INSERT INTO Account (Name, Email, Password, RoleId) VALUES (@name, @email, @password, @roleId)";
-        //        SqlCommand cmd = new SqlCommand(query, conn);
-        //        cmd.Parameters.AddWithValue("@name", account.Name);
-        //        cmd.Parameters.AddWithValue("@email", account.Email);
-        //        cmd.Parameters.AddWithValue("@password", account.Password);
-        //        cmd.Parameters.AddWithValue("@roleId", account.AccountRole.RoleId); // Remove AccountRole for DB testing
-
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
-        //DATABASE TESTING---------------------------------------------
         public void Add(Account account)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
@@ -101,7 +83,6 @@ namespace DAL
                 cmd.ExecuteNonQuery();
             }
         }
-        //DATABASE TESTING---------------------------------------------
 
         public void Update(Account account)
         {
@@ -131,52 +112,60 @@ namespace DAL
             }
         }
 
-        public Role GetRoleById(int id)
+        public Account GetByEmail(string email)
         {
-            //string roleName = "";
-            //List<Permission> permissions = new List<Permission>();
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
 
-            //using (SqlConnection conn = DBConnection.GetConnection())
-            //{
-            //    // Get role name
-            //    string roleQuery = "SELECT Name FROM [Role] WHERE RoleId = @id";
-            //    SqlCommand roleCmd = new SqlCommand(roleQuery, conn);
-            //    roleCmd.Parameters.AddWithValue("@id", id);
+                string query = "SELECT AccountId, Name, Email, Password, OrganizationId, RoleId FROM Account WHERE Email = @email";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@email", email);
 
-            //    using (SqlDataReader reader = roleCmd.ExecuteReader())
-            //    {
-            //        if (reader.Read())
-            //        {
-            //            roleName = reader.GetString(0);
-            //        }
-            //    }
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Account user = new Account(
+                            reader.GetInt32(reader.GetOrdinal("AccountId")),
+                            reader.GetString(reader.GetOrdinal("Name")),
+                            reader.GetString(reader.GetOrdinal("Email")),
+                            reader.GetString(reader.GetOrdinal("Password")),
+                            reader.GetInt32(reader.GetOrdinal("OrganizationId")),
+                            reader.GetInt32(reader.GetOrdinal("RoleId"))
+                        );
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
 
-            //    // Get permissions for this role
-            //    string permQuery = @"
-            //        SELECT p.Name
-            //        FROM RolePermission rp
-            //        JOIN Permission p ON rp.PermissionId = p.PermissionId
-            //        WHERE rp.RoleId = @id";
+        public Account GetByOrganization(int organizationId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
 
-            //    SqlCommand permCmd = new SqlCommand(permQuery, conn);
-            //    permCmd.Parameters.AddWithValue("@id", id);
+                string query = "SELECT AccountId, Name, Email, Password, OrganizationId, RoleId FROM Account WHERE OrganizationId = @organizationId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@organizationId", organizationId);
 
-            //    using (SqlDataReader reader = permCmd.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            string permName = reader.GetString(0);
-            //            if (Enum.TryParse(permName, out Permission perm))
-            //            {
-            //                permissions.Add(perm);
-            //            }
-            //        }
-
-
-            //    }
-            //    return new Role(id, roleName, permissions);
-            //}
-            return new Role();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Account user = new Account(
+                            reader.GetInt32(reader.GetOrdinal("AccountId")),
+                            reader.GetString(reader.GetOrdinal("Name")),
+                            reader.GetString(reader.GetOrdinal("Email")),
+                            reader.GetString(reader.GetOrdinal("Password")),
+                            reader.GetInt32(reader.GetOrdinal("OrganizationId")),
+                            reader.GetInt32(reader.GetOrdinal("RoleId"))
+                        );
+                        return user;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

@@ -18,6 +18,11 @@ namespace Service
             _permissionRepository = permissionRepository;
         }
 
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Permission> GetAll()
         {
             return _permissionRepository.GetAll();

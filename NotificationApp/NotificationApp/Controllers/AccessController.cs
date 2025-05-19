@@ -31,12 +31,7 @@ namespace NotificationApp.Controllers
 
             if (account == null)
             {
-                ModelState.AddModelError("Email", "Account not found.");
-            }
-
-            if (account.Password == "Invalid password")
-            {
-                ModelState.AddModelError("Password", "Invalid password");
+                ViewBag.Error = "Invalid e-mail or password";
                 return View("Index");
             }
 

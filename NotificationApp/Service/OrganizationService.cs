@@ -41,5 +41,10 @@ namespace Service
             Organization organization = _organizationRepository.GetById(id);
             return organization;
         }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

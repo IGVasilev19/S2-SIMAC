@@ -79,3 +79,35 @@ ADD CONSTRAINT FK_Role_Organization
 FOREIGN KEY (OrganizationId) REFERENCES Organization(OrganizationId);
 
 EXEC sp_msforeachtable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT all"
+
+SELECT * FROM Account
+
+insert into [Role] ([Name], OrganizationId) values ('Damaliscus lunatus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Macropus rufus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Eumetopias jubatus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Streptopelia senegalensis', 1);
+insert into [Role] ([Name], OrganizationId) values ('Marmota caligata', 1);
+insert into [Role] ([Name], OrganizationId) values ('unavailable', 1);
+insert into [Role] ([Name], OrganizationId) values ('Uraeginthus angolensis', 1);
+insert into [Role] ([Name], OrganizationId) values ('Nannopterum harrisi', 1);
+insert into [Role] ([Name], OrganizationId) values ('Eumetopias jubatus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Spizaetus coronatus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Cacatua tenuirostris', 1);
+insert into [Role] ([Name], OrganizationId) values ('Carduelis uropygialis', 1);
+insert into [Role] ([Name], OrganizationId) values ('unavailable', 1);
+insert into [Role] ([Name], OrganizationId) values ('Speotyte cuniculata', 1);
+insert into [Role] ([Name], OrganizationId) values ('Cordylus giganteus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Echimys chrysurus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Panthera leo persica', 1);
+insert into [Role] ([Name], OrganizationId) values ('Phalacrocorax niger', 1);
+insert into [Role] ([Name], OrganizationId) values ('Plocepasser mahali', 1);
+insert into [Role] ([Name], OrganizationId) values ('Chordeiles minor', 1);
+insert into [Role] ([Name], OrganizationId) values ('Cebus albifrons', 1);
+insert into [Role] ([Name], OrganizationId) values ('Oreamnos americanus', 1);
+insert into [Role] ([Name], OrganizationId) values ('Callipepla gambelii', 1);
+insert into [Role] ([Name], OrganizationId) values ('Charadrius tricollaris', 1);
+insert into [Role] ([Name], OrganizationId) values ('Chauna torquata', 1);
+insert into [Role] ([Name], OrganizationId) values ('Corvus albicollis', 1);
+insert into [Role] ([Name], OrganizationId) values ('Spilogale gracilis', 1);
+
+SELECT * FROM [Role]

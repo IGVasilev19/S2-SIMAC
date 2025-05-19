@@ -544,9 +544,6 @@
   .bg-green-500 {
     background-color: var(--color-green-500);
   }
-  .bg-red-500 {
-    background-color: var(--color-red-500);
-  }
   .bg-white {
     background-color: var(--color-white);
   }
