@@ -19,11 +19,7 @@
                 @foreach (var notification in Model.Notifications)
                 {
                     <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
-<<<<<<< Updated upstream
-                        <div class="flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:cursor-pointer">
-=======
-                        <div class="flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-100 hover:cursor-pointer">
->>>>>>> Stashed changes
+                        <div class="flex h-full w-full items-center justify-center gap-2 p-2">
                             @if (!notification.Important)
                             {
                                 <div class="rounded-4xl h-[25px] w-[30px] border"></div>
