@@ -9,9 +9,6 @@ namespace Service.Interfaces
 {
     public interface IAccountService : IService<Account>
     {
-        //DATABASE TESTING---------------------------------------------
-        //void SignUp(string name, string email, string password, int organization, int role);
-        //DATABASE TESTING---------------------------------------------
         void SignUp(string name, string email, string password, int organization, int role);
         Account LogIn(string email, string password);
         Account GetById(int id);

@@ -6,31 +6,6 @@ namespace DAL
 {
     public class DeviceRepository : IDeviceRepository
     {
-        //public IEnumerable<Device> GetAll()
-        //{
-        //    List<Device> devices = new List<Device>();
-
-        //    using (SqlConnection conn = DBConnection.GetConnection())
-        //    {
-        //        string query = "SELECT DeviceID, Name, Location FROM Devices";
-        //        SqlCommand cmd = new SqlCommand(query, conn);
-        //        using (SqlDataReader reader = cmd.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                Device device = new Device(
-        //                    reader.GetInt32(0),
-        //                    reader.GetString(1),
-        //                    reader.GetString(2)
-        //                );
-
-        //                devices.Add(device);
-        //            }
-        //        }
-        //    }
-        //    return devices;
-        //}
-
         public Device GetById(int id)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
