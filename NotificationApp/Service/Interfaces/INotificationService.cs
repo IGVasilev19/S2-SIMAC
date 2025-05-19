@@ -11,5 +11,8 @@ namespace Service.Interfaces
     {
         Notification GetById(int id);
         List<Notification> GetByPermission(int permissionId);
+        public void MarkNotificationAsRead(int accountId, int notificationId);
+        public bool HasUserReadNotification(int accountId, int notificationId);
+        public List<Notification> GetNotificationsForUser(Account account, List<int> permissionIds);
     }
 }
