@@ -31,17 +31,6 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-            //foreach (Device device in _deviceService.GetAll())
-            //{
-            //    Console.WriteLine(device.ToString());
-            //    Console.WriteLine("---------------------");
-            //    Console.WriteLine($"Status:------------ {_deviceService.GetDeviceStatus(device)}");
-            //    Console.WriteLine($"Device by ID:----------- {_deviceService.GetById(device.DeviceID).ToString()}");
-            //}
-            List<Device> devices = _deviceService.GetAll().ToList();
-            devices[1].SetStatus(Status.ONLINE);
-            _deviceService.Update(devices[1]);
-
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
@@ -249,8 +238,15 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
         {
+
+            if (string.IsNullOrEmpty(vm.RoleName) || permissionIds == null)
+            {
+                ViewBag.Error = "Invalid role name or permissions."; // TODO: ADd this viewbag
+                return RedirectToAction("RolesCreatePanel");
+            }
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
@@ -277,9 +273,7 @@ namespace NotificationApp.Controllers
             throw new Exception("UserId Not Found");
         }
 
-        //TODO: IMPLEMENT FRONT END
-
-        public IActionResult RolesEditPanel(int roleId)
+        public IActionResult RolesEditPanel(int roleId) //TODO: Permission displaying in front end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -311,7 +305,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
