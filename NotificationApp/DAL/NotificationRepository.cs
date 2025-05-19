@@ -57,6 +57,7 @@ namespace DAL
 
                         return notification;
                     }
+                    return null;
                 }
             }
             return null;

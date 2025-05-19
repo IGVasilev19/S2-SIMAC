@@ -31,8 +31,6 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-
-
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
@@ -217,7 +215,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -245,9 +243,7 @@ namespace NotificationApp.Controllers
             throw new Exception("UserId Not Found");
         }
 
-        //TODO: IMPLEMENT FRONT END
-
-        public IActionResult RolesEditPanel(int roleId)
+        public IActionResult RolesEditPanel(int roleId) //TODO: Permission displaying in front end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -279,7 +275,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -311,7 +307,6 @@ namespace NotificationApp.Controllers
         public IActionResult DeleteAccount(int id)
         {
             _accountService.DeleteById(id);
-
             return RedirectToAction("AccountPanel");
         }
     }
