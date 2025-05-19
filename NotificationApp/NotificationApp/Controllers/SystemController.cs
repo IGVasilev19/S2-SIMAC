@@ -38,9 +38,9 @@ namespace NotificationApp.Controllers
             //    Console.WriteLine($"Status:------------ {_deviceService.GetDeviceStatus(device)}");
             //    Console.WriteLine($"Device by ID:----------- {_deviceService.GetById(device.DeviceID).ToString()}");
             //}
-            List<Device> devices = _deviceService.GetAll().ToList();
-            devices[1].SetStatus(Status.ONLINE);
-            _deviceService.Update(devices[1]);
+            //List<Device> devices = _deviceService.GetAll().ToList();
+            //devices[1].SetStatus(Status.ONLINE);
+            //_deviceService.Update(devices[1]);
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -64,6 +64,7 @@ namespace NotificationApp.Controllers
                         });
                     }
 
+                    //DATABASE TESTING---------------------------------------------
                     InboxViewModel vm = new InboxViewModel
                     {
                         AccountId = account.AccountId,
@@ -74,6 +75,17 @@ namespace NotificationApp.Controllers
                         AccountRole = account.RoleId.ToString(),
                         Notifications = vmNotifications
                     };
+                    //DATABASE TESTING---------------------------------------------
+
+                    /*InboxViewModel vm = new InboxViewModel
+                    {
+                        AccountId = account.AccountId,
+                        AccountName = account.Name,
+                        AccountEmail = account.Email,
+                        AccountPassword = account.Password,
+                        AccountRole = account.AccountRole.Name,
+                        Notifications = vmNotifications
+                    };*/
 
                     return View(vm);
                 }
@@ -87,6 +99,7 @@ namespace NotificationApp.Controllers
         
         public IActionResult DevicesPanel()
         {
+            
             return View();
         }
         
@@ -201,6 +214,7 @@ namespace NotificationApp.Controllers
         //    return RedirectToAction("RolesPanel");
         //}
 
+        //TODO: IMPLEMENT FRONT END
         public IActionResult RolesCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -209,7 +223,7 @@ namespace NotificationApp.Controllers
             {
                 List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
                 RoleCreateEditPanelViewModel vm = new();
-                vm.Permissions = new();
+                vm.SelectedPermissions = new List<PermissionViewModel>();
                 foreach (var permission in allPermissions)
                 {
                     PermissionViewModel pVM = new();
@@ -217,16 +231,14 @@ namespace NotificationApp.Controllers
                     pVM.Name = permission.Name;
                     vm.Permissions.Add(pVM);
                 }
-
-                vm.SelectedPermissions = new();
-                
                 return View("RolesCreatePanel", vm);
             }
             throw new Exception("User Not Found");
         }
 
+        //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -234,20 +246,13 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 Role newRole = new Role(vm.RoleName, account.OrganizationId);
-                newRole.RoleId = _roleService.Add(newRole);
+                _roleService.Add(newRole);
                 List<Permission> selectedPermissions = new();
-
-                foreach (var permissionId in permissionIds)
-                {
-                    selectedPermissions.Add(_permissionService.GetById(permissionId));
-                }
-
                 foreach (var vmSelectedPermission in vm.SelectedPermissions)
                 {
                     Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
                     selectedPermissions.Add(p);
                 }
-
                 _roleService.AssignPermission(newRole.RoleId, selectedPermissions);
                 return RedirectToAction("RolesPanel");
             }
@@ -266,6 +271,7 @@ namespace NotificationApp.Controllers
                 List<Permission> selectedPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
                 RoleCreateEditPanelViewModel vm = new();
 
+                vm.Permissions = new();
                 foreach (var permission in allPermissions)
                 {
                     PermissionViewModel pVM = new();
@@ -288,6 +294,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+
         public IActionResult EditRole(RoleCreateEditPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -310,18 +317,17 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+
         public IActionResult DeleteRole(int roleId)
         {
             _roleService.Delete(roleId);
             return RedirectToAction("RolesPanel");
         }
 
-        [HttpPost]
-        public IActionResult DeleteAccount(int id)
+        //TODO: DELETE THIS LATER
+        public IActionResult RolesCreateEditPanel()
         {
-            _accountService.DeleteById(id);
-
-            return RedirectToAction("AccountPanel");
+            return View();
         }
     }
 }
