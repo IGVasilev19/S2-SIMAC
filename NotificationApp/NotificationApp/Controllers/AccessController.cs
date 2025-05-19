@@ -38,6 +38,7 @@ namespace NotificationApp.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
+                new Claim(ClaimTypes.Name, account.Name)
             };
 
             var identity = new ClaimsIdentity(claims, "AuthCookie");

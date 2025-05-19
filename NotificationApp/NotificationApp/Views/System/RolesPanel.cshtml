@@ -18,7 +18,7 @@
         </div>
         <div class="w-[94%] h-[82%] flex flex-col gap-2 bg-white shadow-md p-4 mx-5">
             <p class="text-left text-md font-bold text-black">Role Name</p>
-            <div class="overflow-y-auto max-h-[93%]">
+            <form method="post" class="overflow-y-auto max-h-[93%]">
                 <table class="min-w-full">
                     <tbody class="font-semibold text-gray-700 text-sm">
                         @for (int i = 0; i < Model.Roles.Count(); i++)
@@ -28,8 +28,9 @@
                                 <tr class="bg-gray-200 even:bg-white">
                                     <td class="px-6 py-3">@Model.Roles[i].Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
+                                        <input type="hidden" name="roleId" value="@Model.Roles[i].RoleId" />
                                         <a asp-action="RolesEditPanel" asp-controller="System" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        <button type="submit" formaction="/System/DeleteRole" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
                             }
@@ -38,15 +39,16 @@
                                 <tr class="bg-gray-100 even:bg-white">
                                     <td class="px-6 py-3">@Model.Roles[i].Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
+                                        <input type="hidden" name="roleId" value="@Model.Roles[i].RoleId" />
                                         <a asp-action="RolesEditPanel" asp-controller="System" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        <button type="submit" formaction="/System/DeleteRole" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
                             }
                         }
                     </tbody>
                 </table>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -98,24 +98,29 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
+            var loggedInUserName = User.FindFirst(ClaimTypes.Name)?.Value;
             var accounts = _accountService.GetAll();
             List<AccountViewModel> vmAccounts = new();
+            
             foreach (var account in accounts)
             {
-                var role = _roleService.GetById(account.RoleId);
-                var vmRole = new RoleViewModel
+                if (account.Name != loggedInUserName)
                 {
-                    RoleId = role.RoleId,
-                    Name = role.Name
-                };
-                vmAccounts.Add(new AccountViewModel
-                {
-                    AccountId = account.AccountId,
-                    Name = account.Name,
-                    Email = account.Email,
-                    Password = account.Password,
-                    Role = vmRole
-                });
+                    var role = _roleService.GetById(account.RoleId);
+                    var vmRole = new RoleViewModel
+                    {
+                        RoleId = role.RoleId,
+                        Name = role.Name
+                    };
+                    vmAccounts.Add(new AccountViewModel
+                    {
+                        AccountId = account.AccountId,
+                        Name = account.Name,
+                        Email = account.Email,
+                        Password = account.Password,
+                        Role = vmRole
+                    });
+                }
             }
 
             var viewmodel = new AccountPanelViewModel
@@ -304,7 +309,7 @@ namespace NotificationApp.Controllers
         public IActionResult DeleteRole(int roleId)
         {
             _roleService.Delete(roleId);
-            return RedirectToAction("RolesPanel");
+            return RedirectToAction("RolesPanel", "System");
         }
 
         [HttpPost]
@@ -312,7 +317,7 @@ namespace NotificationApp.Controllers
         {
             _accountService.DeleteById(id);
 
-            return RedirectToAction("AccountPanel");
+            return RedirectToAction("AccountPanel", "System");
         }
     }
 }
