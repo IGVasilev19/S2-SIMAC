@@ -226,7 +226,7 @@ namespace NotificationApp.Controllers
 
         public IActionResult RolesCreatePanel()
         {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var accountId = User.FindFirst("Name")?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
