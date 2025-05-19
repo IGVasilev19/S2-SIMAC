@@ -6,7 +6,7 @@ namespace NotificationApp.Models
 {
     public class AccountViewModel
     {
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password {  get; set; }

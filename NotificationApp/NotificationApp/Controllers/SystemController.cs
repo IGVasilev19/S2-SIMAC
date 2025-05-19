@@ -114,7 +114,7 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
-            var loggedInUserName = User.FindFirst(ClaimTypes.Name)?.Value;
+            var loggedInUserName = User.FindFirst("Name")?.Value;
             var accounts = _accountService.GetAll();
             List<AccountViewModel> vmAccounts = new();
             
@@ -215,7 +215,7 @@ namespace NotificationApp.Controllers
 
         public IActionResult RolesCreatePanel()
         {
-            var accountId = User.FindFirst("Name")?.Value;
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
@@ -339,6 +339,40 @@ namespace NotificationApp.Controllers
             _accountService.DeleteById(id);
 
             return RedirectToAction("AccountPanel", "System");
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(AccountViewModel accountVM) //TODO: MINA add validation it is an order
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account creator = _accountService.GetById(id);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId , accountVM.Role.RoleId);
+                return RedirectToAction("AccountPanel");
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(id);
+                AccountCreateEditPanelViewModel vm = new();
+                foreach(var role in allRoles)
+                {
+                    RoleViewModel rVM = new();
+                    rVM.RoleId = role.RoleId;
+                    rVM.Name = role.Name;
+                    vm.Roles.Add(rVM);
+                }
+                return View("AccountCreatePanel", vm);
+            }
+            throw new NotImplementedException("TODO");
         }
     }
 }
