@@ -199,18 +199,18 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 int orgId = account.OrganizationId;
-                List<RoleViewModel> allRoles = new();
-                foreach(Role role in _roleService.GetAllRolesByOrganisationId(orgId))
+                RolesPanelViewModel vm = new();
+                vm.Roles = new();
+
+                foreach (Role role in _roleService.GetAllRolesByOrganisationId(orgId))
                 {
-                    allRoles.Add(new RoleViewModel
+                    var newRole = new RoleViewModel
                     {
                         RoleId = role.RoleId,
                         Name = role.Name
-                    });
-                }
-                RolesPanelViewModel vm = new RolesPanelViewModel
-                {
-                    Roles = allRoles
+                    };
+
+                    vm.Roles.Add(newRole);
                 };
 
                 return View(vm);
