@@ -54,7 +54,7 @@
                                         <!-- Child permissions dropdown -->
                                         <div class="pl-6 pt-2 max-h-0 overflow-hidden peer-checked:max-h-64 transition-all duration-300 flex flex-col gap-1 text-sm text-gray-600">
                                             @{
-                                                var children = Model.ChildPermissions.Where(c => c.ParentPermissionId == permission.PermissionId);
+                                                var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId);
                                             }
                                             @if (children.Any())
                                             {
