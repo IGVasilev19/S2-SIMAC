@@ -304,8 +304,12 @@ namespace NotificationApp.Controllers
             {
                 List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
                 List<Permission> selectedPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
+                var chosenRole = _roleService.GetById(roleId);
+
                 RoleCreateEditPanelViewModel vm = new();
 
+                vm.RoleId = roleId;
+                vm.RoleName = chosenRole.Name;
                 vm.Permissions = new();
                 foreach (var permission in allPermissions)
                 {
