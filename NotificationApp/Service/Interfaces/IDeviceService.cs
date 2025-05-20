@@ -12,6 +12,6 @@ namespace Service.Interfaces
         Device GetById(int deviceID);
         Status GetDeviceStatus(Device device);
         void Update(Device device);
-        IEnumerable<Device> GetByOrganization(Organization organization);
+        IEnumerable<Device> GetByOrganization(int organizationID);
     }
 }
