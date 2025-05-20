@@ -68,7 +68,7 @@ namespace DAL
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 string query = @"
-                    SELECT p.PermissionId, p.Name
+                    SELECT p.PermissionId, p.Name, p.ParentId
                     FROM RolePermission rp
                     JOIN Permission p ON rp.PermissionId = p.PermissionId
                     WHERE rp.RoleId = @roleId";

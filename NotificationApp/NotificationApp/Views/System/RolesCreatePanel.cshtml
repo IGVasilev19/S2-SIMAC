@@ -1,10 +1,10 @@
-@{
+﻿@{
     ViewData["Title"] = "Roles Create panel";
 }
 @using NotificationApp.Models
 @model RoleCreateEditPanelViewModel
 
-<div class="w-full h-full flex">
+<div class="flex h-full w-full">
     @Html.Partial("_Navbar")
 
     <form asp-action="CreateRole" asp-controller="System" method="post" class="w-full h-full flex flex-col items-center gap-4 bg-gray-300">
@@ -26,14 +26,14 @@
                         <tbody>
                             @foreach (var permission in Model.Permissions)
                             {
-                                <tr class="w-full flex flex-col">
+                                <tr class="flex w-full flex-col">
                                     <td class="w-full">
                                         <input type="checkbox" id="toggle-@permission.PermissionId" class="hidden peer" />
 
                                         <div class="border-b py-1.5 flex justify-between items-center w-full">
 
                                             <div class="flex items-center gap-2">
-                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[15px] h-[15px] border border-gray-300" />
+                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="h-[15px] w-[15px] border border-gray-300" />
                                                 <label class="text-black">@permission.Name</label>
                                             </div>
 
@@ -51,7 +51,7 @@
                                                 foreach (var child in children)
                                                 {
                                                     <label class="flex items-center gap-2">
-                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="w-[16px] h-[16px] border border-gray-300" />
+                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="h-[16px] w-[16px] border border-gray-300" />
                                                         @child.Name
                                                     </label>
                                                 }
@@ -66,9 +66,9 @@
             </div>
         </div>
 
-        <div class="w-[94%] h-fit flex justify-end items-center gap-2">
-            <a asp-action="RolesPanel" asp-controller="System" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</a>
-            <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
+        <div class="flex h-fit w-[94%] items-center justify-end gap-2">
+            <a asp-action="RolesPanel" asp-controller="System" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Discard</a>
+            <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Save</button>            
         </div>
     </form>
 </div>
