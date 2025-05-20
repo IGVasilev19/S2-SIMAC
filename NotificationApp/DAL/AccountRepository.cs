@@ -88,11 +88,12 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Account SET Name = @name, Email = @email, Password = @password, RoleId = @roleId WHERE AccountId = @id";
+                string query = "UPDATE Account SET Name = @name, Email = @email, Password = @password, OrganizationId = @organizationId, RoleId = @roleId WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
                 cmd.Parameters.AddWithValue("@password", account.Password);
+                cmd.Parameters.AddWithValue("@organizationId", account.OrganizationId);
                 cmd.Parameters.AddWithValue("@roleId", account.RoleId);
                 cmd.Parameters.AddWithValue("@id", account.AccountId);
 
