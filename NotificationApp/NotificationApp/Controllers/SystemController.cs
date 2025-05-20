@@ -175,10 +175,11 @@ namespace NotificationApp.Controllers
             }
         }
 
-        public IActionResult AccountCreateEditPanel()
+        public IActionResult AccountEditPanel()
         {
             return View();
         }
+
         public IActionResult Analytics()
         {
             return View();

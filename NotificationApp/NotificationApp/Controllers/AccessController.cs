@@ -21,6 +21,11 @@ namespace NotificationApp.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Inbox", "System");
+            }
+
             return View();
         }
 
