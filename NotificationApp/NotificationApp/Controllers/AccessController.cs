@@ -27,6 +27,11 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(string email, string password)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index");
+            }
+
             var account = accountService.LogIn(email, password);
 
             if (account == null)

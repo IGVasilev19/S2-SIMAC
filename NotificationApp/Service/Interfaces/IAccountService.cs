@@ -14,5 +14,7 @@ namespace Service.Interfaces
         Account GetById(int id);
         void Update(int id, string name, string email, string password, int organizationId, int roleId);
         Account GetByEmail(string email);
+        public IEnumerable<Account> GetByOrganization(int organizationId);
+        public IEnumerable<Account> SearchAccounts(string filter, int organizationId);
     }
 }

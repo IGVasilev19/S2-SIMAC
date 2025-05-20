@@ -92,6 +92,46 @@ namespace NotificationApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult FilterNotifications(InboxViewModel vm) //TODO: Connect? Idk what I'm doing! Will this work? Will it not? Ig we'll find out!
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Inbox", vm);
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (accountId != null)
+            {
+                if (int.TryParse(accountId, out int id))
+                {
+                    var account = _accountService.GetById(id);
+
+                    var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
+                    var permissionIds = permissions.Select(p => p.PermissionId).ToList();
+                    var notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds);
+
+                    var vmNotifications = new List<NotificationViewModel>();
+
+                    foreach (var notification in notifications)
+                    {
+                        vmNotifications.Add(new NotificationViewModel
+                        {
+                            NotificationID = notification.NotificationID,
+                            Title = notification.Title,
+                            Content = notification.Content,
+                            Important = notification.Important,
+                            Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
+                        });
+                    }
+                    vm.Notifications = vmNotifications;
+                }
+            }
+
+            return View("Inbox", vm);
+        }
+
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
