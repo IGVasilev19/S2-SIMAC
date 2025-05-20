@@ -263,6 +263,7 @@ namespace NotificationApp.Controllers
                     PermissionViewModel pVM = new();
                     pVM.PermissionId = permission.PermissionId;
                     pVM.Name = permission.Name;
+                    pVM.ParentId = permission.ParentId;
                     vm.Permissions.Add(pVM);
                 }
                 return View("RolesCreatePanel", vm);
