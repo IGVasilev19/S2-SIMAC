@@ -365,7 +365,7 @@ namespace NotificationApp.Controllers
                     }
                     vm.SelectedPermissions.Add(selectedPermission);
                 }
-                return View("RolesEditPanel", vm);
+                return View(vm);
             }
             throw new Exception("TODO");
         }
@@ -378,7 +378,8 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 Account account = _accountService.GetById(id);
-                Role role = new Role(id, vm.RoleName, account.OrganizationId);
+
+                Role role = new Role(vm.RoleId, vm.RoleName, account.OrganizationId);
                 _roleService.Update(role);
                 List<Permission> selectedPermissions = new();
                 foreach (var vmSelectedPermission in vm.SelectedPermissions)
