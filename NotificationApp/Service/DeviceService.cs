@@ -40,9 +40,9 @@ namespace Service
         {
             //_deviceRepository.Update(device);
         }
-        public IEnumerable<Device> GetByOrganization(Organization organization) 
+        public IEnumerable<Device> GetByOrganization(int organizationID) 
         {
-            return _deviceRepository.GetByOrganization(organization);
+            return _deviceRepository.GetByOrganization(organizationID);
         }
     }
 }

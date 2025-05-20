@@ -94,25 +94,32 @@ namespace NotificationApp.Controllers
 
         public IActionResult DevicesPanel()
         {
-            IEnumerable<Device> allDevices = _deviceService.GetAll();
-            List<DeviceViewModel> vmDevices = new();
-            DevicePanelViewModel viewmodel = new DevicePanelViewModel();
-            viewmodel.Devices = new();
-            foreach (Device device in allDevices)
-            {
-                DeviceViewModel vm = new DeviceViewModel
-                {
-                    DeviceID = device.DeviceID,
-                    Name = device.Name,
-                    Location = device.Location,
-                    OrganizationID = device.OrganizationID,
-                    DeviceStatus = device.DeviceStatus
-                };
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                viewmodel.Devices.Add(vm);
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                IEnumerable<Device> DevicesByOrganization = _deviceService.GetByOrganization(account.OrganizationId);
+                List<DeviceViewModel> vmDevices = new();
+                DevicePanelViewModel viewmodel = new DevicePanelViewModel();
+                viewmodel.Devices = new();
+                foreach (Device device in DevicesByOrganization)
+                {
+                    DeviceViewModel vm = new DeviceViewModel
+                    {
+                        DeviceID = device.DeviceID,
+                        Name = device.Name,
+                        Location = device.Location,
+                        OrganizationID = device.OrganizationID,
+                        DeviceStatus = device.DeviceStatus
+                    };
+
+                    viewmodel.Devices.Add(vm);
+                }
+
+                return View(viewmodel);
             }
-            
-            return View(viewmodel);
+            return View();
         }
 
 
@@ -134,32 +141,45 @@ namespace NotificationApp.Controllers
 
         public IActionResult AccountPanel()
         {
-            var accounts = _accountService.GetAll();
-            List<AccountViewModel> vmAccounts = new();
-            foreach (var account in accounts)
-            {
-                var role = _roleService.GetById(account.RoleId);
-                var vmRole = new RoleViewModel
-                {
-                    RoleId = role.RoleId,
-                    Name = role.Name
-                };
-                vmAccounts.Add(new AccountViewModel
-                {
-                    AccountId = account.AccountId,
-                    Name = account.Name,
-                    Email = account.Email,
-                    Password = account.Password,
-                    Role = vmRole
-                });
-            }
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var viewmodel = new AccountPanelViewModel
+            if (int.TryParse(accountId, out int id))
             {
-                Accounts = vmAccounts
-            };
-            
-            return View(viewmodel);
+                var accounts = _accountService.GetAll();
+                List<AccountViewModel> vmAccounts = new();
+                
+                foreach (var account in accounts)
+                {
+                    if (account.AccountId != id)
+                    {
+                        var role = _roleService.GetById(account.RoleId);
+                        var vmRole = new RoleViewModel
+                        {
+                            RoleId = role.RoleId,
+                            Name = role.Name
+                        };
+                        vmAccounts.Add(new AccountViewModel
+                        {
+                            AccountId = account.AccountId,
+                            Name = account.Name,
+                            Email = account.Email,
+                            Password = account.Password,
+                            Role = vmRole
+                        });
+                    }
+                }
+
+                var viewmodel = new AccountPanelViewModel
+                {
+                    Accounts = vmAccounts
+                };
+                
+                return View(viewmodel);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public IActionResult AccountCreateEditPanel()
