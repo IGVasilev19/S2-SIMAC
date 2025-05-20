@@ -308,7 +308,6 @@ namespace NotificationApp.Controllers
                 vm.RoleId = selectedRole.RoleId;
                 vm.RoleName = selectedRole.Name;
 
-
                 List<List<Permission>> allPermissions = (List<List<Permission>>)_permissionService.GetParentAndChildPermissions();
 
                 foreach (Permission parentPermission in allPermissions[0]) //Populate Permissions Property (Parents)
@@ -343,7 +342,7 @@ namespace NotificationApp.Controllers
                 }
                 return View("RolesEditPanel", vm);
             }
-            throw new Exception("UserId Not Found");
+            throw new Exception("TODO");
         }
 
         [HttpPost]
