@@ -10,5 +10,6 @@ namespace NotificationApp.Models
         public List<PermissionViewModel> Permissions { get; set; } = new();
         public List<PermissionViewModel> ChildPermissions { get; set; } = new();
         public List<PermissionViewModel> SelectedPermissions { get; set; } = new();
+        public List<PermissionViewModel> ChildPermissions {get; set; } = new();
     }
 }
