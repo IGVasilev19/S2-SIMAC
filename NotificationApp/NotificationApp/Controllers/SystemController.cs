@@ -255,19 +255,43 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
-
                 RoleCreateEditPanelViewModel vm = new();
-                vm.SelectedPermissions = new List<PermissionViewModel>();
-                foreach (var permission in allPermissions)
+
+                List<List<Permission>> allPermissions = (List<List<Permission>>)_permissionService.GetParentAndChildPermissions();
+
+                foreach (Permission parentPermission in allPermissions[0]) //Populate Permissions Property (Parents)
                 {
-                    PermissionViewModel pVM = new();
-                    pVM.PermissionId = permission.PermissionId;
-                    pVM.Name = permission.Name;
-                    pVM.ParentId = permission.ParentId;
-                    vm.Permissions.Add(pVM);
+                    PermissionViewModel parentViewModel = new();
+                    parentViewModel.PermissionId = parentPermission.PermissionId;
+                    parentViewModel.Name = parentPermission.Name;
+                    vm.Permissions.Add(parentViewModel);
                 }
+
+                foreach (Permission childPermission in allPermissions[1]) //Populate ChildPermissions Property (Children)
+                {
+                    PermissionViewModel childViewModel = new();
+                    childViewModel.PermissionId = childPermission.PermissionId;
+                    childViewModel.Name = childPermission.Name;
+                    childViewModel.ParentId = childPermission.ParentId;
+                    vm.ChildPermissions.Add(childViewModel);
+                }
+
                 return View("RolesCreatePanel", vm);
+
+
+                //List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
+
+                //RoleCreateEditPanelViewModel vm = new();
+                //vm.SelectedPermissions = new List<PermissionViewModel>();
+                //foreach (var permission in allPermissions)
+                //{
+                //    PermissionViewModel pVM = new();
+                //    pVM.PermissionId = permission.PermissionId;
+                //    pVM.Name = permission.Name;
+                //    pVM.ParentId = permission.ParentId;
+                //    vm.Permissions.Add(pVM);
+                //}
+                //return View("RolesCreatePanel", vm);
             }
             throw new Exception("User Not Found");
         }
