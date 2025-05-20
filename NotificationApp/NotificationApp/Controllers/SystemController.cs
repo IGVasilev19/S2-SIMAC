@@ -94,25 +94,32 @@ namespace NotificationApp.Controllers
 
         public IActionResult DevicesPanel()
         {
-            IEnumerable<Device> allDevices = _deviceService.GetAll();
-            List<DeviceViewModel> vmDevices = new();
-            DevicePanelViewModel viewmodel = new DevicePanelViewModel();
-            viewmodel.Devices = new();
-            foreach (Device device in allDevices)
-            {
-                DeviceViewModel vm = new DeviceViewModel
-                {
-                    DeviceID = device.DeviceID,
-                    Name = device.Name,
-                    Location = device.Location,
-                    OrganizationID = device.OrganizationID,
-                    DeviceStatus = device.DeviceStatus
-                };
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                viewmodel.Devices.Add(vm);
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                IEnumerable<Device> DevicesByOrganization = _deviceService.GetByOrganization(account.OrganizationId);
+                List<DeviceViewModel> vmDevices = new();
+                DevicePanelViewModel viewmodel = new DevicePanelViewModel();
+                viewmodel.Devices = new();
+                foreach (Device device in DevicesByOrganization)
+                {
+                    DeviceViewModel vm = new DeviceViewModel
+                    {
+                        DeviceID = device.DeviceID,
+                        Name = device.Name,
+                        Location = device.Location,
+                        OrganizationID = device.OrganizationID,
+                        DeviceStatus = device.DeviceStatus
+                    };
+
+                    viewmodel.Devices.Add(vm);
+                }
+
+                return View(viewmodel);
             }
-            
-            return View(viewmodel);
+            return View();
         }
 
 
@@ -358,27 +365,14 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel", "System");
         }
 
-        [HttpPost]
-        public IActionResult CreateAccount(AccountViewModel accountVM) //TODO: MINA add validation it is an order
-        {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (int.TryParse(accountId, out int id))
-            {
-                Account creator = _accountService.GetById(id);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId , accountVM.Role.RoleId);
-                return RedirectToAction("AccountPanel");
-            }
-            throw new NotImplementedException("TODO");
-        }
-
         public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
-                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(id);
+                Account creatorAccount = _accountService.GetById(id);
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
                 AccountCreateEditPanelViewModel vm = new();
                 foreach(var role in allRoles)
                 {
@@ -388,6 +382,87 @@ namespace NotificationApp.Controllers
                     vm.Roles.Add(rVM);
                 }
                 return View("AccountCreatePanel", vm);
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.ErrorMessage = "Please fill in all required fields.";
+                return View("AccountCreatePanel", accountVM); //TODO: MINA add validation it is an order
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account creator = _accountService.GetById(id);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                return RedirectToAction("AccountPanel");
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                AccountCreateEditPanelViewModel vm = new();
+
+                Account creatorAccount = _accountService.GetById(id);
+
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
+                foreach (var role in allRoles)
+                {
+                    RoleViewModel rVM = new();
+                    rVM.RoleId = role.RoleId;
+                    rVM.Name = role.Name;
+                    vm.Roles.Add(rVM);
+                }
+
+                vm.Name = accountVM.Name;
+                vm.Email = accountVM.Email;
+                vm.SelectedRole = new RoleViewModel();
+                vm.SelectedRole.RoleId = accountVM.Role.RoleId;
+                vm.SelectedRole.Name = accountVM.Role.Name;
+
+                return View("AccountEditPanel", vm);
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        [HttpPost]
+        public IActionResult EditAccount(AccountCreateEditPanelViewModel accountVM)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.ErrorMessage = "Please fill in all required fields.";
+                return View("AccountEditPanel", accountVM); //TODO: MINA add validation it is an order
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account creator = _accountService.GetById(id);
+
+                Account selectedAccount = _accountService.GetByEmail(accountVM.Email);
+
+                if (string.IsNullOrEmpty(selectedAccount.Password))
+                {
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    return RedirectToAction("AccountPanel");
+                }
+                else
+                {
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    return RedirectToAction("AccountPanel");
+                }
             }
             throw new NotImplementedException("TODO");
         }
