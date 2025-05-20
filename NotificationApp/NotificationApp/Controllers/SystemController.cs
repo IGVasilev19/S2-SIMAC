@@ -94,25 +94,32 @@ namespace NotificationApp.Controllers
 
         public IActionResult DevicesPanel()
         {
-            IEnumerable<Device> allDevices = _deviceService.GetAll();
-            List<DeviceViewModel> vmDevices = new();
-            DevicePanelViewModel viewmodel = new DevicePanelViewModel();
-            viewmodel.Devices = new();
-            foreach (Device device in allDevices)
-            {
-                DeviceViewModel vm = new DeviceViewModel
-                {
-                    DeviceID = device.DeviceID,
-                    Name = device.Name,
-                    Location = device.Location,
-                    OrganizationID = device.OrganizationID,
-                    DeviceStatus = device.DeviceStatus
-                };
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                viewmodel.Devices.Add(vm);
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                IEnumerable<Device> DevicesByOrganization = _deviceService.GetByOrganization(account.OrganizationId);
+                List<DeviceViewModel> vmDevices = new();
+                DevicePanelViewModel viewmodel = new DevicePanelViewModel();
+                viewmodel.Devices = new();
+                foreach (Device device in DevicesByOrganization)
+                {
+                    DeviceViewModel vm = new DeviceViewModel
+                    {
+                        DeviceID = device.DeviceID,
+                        Name = device.Name,
+                        Location = device.Location,
+                        OrganizationID = device.OrganizationID,
+                        DeviceStatus = device.DeviceStatus
+                    };
+
+                    viewmodel.Devices.Add(vm);
+                }
+
+                return View(viewmodel);
             }
-            
-            return View(viewmodel);
+            return View();
         }
 
 
