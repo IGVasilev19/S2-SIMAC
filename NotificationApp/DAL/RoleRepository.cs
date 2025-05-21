@@ -161,5 +161,17 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        public bool CheckIfRoleOccupied(int roleId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT COUNT(*) FROM Account WHERE RoleId = @roleId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@roleId", roleId);
+
+                return Convert.ToBoolean(cmd.ExecuteScalar());
+            }
+        }
     }
 }

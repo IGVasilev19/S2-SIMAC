@@ -11,7 +11,7 @@ namespace Service.Interfaces
     {
         void AssignPermission(int roleId, IEnumerable<Permission> permissions);
         int Add(Role role);
-        void Delete(int roleId);
+        bool Delete(int roleId);
         void Update(Role role);
         Role GetById(int roleId);
         IEnumerable<Role> GetAllRolesByOrganisationId(int userId);
