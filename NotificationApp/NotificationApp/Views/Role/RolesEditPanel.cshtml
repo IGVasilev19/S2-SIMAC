@@ -64,7 +64,7 @@
         </div>
 
         <div class="w-[94%] h-fit flex justify-end items-center gap-2">
-            <a asp-action="RolesPanel" asp-controller="System" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</a>
+            <a asp-action="RolesPanel" asp-controller="Role" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</a>
             <input type="hidden" asp-for="@Model.RoleId" />
             <input type="hidden" asp-for="@Model.RoleName"/>
             <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
