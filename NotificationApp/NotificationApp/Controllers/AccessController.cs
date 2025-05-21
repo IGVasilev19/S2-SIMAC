@@ -21,12 +21,22 @@ namespace NotificationApp.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Inbox", "System");
+            }
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> LogIn(string email, string password)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index");
+            }
+
             var account = accountService.LogIn(email, password);
 
             if (account == null)

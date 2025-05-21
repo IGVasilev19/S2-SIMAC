@@ -11,6 +11,6 @@ namespace DAL.Interfaces
     {
         public Account GetByEmail(string email);
 
-        public Account GetByOrganization(int organizationId);
+        public IEnumerable<Account> GetByOrganization(int organizationId);
     }
 }
