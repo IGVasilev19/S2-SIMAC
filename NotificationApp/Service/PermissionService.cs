@@ -51,7 +51,7 @@ namespace Service
             }
 
             List<Permission> childPermissions = new();
-            foreach (Permission permission in childPermissions)
+            foreach (Permission permission in allPermissions)
             {
                 if(permission.ParentId != null)
                 {
