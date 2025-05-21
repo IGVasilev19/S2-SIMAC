@@ -15,5 +15,6 @@ namespace Service.Interfaces
         void Update(Role role);
         Role GetById(int roleId);
         IEnumerable<Role> GetAllRolesByOrganisationId(int userId);
+        public IEnumerable<Role> SearchRoles(string filter, int organizationId);
     }
 }

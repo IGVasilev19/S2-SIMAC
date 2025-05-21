@@ -58,5 +58,15 @@ namespace Service
         {
             return _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
         }
+
+        public IEnumerable<Notification> SearchNotifications(string  filter, Account account, List<int> permissionIds)
+        {
+            IEnumerable<Notification> filteredNotifications = _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredNotifications = filteredNotifications.Where(s => s.Title.ToUpper().Contains(filter.ToUpper()) || s.Content.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredNotifications;
+        }
     }
 }
