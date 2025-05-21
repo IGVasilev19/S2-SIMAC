@@ -30,7 +30,8 @@
                                         <div class="border-b py-1.5 flex justify-between items-center w-full">
 
                                             <div class="flex items-center gap-2">
-                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[15px] h-[15px] border border-gray-300" />
+                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[15px] h-[15px] border border-gray-300"
+                                                @(Model.SelectedPermissions.Any(p => p.PermissionId == permission.PermissionId) ? "checked" : "")/>
                                                 <label class="text-black">@permission.Name</label>
                                             </div>
 
@@ -48,7 +49,8 @@
                                                 foreach (var child in children)
                                                 {
                                                     <label class="flex items-center gap-2">
-                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="w-[16px] h-[16px] border border-gray-300" />
+                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="w-[16px] h-[16px] border border-gray-300"
+                                                        @(Model.SelectedPermissions.Any(p => p.PermissionId == child.PermissionId) ? "checked" : "") />
                                                         @child.Name
                                                     </label>
                                                 }
