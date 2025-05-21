@@ -356,14 +356,17 @@ namespace NotificationApp.Controllers
                 Role role = new Role(id, vm.RoleName, account.OrganizationId);
                 _roleService.Update(role);
                 List<Permission> selectedPermissions = new();
+
                 foreach (var vmSelectedPermission in vm.SelectedPermissions)
                 {
                     Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
                     selectedPermissions.Add(p);
                 }
+
                 _roleService.AssignPermission(role.RoleId, selectedPermissions);
                 return RedirectToAction("RolesPanel");
             }
+            
             throw new Exception("UserId Not Found");
         }
 
