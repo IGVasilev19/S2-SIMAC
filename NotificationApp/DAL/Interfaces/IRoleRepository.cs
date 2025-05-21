@@ -14,5 +14,6 @@ namespace DAL.Interfaces
         void AssignPermission(int roleId, IEnumerable<Permission> permissions);
         public int AddRole(Role role);
         IEnumerable<Role> GetAllRolesByOrganisationId(int organizationId);
+        public bool CheckIfRoleOccupied(int roleId);
     }
 }

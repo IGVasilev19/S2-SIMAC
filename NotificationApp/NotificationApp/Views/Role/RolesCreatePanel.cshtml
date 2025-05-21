@@ -36,15 +36,14 @@
                                                 <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="h-[15px] w-[15px] border border-gray-300" />
                                                 <label class="text-black">@permission.Name</label>
                                             </div>
-
-                                            <label for="toggle-@permission.PermissionId" class="cursor-pointer pr-1">
-                                                <img src="../images/plus.svg" class="h-[15px] transition-transform duration-300 peer-checked:rotate-45" />
+                                            <label for="toggle-@permission.PermissionId" class="cursor-pointer pr-1 transition-transform duration-300 peer-checked:rotate-45">
+                                                <img src="../images/plus.svg" class="h-[15px]" />
                                             </label>
                                         </div>
 
                                         <div class="flex max-h-0 flex-col gap-1 overflow-hidden pt-2 pl-6 text-sm text-gray-600 transition-all duration-300 peer-checked:max-h-64">
                                             @{
-                                                var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId);
+                                                var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId && Model.SelectedPermissions.Any(sp => sp.PermissionId == c.ParentId));
                                             }
                                             @if (children.Any())
                                             {
