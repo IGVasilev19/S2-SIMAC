@@ -78,5 +78,20 @@ namespace Service
         {
             return _accountRepository.GetByEmail(email);
         }
+
+        public IEnumerable<Account> GetByOrganization(int organizationId)
+        {
+            return _accountRepository.GetByOrganization(organizationId);
+        }
+
+        public IEnumerable<Account> SearchAccounts(string filter, int organizationId)
+        {
+            IEnumerable<Account> filteredAccounts = _accountRepository.GetByOrganization(organizationId);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredAccounts = filteredAccounts.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredAccounts;
+        }
     }
 }

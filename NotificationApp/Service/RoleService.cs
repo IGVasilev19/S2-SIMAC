@@ -55,5 +55,15 @@ namespace Service
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Role> SearchRoles(string filter, int organizationId)
+        {
+            IEnumerable<Role> filteredRoles = _roleRepository.GetAllRolesByOrganisationId(organizationId);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredRoles = filteredRoles.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredRoles;
+        }
     }
 }
