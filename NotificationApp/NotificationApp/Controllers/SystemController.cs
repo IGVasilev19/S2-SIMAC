@@ -306,14 +306,14 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 Role newRole = new Role(vm.RoleName, account.OrganizationId);
-                _roleService.Add(newRole);
+                int addedRoleId = _roleService.Add(newRole);
                 List<Permission> selectedPermissions = new();
-                foreach (var vmSelectedPermission in vm.SelectedPermissions)
+                foreach (int pId in permissionIds)
                 {
-                    Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
+                    Permission p = _permissionService.GetById(pId);
                     selectedPermissions.Add(p);
                 }
-                _roleService.AssignPermission(newRole.RoleId, selectedPermissions);
+                _roleService.AssignPermission(addedRoleId, selectedPermissions);
                 return RedirectToAction("RolesPanel");
             }
             throw new Exception("UserId Not Found");

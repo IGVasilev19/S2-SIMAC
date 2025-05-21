@@ -52,7 +52,11 @@ namespace Service
         public Account LogIn(string email, string password)
         {
             Account account = _accountRepository.GetByEmail(email);
-            return account;
+            if (account != null && PasswordHasher.Verify(password, account.Password))
+            {
+                return account;
+            }
+            return null;
         }
 
         public Account GetById(int id) => _accountRepository.GetById(id);
