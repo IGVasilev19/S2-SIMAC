@@ -29,7 +29,7 @@ namespace Service
 
         public bool Delete(int roleId)
         {
-            if(_roleRepository.CheckIfRoleOccupied(roleId))
+            if(!_roleRepository.CheckIfRoleOccupied(roleId))
             {
                 _roleRepository.Delete(roleId);
                 return true;

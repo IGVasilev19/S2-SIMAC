@@ -230,8 +230,15 @@ namespace NotificationApp.Controllers
 
         public IActionResult DeleteRole(int roleId)
         {
-            _roleService.Delete(roleId);
-            return RedirectToAction("RolesPanel", "Role");
+            if (_roleService.Delete(roleId))
+            {
+                return RedirectToAction("RolesPanel", "Role");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "This role is being used by 1 or more accounts and can't be deleted.";
+                return RedirectToAction("RolesPanel", "Role");
+            }
         }
     }
 }
