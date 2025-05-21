@@ -1,5 +1,6 @@
 using Azure.Identity;
 using BLL;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -55,34 +56,6 @@ namespace NotificationApp.Controllers
             }
         }
 
-
-        //[HttpPost]
-
-        //public IActionResult UpdateRole(int roleId, string roleName, IEnumerable<int> permissionIds)
-        //{
-        //    if (string.IsNullOrEmpty(roleName) || permissionIds == null)
-        //    {
-        //        return BadRequest("Invalid role name or permissions.");
-        //    }
-
-        //    Role role = _roleService.GetById(roleId);
-        //    role.Name = roleName;
-        //    _roleService.Update(role);
-
-        //    //List<Permission> permissions = permissionIds
-        //    //    .Select(permissionId => _permissionService.GetById(permissionId))
-        //    //    .ToList();
-
-        //    var permissions = permissionIds
-        //    .Select(id => _permissionService.GetById(id))
-        //    .Where(p => p != null);
-
-        //    _roleService.AssignPermission(roleId, permissions);
-
-        //    return RedirectToAction("RolesPanel");
-        //}
-
-        //TODO: IMPLEMENT FRONT END
         public IActionResult RolesCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -111,29 +84,19 @@ namespace NotificationApp.Controllers
                 }
 
                 return View("RolesCreatePanel", vm);
-
-
-                //List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
-
-                //RoleCreateEditPanelViewModel vm = new();
-                //vm.SelectedPermissions = new List<PermissionViewModel>();
-                //foreach (var permission in allPermissions)
-                //{
-                //    PermissionViewModel pVM = new();
-                //    pVM.PermissionId = permission.PermissionId;
-                //    pVM.Name = permission.Name;
-                //    pVM.ParentId = permission.ParentId;
-                //    vm.Permissions.Add(pVM);
-                //}
-                //return View("RolesCreatePanel", vm);
             }
             throw new Exception("User Not Found");
         }
 
-        //TODO: IMPLEMENT FRONT END
         [HttpPost]
-        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Permission displaying in front end
+        public IActionResult CreateRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) 
         {
+            //ModelState.Remove(nameof(RoleCreateEditPanelViewModel.RoleId));
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("RolesCreatePanel"); //TODO:
+            }
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
@@ -152,7 +115,7 @@ namespace NotificationApp.Controllers
             }
             throw new Exception("UserId Not Found");
         }
-
+          
         //TODO: IMPLEMENT FRONT END
 
         public IActionResult RolesEditPanel(int roleId)
@@ -207,6 +170,11 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult EditRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Needs to be hooked up to Front-End
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("RolesEditPanel", new { roleId = vm.RoleId });
+            }
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
