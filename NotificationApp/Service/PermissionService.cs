@@ -36,5 +36,34 @@ namespace Service
         {
             return _permissionRepository.GetPermissionsByRoleId(roleId);
         }
+
+        public IEnumerable<IEnumerable<Permission>> GetParentAndChildPermissions()
+        {
+            List<Permission> allPermissions = (List<Permission>)_permissionRepository.GetAll();
+
+            List<Permission> parentPermissions = new();
+            foreach (Permission permission in allPermissions)
+            {
+                if(permission.ParentId == null)
+                {
+                    parentPermissions.Add(permission);
+                }
+            }
+
+            List<Permission> childPermissions = new();
+            foreach (Permission permission in childPermissions)
+            {
+                if(permission.ParentId != null)
+                {
+                    childPermissions.Add(permission);
+                }
+            }
+
+            List<List<Permission>> compressedPermissionsList = new();
+            compressedPermissionsList.Add(parentPermissions);
+            compressedPermissionsList.Add(childPermissions);
+
+            return compressedPermissionsList;
+        }
     }
 }

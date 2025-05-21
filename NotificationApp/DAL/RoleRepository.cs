@@ -91,9 +91,11 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Role SET [Name] = @name";
+                string query = "UPDATE Role SET [Name] = @name WHERE RoleId = @roleId";
                 SqlCommand cmd = new SqlCommand(query, conn);
+
                 cmd.Parameters.AddWithValue("@name", role.Name);
+                cmd.Parameters.AddWithValue("@roleId", role.RoleId);
 
                 cmd.ExecuteNonQuery();
             }
