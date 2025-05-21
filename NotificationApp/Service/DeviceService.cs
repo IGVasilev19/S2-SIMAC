@@ -1,6 +1,7 @@
 ﻿using BLL;
 using DAL;
 using DAL.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,19 @@ namespace Service
         {
             //_deviceRepository.Update(device);
         }
-        public IEnumerable<Device> GetByOrganization(Organization organization) 
+        public IEnumerable<Device> GetByOrganization(int organizationID) 
         {
-            return _deviceRepository.GetByOrganization(organization);
+            return _deviceRepository.GetByOrganization(organizationID);
+        }
+
+        public IEnumerable<Device> SearchDevices(string filter, int organizationId)
+        {
+            IEnumerable<Device> filteredDevices = _deviceRepository.GetByOrganization(organizationId);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredDevices = filteredDevices.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredDevices;
         }
     }
 }

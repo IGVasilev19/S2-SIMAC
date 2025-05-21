@@ -92,27 +92,74 @@ namespace NotificationApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult FilterNotifications(InboxViewModel vm) //TODO: Connect? Idk what I'm doing! Will this work? Will it not? Ig we'll find out!
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Inbox", vm);
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (accountId != null)
+            {
+                if (int.TryParse(accountId, out int id))
+                {
+                    var account = _accountService.GetById(id);
+
+                    var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
+                    var permissionIds = permissions.Select(p => p.PermissionId).ToList();
+                    var notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds);
+
+                    var vmNotifications = new List<NotificationViewModel>();
+
+                    foreach (var notification in notifications)
+                    {
+                        vmNotifications.Add(new NotificationViewModel
+                        {
+                            NotificationID = notification.NotificationID,
+                            Title = notification.Title,
+                            Content = notification.Content,
+                            Important = notification.Important,
+                            Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
+                        });
+                    }
+                    vm.Notifications = vmNotifications;
+                }
+            }
+
+            return View("Inbox", vm);
+        }
+
         public IActionResult DevicesPanel()
         {
-            IEnumerable<Device> allDevices = _deviceService.GetAll();
-            List<DeviceViewModel> vmDevices = new();
-            DevicePanelViewModel viewmodel = new DevicePanelViewModel();
-            viewmodel.Devices = new();
-            foreach (Device device in allDevices)
-            {
-                DeviceViewModel vm = new DeviceViewModel
-                {
-                    DeviceID = device.DeviceID,
-                    Name = device.Name,
-                    Location = device.Location,
-                    OrganizationID = device.OrganizationID,
-                    DeviceStatus = device.DeviceStatus
-                };
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                viewmodel.Devices.Add(vm);
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                IEnumerable<Device> DevicesByOrganization = _deviceService.GetByOrganization(account.OrganizationId);
+                List<DeviceViewModel> vmDevices = new();
+                DevicePanelViewModel viewmodel = new DevicePanelViewModel();
+                viewmodel.Devices = new();
+                foreach (Device device in DevicesByOrganization)
+                {
+                    DeviceViewModel vm = new DeviceViewModel
+                    {
+                        DeviceID = device.DeviceID,
+                        Name = device.Name,
+                        Location = device.Location,
+                        OrganizationID = device.OrganizationID,
+                        DeviceStatus = device.DeviceStatus
+                    };
+
+                    viewmodel.Devices.Add(vm);
+                }
+
+                return View(viewmodel);
             }
-            
-            return View(viewmodel);
+            return View();
         }
 
 
@@ -175,10 +222,11 @@ namespace NotificationApp.Controllers
             }
         }
 
-        public IActionResult AccountCreateEditPanel()
+        public IActionResult AccountEditPanel()
         {
             return View();
         }
+
         public IActionResult Analytics()
         {
             return View();
@@ -192,18 +240,18 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 int orgId = account.OrganizationId;
-                List<RoleViewModel> allRoles = new();
-                foreach(Role role in _roleService.GetAllRolesByOrganisationId(orgId))
+                RolesPanelViewModel vm = new();
+                vm.Roles = new();
+
+                foreach (Role role in _roleService.GetAllRolesByOrganisationId(orgId))
                 {
-                    allRoles.Add(new RoleViewModel
+                    var newRole = new RoleViewModel
                     {
                         RoleId = role.RoleId,
                         Name = role.Name
-                    });
-                }
-                RolesPanelViewModel vm = new RolesPanelViewModel
-                {
-                    Roles = allRoles
+                    };
+
+                    vm.Roles.Add(newRole);
                 };
 
                 return View(vm);
@@ -248,17 +296,43 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
                 RoleCreateEditPanelViewModel vm = new();
-                vm.SelectedPermissions = new List<PermissionViewModel>();
-                foreach (var permission in allPermissions)
+
+                List<List<Permission>> allPermissions = (List<List<Permission>>)_permissionService.GetParentAndChildPermissions();
+
+                foreach (Permission parentPermission in allPermissions[0]) //Populate Permissions Property (Parents)
                 {
-                    PermissionViewModel pVM = new();
-                    pVM.PermissionId = permission.PermissionId;
-                    pVM.Name = permission.Name;
-                    vm.Permissions.Add(pVM);
+                    PermissionViewModel parentViewModel = new();
+                    parentViewModel.PermissionId = parentPermission.PermissionId;
+                    parentViewModel.Name = parentPermission.Name;
+                    vm.Permissions.Add(parentViewModel);
                 }
+
+                foreach (Permission childPermission in allPermissions[1]) //Populate ChildPermissions Property (Children)
+                {
+                    PermissionViewModel childViewModel = new();
+                    childViewModel.PermissionId = childPermission.PermissionId;
+                    childViewModel.Name = childPermission.Name;
+                    childViewModel.ParentId = childPermission.ParentId;
+                    vm.ChildPermissions.Add(childViewModel);
+                }
+
                 return View("RolesCreatePanel", vm);
+
+
+                //List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
+
+                //RoleCreateEditPanelViewModel vm = new();
+                //vm.SelectedPermissions = new List<PermissionViewModel>();
+                //foreach (var permission in allPermissions)
+                //{
+                //    PermissionViewModel pVM = new();
+                //    pVM.PermissionId = permission.PermissionId;
+                //    pVM.Name = permission.Name;
+                //    pVM.ParentId = permission.ParentId;
+                //    vm.Permissions.Add(pVM);
+                //}
+                //return View("RolesCreatePanel", vm);
             }
             throw new Exception("User Not Found");
         }
@@ -294,30 +368,47 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                List<Permission> allPermissions = (List<Permission>)_permissionService.GetAll();
-                List<Permission> selectedPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
                 RoleCreateEditPanelViewModel vm = new();
 
-                vm.Permissions = new();
-                foreach (var permission in allPermissions)
+                Role selectedRole = _roleService.GetById(roleId);
+                vm.RoleId = selectedRole.RoleId;
+                vm.RoleName = selectedRole.Name;
+
+                List<List<Permission>> allPermissions = (List<List<Permission>>)_permissionService.GetParentAndChildPermissions();
+
+                foreach (Permission parentPermission in allPermissions[0]) //Populate Permissions Property (Parents)
                 {
-                    PermissionViewModel pVM = new();
-                    pVM.PermissionId = permission.PermissionId;
-                    pVM.Name = permission.Name;
-                    vm.Permissions.Add(pVM);
+                    PermissionViewModel parentViewModel = new();
+                    parentViewModel.PermissionId = parentPermission.PermissionId;
+                    parentViewModel.Name = parentPermission.Name;
+                    vm.Permissions.Add(parentViewModel);
                 }
 
-                vm.SelectedPermissions = new List<PermissionViewModel>();
-                foreach(var permission in selectedPermissions)
+                foreach (Permission childPermission in allPermissions[1]) //Populate ChildPermissions Property (Children)
                 {
-                    PermissionViewModel pVM = new();
-                    pVM.PermissionId = permission.PermissionId;
-                    pVM.Name = permission.Name;
-                    vm.SelectedPermissions.Add(pVM);
+                    PermissionViewModel childViewModel = new();
+                    childViewModel.PermissionId = childPermission.PermissionId;
+                    childViewModel.Name = childPermission.Name;
+                    childViewModel.ParentId = childPermission.ParentId;
+                    vm.ChildPermissions.Add(childViewModel);
                 }
-                return View("RolesEditPanel", vm);
+
+                List<Permission> currentPermissions = (List<Permission>)_permissionService.GetPermissionsByRoleId(roleId);
+
+                foreach (Permission permission in currentPermissions) //Populate SelectedPermissions Property 
+                {
+                    PermissionViewModel selectedPermission = new();
+                    selectedPermission.PermissionId = permission.PermissionId;
+                    selectedPermission.Name = permission.Name;
+                    if (permission.ParentId != null)
+                    {
+                        selectedPermission.ParentId = permission.ParentId;
+                    }
+                    vm.SelectedPermissions.Add(selectedPermission);
+                }
+                return View(vm);
             }
-            throw new Exception("UserId Not Found");
+            throw new Exception("TODO");
         }
 
         [HttpPost]
@@ -328,7 +419,8 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 Account account = _accountService.GetById(id);
-                Role role = new Role(id, vm.RoleName, account.OrganizationId);
+
+                Role role = new Role(vm.RoleId, vm.RoleName, account.OrganizationId);
                 _roleService.Update(role);
                 List<Permission> selectedPermissions = new();
                 foreach (var vmSelectedPermission in vm.SelectedPermissions)
@@ -358,27 +450,14 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel", "System");
         }
 
-        [HttpPost]
-        public IActionResult CreateAccount(AccountViewModel accountVM) //TODO: MINA add validation it is an order
-        {
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (int.TryParse(accountId, out int id))
-            {
-                Account creator = _accountService.GetById(id);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId , accountVM.Role.RoleId);
-                return RedirectToAction("AccountPanel");
-            }
-            throw new NotImplementedException("TODO");
-        }
-
         public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
-                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(id);
+                Account creatorAccount = _accountService.GetById(id);
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
                 AccountCreateEditPanelViewModel vm = new();
                 foreach(var role in allRoles)
                 {
@@ -388,6 +467,87 @@ namespace NotificationApp.Controllers
                     vm.Roles.Add(rVM);
                 }
                 return View("AccountCreatePanel", vm);
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.ErrorMessage = "Please fill in all required fields.";
+                return View("AccountCreatePanel", accountVM); //TODO: MINA add validation it is an order
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account creator = _accountService.GetById(id);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                return RedirectToAction("AccountPanel");
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                AccountCreateEditPanelViewModel vm = new();
+
+                Account creatorAccount = _accountService.GetById(id);
+
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
+                foreach (var role in allRoles)
+                {
+                    RoleViewModel rVM = new();
+                    rVM.RoleId = role.RoleId;
+                    rVM.Name = role.Name;
+                    vm.Roles.Add(rVM);
+                }
+
+                vm.Name = accountVM.Name;
+                vm.Email = accountVM.Email;
+                vm.SelectedRole = new RoleViewModel();
+                vm.SelectedRole.RoleId = accountVM.Role.RoleId;
+                vm.SelectedRole.Name = accountVM.Role.Name;
+
+                return View("AccountEditPanel", vm);
+            }
+            throw new NotImplementedException("TODO");
+        }
+
+        [HttpPost]
+        public IActionResult EditAccount(AccountCreateEditPanelViewModel accountVM)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.ErrorMessage = "Please fill in all required fields.";
+                return View("AccountEditPanel", accountVM); //TODO: MINA add validation it is an order
+            }
+
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account creator = _accountService.GetById(id);
+
+                Account selectedAccount = _accountService.GetByEmail(accountVM.Email);
+
+                if (string.IsNullOrEmpty(selectedAccount.Password))
+                {
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    return RedirectToAction("AccountPanel");
+                }
+                else
+                {
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    return RedirectToAction("AccountPanel");
+                }
             }
             throw new NotImplementedException("TODO");
         }

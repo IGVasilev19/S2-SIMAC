@@ -30,7 +30,7 @@
                                     <td class="px-6 py-3 space-x-2 text-right">
                                         <form asp-action="DeleteRole" asp-controller="System" method="post">
                                             <input type="hidden" name="roleId" value="@Model.Roles[i].RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="System" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <a asp-action="RolesEditPanel" asp-controller="System" asp-route-roleId="@Model.Roles[i].RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
                                             <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                         </form>
                                     </td>
@@ -43,7 +43,7 @@
                                     <td class="px-6 py-3 space-x-2 text-right">
                                         <form asp-action="DeleteRole" asp-controller="System" method="post">
                                             <input type="hidden" name="roleId" value="@Model.Roles[i].RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="System" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <a asp-action="RolesEditPanel" asp-controller="System" asp-route-roleId="@Model.Roles[i].RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
                                             <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                         </form>
                                     </td>

@@ -88,11 +88,12 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Account SET Name = @name, Email = @email, Password = @password, RoleId = @roleId WHERE AccountId = @id";
+                string query = "UPDATE Account SET Name = @name, Email = @email, Password = @password, OrganizationId = @organizationId, RoleId = @roleId WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", account.Name);
                 cmd.Parameters.AddWithValue("@email", account.Email);
                 cmd.Parameters.AddWithValue("@password", account.Password);
+                cmd.Parameters.AddWithValue("@organizationId", account.OrganizationId);
                 cmd.Parameters.AddWithValue("@roleId", account.RoleId);
                 cmd.Parameters.AddWithValue("@id", account.AccountId);
 
@@ -140,18 +141,18 @@ namespace DAL
             return null;
         }
 
-        public Account GetByOrganization(int organizationId)
+        public IEnumerable<Account> GetByOrganization(int organizationId)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-
                 string query = "SELECT AccountId, Name, Email, Password, OrganizationId, RoleId FROM Account WHERE OrganizationId = @organizationId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@organizationId", organizationId);
 
+                List<Account> accounts = new List<Account>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         Account user = new Account(
                             reader.GetInt32(reader.GetOrdinal("AccountId")),
@@ -161,8 +162,9 @@ namespace DAL
                             reader.GetInt32(reader.GetOrdinal("OrganizationId")),
                             reader.GetInt32(reader.GetOrdinal("RoleId"))
                         );
-                        return user;
+                        accounts.Add(user);
                     }
+                    return accounts;
                 }
             }
             return null;

@@ -1,53 +1,74 @@
-@{
+﻿@{
     ViewData["Title"] = "Roles Create panel";
 }
 @using NotificationApp.Models
 @model RoleCreateEditPanelViewModel
 
-<div class="w-full h-full flex">
-@Html.Partial("_Navbar")
+<div class="flex h-full w-full">
+    @Html.Partial("_Navbar")
+
     <form asp-action="CreateRole" asp-controller="System" method="post" class="w-full h-full flex flex-col items-center gap-4 bg-gray-300">
         <div class="w-[94%] h-[93%] flex flex-col items-center gap-6">
             <div class="w-full flex items-center justify-center bg-white gap-2 shadow-md p-4 mt-2">   
-                <p class="w-fit text-md font-semibold m-0 text-black">Role Name: </p>
+                <p class="w-fit text-md font-semibold m-0 text-black">Role Name:</p>
                 <input asp-for="RoleName" type="text" placeholder="Type role name" class="w-[600px] px-2 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>          
             </div>
+            
             <div class="w-full h-full bg-white shadow-md p-4 mx-5">
                 <div class="w-full h-full flex flex-col items-center gap-5">
-                        <div class="flex w-full justify-center items-center gap-2">
-                            <input type="text" placeholder="Search permission" class="w-[600px] px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
-                            <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
-                        </div>
+
+                    <div class="flex w-full justify-center items-center gap-2">
+                        <input type="text" placeholder="Search permission" class="w-[600px] px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
+                        <button type="button" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
+                    </div>
+
                     <table class="w-[650px]">
                         <tbody>
                             @foreach (var permission in Model.Permissions)
                             {
-                                <tr class="flex w-full flex-col justify-center">
-                                    <td>
-                                        <div class="border-b py-1.5 flex justify-between items-center">
-                                            <div>
-                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[20px] bg-white hover:bg-gray-100 text-black font-semibold px-8 py-2 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer" />
-                                                <label
-                                                    class="inline-block ps-[0.15rem] hover:cursor-pointer">
-                                                    @permission.Name
-                                                </label>
+                                <tr class="flex w-full flex-col">
+                                    <td class="w-full">
+                                        <input type="checkbox" id="toggle-@permission.PermissionId" class="hidden peer" />
+
+                                        <div class="border-b py-1.5 flex justify-between items-center w-full">
+
+                                            <div class="flex items-center gap-2">
+                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="h-[15px] w-[15px] border border-gray-300" />
+                                                <label class="text-black">@permission.Name</label>
                                             </div>
-                                            <button class="flex hover:cursor-pointer justify-center items-center pr-1">
-                                                <img src="../images/plus.svg" class="h-[15px]"/>
-                                            </button>
+
+                                            <label for="toggle-@permission.PermissionId" class="cursor-pointer pr-1">
+                                                <img src="../images/plus.svg" class="h-[15px] transition-transform duration-300 peer-checked:rotate-45" />
+                                            </label>
                                         </div>
-                                    </td>  
+
+                                        <div class="pl-6 pt-2 max-h-0 overflow-hidden peer-checked:max-h-64 transition-all duration-300 flex flex-col gap-1 text-sm text-gray-600">
+                                            @{
+                                                var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId);
+                                            }
+                                            @if (children.Any())
+                                            {
+                                                foreach (var child in children)
+                                                {
+                                                    <label class="flex items-center gap-2">
+                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="h-[16px] w-[16px] border border-gray-300" />
+                                                        @child.Name
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
                                 </tr>
                             }
-                        </tbody> 
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="w-[94%] h-fit flex justify-end items-center gap-2">
-            <a asp-action="RolesPanel" asp-controller="System" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Discard</a>
-            <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Save</button>            
+
+        <div class="flex h-fit w-[94%] items-center justify-end gap-2">
+            <a asp-action="RolesPanel" asp-controller="System" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Discard</a>
+            <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Save</button>            
         </div>
     </form>
-    
 </div>

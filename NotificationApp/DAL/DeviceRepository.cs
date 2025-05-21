@@ -133,7 +133,7 @@ namespace DAL
             }
         }
 
-        public IEnumerable<Device> GetByOrganization(Organization organization) 
+        public IEnumerable<Device> GetByOrganization(int organizationID) 
         {
             List<Device> devices = new List<Device>();
 
@@ -142,7 +142,7 @@ namespace DAL
                 string query = "SELECT * from Device where OrganizationId = @OrganizationId";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@OrganizationId", organization.OrganizationId);
+                cmd.Parameters.AddWithValue("@OrganizationId", organizationID);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

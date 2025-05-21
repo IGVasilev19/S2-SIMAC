@@ -17,7 +17,7 @@ namespace DAL
             List<Permission> permissions = new List<Permission>();
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT PermissionId, Name FROM Permission";
+                string query = "SELECT PermissionId, Name, ParentId FROM Permission";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -25,7 +25,8 @@ namespace DAL
                     {
                         Permission permission = new Permission(
                             reader.GetInt32(0),
-                            reader.GetString(1)
+                            reader.GetString(1),
+                            reader.IsDBNull(2) ? null : reader.GetInt32(2)
                         );
 
                         permissions.Add(permission);
@@ -49,7 +50,8 @@ namespace DAL
                     {
                         Permission permission = new Permission(
                             reader.GetInt32(0),
-                            reader.GetString(1)
+                            reader.GetString(1),
+                            reader.IsDBNull(2) ? null : reader.GetInt32(2)
                         );
 
                         return permission;
@@ -66,7 +68,7 @@ namespace DAL
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 string query = @"
-                    SELECT p.PermissionId, p.Name
+                    SELECT p.PermissionId, p.Name, p.ParentId
                     FROM RolePermission rp
                     JOIN Permission p ON rp.PermissionId = p.PermissionId
                     WHERE rp.RoleId = @roleId";
@@ -80,7 +82,8 @@ namespace DAL
                     {
                         int id = reader.GetInt32(0);
                         string name = reader.GetString(1);
-                        permissions.Add(new Permission(id, name));
+                        int? parentId = reader.IsDBNull(2) ? null : reader.GetInt32(2);
+                        permissions.Add(new Permission(id, name, parentId));
                     }
                 }
             }

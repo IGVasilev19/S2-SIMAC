@@ -58,5 +58,36 @@ namespace Service
         public Account GetById(int id) => _accountRepository.GetById(id);
 
         public void DeleteById(int id) => _accountRepository.Delete(id);
+
+        public void Update(int id, string name, string email, string password, int organizationId, int roleId)
+        {
+            // Hash the password with a salt using BCrypt  
+            string hashedPassword = PasswordHasher.Hash(password);
+
+            // Create a new account with the hashed password  
+            Account updatedAccount = new Account(id, name, email, hashedPassword, organizationId, roleId);
+
+            // Update the account in the repository  
+            _accountRepository.Update(updatedAccount);
+        }
+        public Account GetByEmail(string email)
+        {
+            return _accountRepository.GetByEmail(email);
+        }
+
+        public IEnumerable<Account> GetByOrganization(int organizationId)
+        {
+            return _accountRepository.GetByOrganization(organizationId);
+        }
+
+        public IEnumerable<Account> SearchAccounts(string filter, int organizationId)
+        {
+            IEnumerable<Account> filteredAccounts = _accountRepository.GetByOrganization(organizationId);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredAccounts = filteredAccounts.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredAccounts;
+        }
     }
 }
