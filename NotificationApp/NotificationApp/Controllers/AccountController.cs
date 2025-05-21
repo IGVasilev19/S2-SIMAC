@@ -78,6 +78,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel");
         }
 
+        // [Permission("Manager", "Admin")]
         public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
