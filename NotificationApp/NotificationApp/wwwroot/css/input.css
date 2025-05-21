@@ -14,3 +14,7 @@ body {
     @apply w-full h-[40px] bg-white/30 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[15%];
   } */
 }
+
+.custom-rotate-neg90 {
+  transform: rotate(-90deg);
+}
