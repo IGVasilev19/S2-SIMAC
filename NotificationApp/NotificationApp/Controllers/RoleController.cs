@@ -2,6 +2,7 @@ using Azure.Identity;
 using BLL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Identity.Client;
 using NotificationApp.Models;
 using NotificationApp.Models.DTO_View_Models;
@@ -204,7 +205,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm) //TODO: Needs to be hooked up to Front-End
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Needs to be hooked up to Front-End
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -215,9 +216,9 @@ namespace NotificationApp.Controllers
                 Role role = new Role(vm.RoleId, vm.RoleName, account.OrganizationId);
                 _roleService.Update(role);
                 List<Permission> selectedPermissions = new();
-                foreach (var vmSelectedPermission in vm.SelectedPermissions)
+                foreach (var pId in permissionIds)
                 {
-                    Permission p = _permissionService.GetById(vmSelectedPermission.PermissionId);
+                    Permission p = _permissionService.GetById(pId);
                     selectedPermissions.Add(p);
                 }
                 _roleService.AssignPermission(role.RoleId, selectedPermissions);
