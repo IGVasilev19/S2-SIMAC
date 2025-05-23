@@ -7,19 +7,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NotificationApp.Models
 {
-    public class AccountCreateEditPanelViewModel
+    public class AccountEditPanelViewModel
     {
-        [Required(ErrorMessage = "Name is required")]
         public string Name {get; set;}
-        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Password is required")]
-        public string Password {get; set;}
-        [ValidateNever]
-        [BindNever]
+        public string? Password { get; set; }
         public List<RoleViewModel> Roles { get; set; } = new();
-        [Required(ErrorMessage = "Role is required")]
-        [ValidateNever]
         public RoleViewModel SelectedRole {get; set;}
     }
 }
