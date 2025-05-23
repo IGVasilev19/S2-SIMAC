@@ -27,35 +27,54 @@
                                     <td class="w-full">
                                         <input type="checkbox" id="toggle-@permission.PermissionId" class="hidden peer" />
 
+                                        @{
+                                            var isChecked = Model.SelectedPermissions.Any(p => p.PermissionId == permission.PermissionId) ? "checked" : "";
+                                            var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId).ToList();
+                                            var hasChildren = children.Any();
+                                        }
                                         <div class="border-b py-1.5 flex justify-between items-center w-full">
-
                                             <div class="flex items-center gap-2">
-                                                <input name="permissionIds" value="@permission.PermissionId" type="checkbox" class="w-[15px] h-[15px] border border-gray-300"
-                                                @(Model.SelectedPermissions.Any(p => p.PermissionId == permission.PermissionId) ? "checked" : "")/>
-                                                <label class="text-black">@permission.Name</label>
+                                                <input id="parent-@permission.PermissionId"
+                                                    name="permissionIds"
+                                                    value="@permission.PermissionId"
+                                                    type="checkbox"
+                                                    class="w-[15px] h-[15px] border border-gray-300 parent-checkbox"
+                                                    data-child-container-id="child-container-@permission.PermissionId"
+                                                    @isChecked />
+
+                                                <label class="text-black" for="parent-@permission.PermissionId">@permission.Name</label>
                                             </div>
 
-                                            <label for="toggle-@permission.PermissionId" class="cursor-pointer pr-1">
-                                                <img src="../images/plus.svg" class="h-[15px] transition-transform duration-300 peer-checked:rotate-45" />
-                                            </label>
+                                            @if (hasChildren)
+                                            {
+                                                <label for="parent-@permission.PermissionId" class="cursor-pointer pr-1">
+                                                    <img src="../images/plus.svg"
+                                                        class="h-[15px] transition-transform duration-300 toggle-icon"
+                                                        data-icon-id="@permission.PermissionId" />
+                                                </label>
+                                            }
                                         </div>
 
-                                        <div class="pl-6 pt-2 max-h-0 overflow-hidden peer-checked:max-h-64 transition-all duration-300 flex flex-col gap-1 text-sm text-gray-600">
-                                            @{
-                                                var children = Model.ChildPermissions.Where(c => c.ParentId == permission.PermissionId);
-                                            }
-                                            @if (children.Any())
-                                            {
-                                                foreach (var child in children)
+                                        @if (hasChildren)
+                                        {
+                                            <div id="child-container-@permission.PermissionId"
+                                                class="pl-6 pt-2 transition-all duration-300 flex flex-col gap-1 text-sm text-gray-600"
+                                                style="display: @(isChecked == "checked" ? "block" : "none")">
+
+                                                @foreach (var child in children)
                                                 {
                                                     <label class="flex items-center gap-2">
-                                                        <input type="checkbox" name="permissionIds" value="@child.PermissionId" class="w-[16px] h-[16px] border border-gray-300"
-                                                        @(Model.SelectedPermissions.Any(p => p.PermissionId == child.PermissionId) ? "checked" : "") />
+                                                        <input type="checkbox"
+                                                            name="permissionIds"
+                                                            value="@child.PermissionId"
+                                                            class="w-[16px] h-[16px] border border-gray-300 child-checkbox"
+                                                            data-parent-id="@permission.PermissionId"
+                                                            @(Model.SelectedPermissions.Any(p => p.PermissionId == child.PermissionId) ? "checked" : "") />
                                                         @child.Name
                                                     </label>
                                                 }
-                                            }
-                                        </div>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
                             }
