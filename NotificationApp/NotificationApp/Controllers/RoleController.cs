@@ -56,6 +56,38 @@ namespace NotificationApp.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult SearchRoles(RolesPanelViewModel vm) //TODO: Connect??????????? ;(
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                int orgId = account.OrganizationId;
+                vm.Roles = new();
+
+                foreach (Role role in _roleService.SearchRoles(vm.Search, orgId))
+                {
+                    var newRole = new RoleViewModel
+                    {
+                        RoleId = role.RoleId,
+                        Name = role.Name
+                    };
+
+                    vm.Roles.Add(newRole);
+                };
+
+                return View("RolesPanel", vm);
+            }
+            else
+            {
+                return View("RolesPanel");
+            }
+        }
+
+
+        
         public IActionResult RolesCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -162,7 +194,7 @@ namespace NotificationApp.Controllers
                     }
                     vm.SelectedPermissions.Add(selectedPermission);
                 }
-                return View(vm);
+                return View(vm);    
             }
             throw new Exception("TODO");
         }

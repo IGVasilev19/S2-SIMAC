@@ -66,6 +66,53 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+        public IActionResult SearchAccounts(AccountPanelViewModel vm) //TODO: Connect ;P
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account acc = _accountService.GetById(id);
+                var accounts = _accountService.SearchAccounts(vm.Search, acc.OrganizationId);
+                List<AccountViewModel> vmAccounts = new();
+
+                foreach (var account in accounts)
+                {
+                    if (account.AccountId != id)
+                    {
+                        var role = _roleService.GetById(account.RoleId);
+                        var vmRole = new RoleViewModel
+                        {
+                            RoleId = role.RoleId,
+                            Name = role.Name
+                        };
+                        vmAccounts.Add(new AccountViewModel
+                        {
+                            AccountId = account.AccountId,
+                            Name = account.Name,
+                            Email = account.Email,
+                            Password = account.Password,
+                            Role = vmRole
+                        });
+                    }
+                }
+
+                vm.Accounts = vmAccounts;
+
+                return View("AccountPanel", vm);
+            }
+            else
+            {
+                return View("AccountPanel", vm);
+            }
+        }
+
+        public IActionResult AccountEditPanel()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
             _accountService.DeleteById(id);
@@ -118,18 +165,21 @@ namespace NotificationApp.Controllers
             return View(accountVM);
         }
 
-        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
+        public IActionResult AccountEditPanel(int selectedAccountId) //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
+                Account creatorAccount = _accountService.GetById(id); // Creator's account object to get Org Id from
+                Account selectedAccount = _accountService.GetById(selectedAccountId); // Selected account object to edit
+
                 AccountEditPanelViewModel vm = new();
 
-                Account creatorAccount = _accountService.GetById(id);
+                vm.Name = selectedAccount.Name;
+                vm.Email = selectedAccount.Email;
 
-                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
-
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -138,15 +188,13 @@ namespace NotificationApp.Controllers
                     vm.Roles.Add(rVM);
                 }
 
-                vm.Name = accountVM.Name;
-                vm.Email = accountVM.Email;
-                vm.SelectedRole = new RoleViewModel();
-                vm.SelectedRole.RoleId = accountVM.Role.RoleId;
-                vm.SelectedRole.Name = accountVM.Role.Name;
+                Role roleOfSelectedAccount = _roleService.GetById(selectedAccount.RoleId); // Get the role of the selected account
 
-                return View(vm);
+                RoleViewModel roleVM = new();
+                roleVM.RoleId = selectedAccount.RoleId;
+
+                vm.SelectedRole = roleVM; // Set the selected role to the the selected account
             }
-            
             throw new NotImplementedException("TODO");
         }
 
