@@ -120,6 +120,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel");
         }
 
+        // [Permission("Manager", "Admin")]
         public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -128,7 +129,7 @@ namespace NotificationApp.Controllers
             {
                 Account creatorAccount = _accountService.GetById(id);
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
-                AccountCreateEditPanelViewModel vm = new();
+                AccountCreatePanelViewModel vm = new();
                 foreach(var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -136,18 +137,20 @@ namespace NotificationApp.Controllers
                     rVM.Name = role.Name;
                     vm.Roles.Add(rVM);
                 }
-                return View("AccountCreatePanel", vm);
+                vm.SelectedRole = new();
+
+                return View(vm);
             }
             throw new NotImplementedException("TODO");
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM)
+        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM, int SelectedRole)
         {
             if (ModelState.IsValid == false)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View("AccountCreatePanel", accountVM); //TODO: MINA add validation it is an order
+                return View(accountVM); //TODO: MINA add validation it is an order
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -155,23 +158,28 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 Account creator = _accountService.GetById(id);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, SelectedRole);
                 return RedirectToAction("AccountPanel");
             }
-            throw new NotImplementedException("TODO");
+
+            return View(accountVM);
         }
 
-        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
+        public IActionResult AccountEditPanel(int selectedAccountId) //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
             {
-                AccountCreateEditPanelViewModel vm = new();
+                Account creatorAccount = _accountService.GetById(id); // Creator's account object to get Org Id from
+                Account selectedAccount = _accountService.GetById(selectedAccountId); // Selected account object to edit
 
-                Account creatorAccount = _accountService.GetById(id);
+                AccountEditPanelViewModel vm = new();
 
-                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
+                vm.Name = selectedAccount.Name;
+                vm.Email = selectedAccount.Email;
+
+                List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -180,19 +188,18 @@ namespace NotificationApp.Controllers
                     vm.Roles.Add(rVM);
                 }
 
-                vm.Name = accountVM.Name;
-                vm.Email = accountVM.Email;
-                vm.SelectedRole = new RoleViewModel();
-                vm.SelectedRole.RoleId = accountVM.Role.RoleId;
-                vm.SelectedRole.Name = accountVM.Role.Name;
+                Role roleOfSelectedAccount = _roleService.GetById(selectedAccount.RoleId); // Get the role of the selected account
 
-                return View("AccountEditPanel", vm);
+                RoleViewModel roleVM = new();
+                roleVM.RoleId = selectedAccount.RoleId;
+
+                vm.SelectedRole = roleVM; // Set the selected role to the the selected account
             }
             throw new NotImplementedException("TODO");
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountCreateEditPanelViewModel accountVM)
+        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
         {
             if (ModelState.IsValid == false)
             {

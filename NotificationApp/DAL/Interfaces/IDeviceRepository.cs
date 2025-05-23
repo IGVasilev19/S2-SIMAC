@@ -11,5 +11,6 @@ namespace DAL.Interfaces
     {
         IEnumerable<Device> GetByOrganization(int organizationID);
         Status GetStatus(Device device);
+
     }
 }

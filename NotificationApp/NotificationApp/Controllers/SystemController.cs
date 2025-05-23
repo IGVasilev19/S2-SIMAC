@@ -191,7 +191,7 @@ namespace NotificationApp.Controllers
             }
             return View("DevicesPanel");
         }
-        
+
         public IActionResult DevicesCreateEditPanel()
         {
             return View();
