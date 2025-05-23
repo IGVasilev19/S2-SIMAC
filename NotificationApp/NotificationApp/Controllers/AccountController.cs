@@ -65,11 +65,6 @@ namespace NotificationApp.Controllers
             }
         }
 
-        public IActionResult AccountEditPanel()
-        {
-            return View();
-        }
-
         [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
@@ -78,6 +73,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel");
         }
 
+        // [Permission("Manager", "Admin")]
         public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -94,18 +90,20 @@ namespace NotificationApp.Controllers
                     rVM.Name = role.Name;
                     vm.Roles.Add(rVM);
                 }
-                return View("AccountCreatePanel", vm);
+                vm.SelectedRole = new();
+
+                return View(vm);
             }
             throw new NotImplementedException("TODO");
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM)
+        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM, int SelectedRole)
         {
             if (ModelState.IsValid == false)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View("AccountCreatePanel", accountVM); //TODO: MINA add validation it is an order
+                return View(accountVM); //TODO: MINA add validation it is an order
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -113,10 +111,11 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 Account creator = _accountService.GetById(id);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, SelectedRole);
                 return RedirectToAction("AccountPanel");
             }
-            throw new NotImplementedException("TODO");
+
+            return View(accountVM);
         }
 
         public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
@@ -144,7 +143,7 @@ namespace NotificationApp.Controllers
                 vm.SelectedRole.RoleId = accountVM.Role.RoleId;
                 vm.SelectedRole.Name = accountVM.Role.Name;
 
-                return View("AccountEditPanel", vm);
+                return View(vm);
             }
             throw new NotImplementedException("TODO");
         }

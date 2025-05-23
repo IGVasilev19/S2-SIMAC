@@ -111,3 +111,19 @@ insert into [Role] ([Name], OrganizationId) values ('Corvus albicollis', 1);
 insert into [Role] ([Name], OrganizationId) values ('Spilogale gracilis', 1);
 
 SELECT * FROM [Role]
+
+
+
+
+
+
+SELECT * FROM Account
+
+SELECT * FROM [Role]
+
+SELECT * FROM RolePermission
+
+SELECT * FROM Permission
+
+INSERT INTO RolePermission([RoleId], PermissionId)
+VALUES ('2', '2')

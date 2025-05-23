@@ -1,29 +1,51 @@
 @{
-    ViewData["Title"] = "Account Create panel";
+    ViewData["Title"] = "Account Create Panel";
 }
+@model AccountCreateEditPanelViewModel
 
 <div class="w-full h-full flex">
     @Html.Partial("_Navbar")
     <div class="w-full h-full flex items-center justify-center bg-gray-300">
-        <div class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
+        <form asp-action="CreateAccount" asp-controller="Account" asp-route-roleId="@Model.SelectedRole.RoleId" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
             <p class="text-4xl font-semibold">Create account</p>
             <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
                 <p class="select-none">Name*</p>
-                <input class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Name" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
             <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
                 <p class="select-none">Email*</p>
-                <input class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Email" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
             <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
                 <p class="select-none">Password*</p>
-                <input type="password" class="w-[800px] h-[40px]] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Password" type="password" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] gap-2">
-                <p class="select-none">Role*</p>
-                <input type="password" class="w-[800px] h-[40px]] items-center justify-center bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+                <div class="flex gap-3">
+                    <p class="select-none">Role*</p>
+                    <span asp-validation-for="SelectedRole" class="text-red-500 text-lg"></span>
+                </div>
+                <div class="relative dropdown-group">
+                    <div onclick="toggleRoleDropdown()" class="toggle-roledropdown select-none flex items-center justify-between rounded-lg w-[800px] h-[40px] bg-white border border-gray-300 px-4 cursor-pointer">
+                        <p id="selectedRole" class="font-semibold m-0">
+                            @(Model.SelectedRole != null ? "Select Role" : Model.SelectedRole.Name)
+                        </p>
+                        <img id="dropdownArrow" src="~/images/Arrow.svg" class="h-[50%] transition-transform duration-100 rotate-0" />
+                    </div>
+
+                    <div id="dropdownRoleContent" class="dropdown-content absolute mt-2 rounded-xl shadow-lg hidden z-50 w-[800px] h-[100px] bg-white border border-gray-300 overflow-y-auto">
+                        @foreach (var item in Model.Roles)
+                        {
+                            <div onclick="selectRole('@item.RoleId','@item.Name')" 
+                                class="px-6 py-3 hover:bg-gray-100 hover:first:rounded-t-xl hover:last:rounded-b-xl text-[#2C3E50] text-lg font-semibold cursor-pointer">
+                                @item.Name
+                            </div>
+                        }
+                    </div>
+                </div>
+                <input asp-for="SelectedRole" type="hidden" id="SelectedRole" name="SelectedRole" />
             </div>
-            <button class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button> 
-        </div>
+            <button type="submit" class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button> 
+        </form>
     </div>
 </div>
