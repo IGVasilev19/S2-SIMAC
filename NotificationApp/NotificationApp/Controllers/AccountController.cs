@@ -66,6 +66,53 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+        public IActionResult SearchAccounts(AccountPanelViewModel vm) //TODO: Connect ;P
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account acc = _accountService.GetById(id);
+                var accounts = _accountService.SearchAccounts(vm.Search, acc.OrganizationId);
+                List<AccountViewModel> vmAccounts = new();
+
+                foreach (var account in accounts)
+                {
+                    if (account.AccountId != id)
+                    {
+                        var role = _roleService.GetById(account.RoleId);
+                        var vmRole = new RoleViewModel
+                        {
+                            RoleId = role.RoleId,
+                            Name = role.Name
+                        };
+                        vmAccounts.Add(new AccountViewModel
+                        {
+                            AccountId = account.AccountId,
+                            Name = account.Name,
+                            Email = account.Email,
+                            Password = account.Password,
+                            Role = vmRole
+                        });
+                    }
+                }
+
+                vm.Accounts = vmAccounts;
+
+                return View("AccountPanel", vm);
+            }
+            else
+            {
+                return View("AccountPanel", vm);
+            }
+        }
+
+        public IActionResult AccountEditPanel()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
             _accountService.DeleteById(id);
