@@ -25,10 +25,10 @@ document.querySelectorAll('.parent-checkbox').forEach(parent => {
         }
     });
 });
+
   document.getElementById("preview-title").innerText = title;
   document.getElementById("preview-date").innerText = date;
   document.getElementById("preview-body").innerText = body;
-}
 
 function toggleRoleDropdown() {
   const dropdown = document.getElementById("dropdownRoleContent");
