@@ -107,11 +107,6 @@ namespace NotificationApp.Controllers
             }
         }
 
-        public IActionResult AccountEditPanel()
-        {
-            return View();
-        }
-
         [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
@@ -178,6 +173,7 @@ namespace NotificationApp.Controllers
 
                 vm.Name = selectedAccount.Name;
                 vm.Email = selectedAccount.Email;
+                vm.Role = _roleService.GetById(selectedAccount.RoleId);
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
@@ -191,11 +187,15 @@ namespace NotificationApp.Controllers
                 Role roleOfSelectedAccount = _roleService.GetById(selectedAccount.RoleId); // Get the role of the selected account
 
                 RoleViewModel roleVM = new();
-                roleVM.RoleId = selectedAccount.RoleId;
+                roleVM.RoleId = roleOfSelectedAccount.RoleId;
+                roleVM.Name = roleOfSelectedAccount.Name;
 
                 vm.SelectedRole = roleVM; // Set the selected role to the the selected account
+                
+                return View(vm);
             }
-            throw new NotImplementedException("TODO");
+
+            return View();
         }
 
         [HttpPost]

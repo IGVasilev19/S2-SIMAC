@@ -6,7 +6,7 @@
 <div class="w-full h-full flex">
     @Html.Partial("_Navbar")
     <div class="w-full h-full flex items-center justify-center bg-gray-300">
-        <form asp-action="CreateAccount" asp-controller="Account" asp-route-roleId="@Model.SelectedRole.RoleId" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
+        <form asp-action="EditAccount" asp-controller="Account" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
             <p class="text-4xl font-semibold">Edit account</p>
             <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
                 <p class="select-none">Name*</p>
@@ -28,7 +28,7 @@
                 <div class="relative dropdown-group">
                     <div onclick="toggleRoleDropdown()" class="toggle-roledropdown select-none flex items-center justify-between rounded-lg w-[800px] h-[40px] bg-white border border-gray-300 px-4 cursor-pointer">
                         <p id="selectedRole" class="font-semibold m-0">
-                            @(Model.SelectedRole != null ? "Select Role" : Model.SelectedRole.Name)
+                            @(Model.SelectedRole != null ? Model.Role.Name : Model.SelectedRole.Name)
                         </p>
                         <img id="dropdownArrow" src="~/images/Arrow.svg" class="h-[50%] transition-transform duration-100 rotate-0" />
                     </div>
