@@ -13,36 +13,36 @@
                 <button class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </div>
         </div>
-        <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
-            <div class="flex w-full bg-white justify-between">
+        <div class="mx-5 h-[82%] w-[94%] bg-white p-4 shadow-md">
+            <div class="flex w-full justify-between bg-white">
                 <div class="flex gap-60">
-                    <p class="text-left px-6 py-3 text-sm font-bold text-black">Device Name</p>
-                    <p class="text-left px-6 py-3 text-sm font-bold text-black">Location</p>
+                    <p class="px-6 py-3 text-left text-sm font-bold text-black">Device Name</p>
+                    <p class="px-6 py-3 text-left text-sm font-bold text-black">Location</p>
                 </div>
-                <p class="text-right px-6 py-3 text-sm font-bold text-black pr-25">Status</p>
+                <p class="px-6 py-3 pr-25 text-right text-sm font-bold text-black">Status</p>
             </div>
             <div class="overflow-x-auto">
                 @for (int i = 0; i < Model.Devices.Count(); i++) 
                 {
-                <table class="w-full text-sm text-left text-gray-700 font-semibold">
+                <table class="w-full text-left text-sm font-semibold text-gray-700">
                     <tbody class="group">
                     @if (i%2==0)
                     {
                     <tr class="relative bg-gray-100 even:bg-white hover:bg-gray-300 hover:cursor-pointer">
-                        <td class="w-[400px] pl-6 py-3">@Model.Devices[i].Name</td>
+                        <td class="w-[400px] py-3 pl-6">@Model.Devices[i].Name</td>
                         <td class="w-[400px] py-3">@Model.Devices[i].Location</td>
-                        <td class="w-[400px] py-3 pr-3 flex justify-end relative overflow-hidden">
+                        <td class="relative flex w-[400px] justify-end overflow-hidden py-3 pr-3">
                         @if (Model.Devices[i].DeviceStatus == 0)
                         {
-                            <div class="flex gap-2 items-center">
-                                <div class="bg-green-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-[25px] w-[25px] rounded-full bg-green-500 shadow-md"></div>
                                     <p class="font-bold">Online</p>
                             </div>
                         }
                         else 
                         {
-                            <div class="flex gap-2 items-center">
-                                <div class="bg-red-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-[25px] w-[25px] rounded-full bg-red-500 shadow-md"></div>
                                     <p class="font-bold">Offline</p>
                             </div>
                         }
@@ -51,21 +51,21 @@
                     }
                     else 
                     {
-                    <tr class="relative bg-gray-200 hover:bg-gray-300 even:bg-white hover:cursor-pointer">
-                        <td class="w-[400px] pl-6 py-3">@Model.Devices[i].Name</td>
+                    <tr class="relative bg-gray-200 even:bg-white hover:bg-gray-300 hover:cursor-pointer">
+                        <td class="w-[400px] py-3 pl-6">@Model.Devices[i].Name</td>
                         <td class="w-[400px] py-3">@Model.Devices[i].Location</td>
-                        <td class="w-[400px] py-3 pr-3 flex justify-end relative overflow-hidden">
+                        <td class="relative flex w-[650px] justify-end overflow-hidden py-3 pr-3">
                         @if (Model.Devices[i].DeviceStatus == 0)
                         {
-                            <div class="flex gap-2 items-center">
-                                <div class="bg-green-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-[25px] w-[25px] rounded-full bg-green-500 shadow-md"></div>
                                     <p class="font-bold">Online</p>
                             </div>
                         }
                         else 
                         {
-                            <div class="flex gap-2 items-center">
-                                <div class="bg-red-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-[25px] w-[25px] rounded-full bg-red-500 shadow-md"></div>
                                     <p class="font-bold">Offline</p>
                             </div>
                         }

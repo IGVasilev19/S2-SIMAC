@@ -118,7 +118,7 @@ namespace NotificationApp.Controllers
             return View(accountVM);
         }
 
-        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
+        public IActionResult AccountEditPanel(AccountViewModel accountVM, int roleId) //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

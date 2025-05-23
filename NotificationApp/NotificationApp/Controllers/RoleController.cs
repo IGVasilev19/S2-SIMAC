@@ -162,7 +162,7 @@ namespace NotificationApp.Controllers
                     }
                     vm.SelectedPermissions.Add(selectedPermission);
                 }
-                return View(vm);
+                return View(vm);    
             }
             throw new Exception("TODO");
         }
