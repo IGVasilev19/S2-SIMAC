@@ -93,5 +93,10 @@ namespace Service
             }
             return filteredAccounts;
         }
+
+        public IEnumerable<Account> GetManager(int organizationId) // TODO: Dawid implement this
+        {
+            throw new NotImplementedException();
+        }
     }
 }

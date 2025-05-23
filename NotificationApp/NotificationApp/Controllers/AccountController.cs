@@ -30,7 +30,7 @@ namespace NotificationApp.Controllers
             {
                 var accounts = _accountService.GetAll();
                 List<AccountViewModel> vmAccounts = new();
-                
+
                 foreach (var account in accounts)
                 {
                     if (account.AccountId != id)
@@ -56,7 +56,7 @@ namespace NotificationApp.Controllers
                 {
                     Accounts = vmAccounts
                 };
-                
+
                 return View(viewmodel);
             }
             else
