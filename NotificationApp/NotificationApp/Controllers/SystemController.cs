@@ -140,7 +140,7 @@ namespace NotificationApp.Controllers
             {
                 Account account = _accountService.GetById(id);
                 IEnumerable<Device> DevicesByOrganization = _deviceService.GetByOrganization(account.OrganizationId);
-                List<DeviceViewModel> vmDevices = new();
+                //List<DeviceViewModel> vmDevices = new(); //idk what this does???
                 DevicePanelViewModel viewmodel = new DevicePanelViewModel();
                 viewmodel.Devices = new();
                 foreach (Device device in DevicesByOrganization)
@@ -157,9 +157,39 @@ namespace NotificationApp.Controllers
                     viewmodel.Devices.Add(vm);
                 }
 
-                return View(viewmodel);
+                return View("DevicesPanel", viewmodel);
             }
-            return View();
+            return View("DevicesPanel");
+        }
+
+        [HttpPost]
+        public IActionResult SearchDevices(DevicePanelViewModel vm) //TODO: Connect with front-end?????????
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account account = _accountService.GetById(id);
+                IEnumerable<Device> filteredDevices = _deviceService.SearchDevices(vm.Filter, account.OrganizationId);
+                
+                vm.Devices = new();
+                foreach (Device device in filteredDevices)
+                {
+                    DeviceViewModel dvm = new DeviceViewModel
+                    {
+                        DeviceID = device.DeviceID,
+                        Name = device.Name,
+                        Location = device.Location,
+                        OrganizationID = device.OrganizationID,
+                        DeviceStatus = device.DeviceStatus
+                    };
+
+                    vm.Devices.Add(dvm);
+                }
+
+                return View("DevicesPanel", vm);
+            }
+            return View("DevicesPanel");
         }
         
         public IActionResult DevicesCreateEditPanel()
