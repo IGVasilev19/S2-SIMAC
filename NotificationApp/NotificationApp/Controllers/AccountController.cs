@@ -173,7 +173,12 @@ namespace NotificationApp.Controllers
 
                 vm.Name = selectedAccount.Name;
                 vm.Email = selectedAccount.Email;
-                vm.Role = _roleService.GetById(selectedAccount.RoleId);
+                Role currentRole = _roleService.GetById(selectedAccount.RoleId);
+
+                //vm.Role = new();
+                //vm.Role.RoleId = currentRole.RoleId;
+                //vm.Role.Name = currentRole.Name;
+
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
@@ -204,7 +209,7 @@ namespace NotificationApp.Controllers
             if (ModelState.IsValid == false)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View("AccountEditPanel", accountVM); //TODO: MINA add validation it is an order
+                return RedirectToAction("AccountEditPanel"); //TODO: MINA add validation it is an order
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
