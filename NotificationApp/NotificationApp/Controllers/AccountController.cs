@@ -82,7 +82,7 @@ namespace NotificationApp.Controllers
             {
                 Account creatorAccount = _accountService.GetById(id);
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
-                AccountCreatePanelViewModel vm = new();
+                AccountCreateEditPanelViewModel vm = new();
                 foreach(var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -118,7 +118,7 @@ namespace NotificationApp.Controllers
             return View(accountVM);
         }
 
-        public IActionResult AccountEditPanel(AccountViewModel accountVM, int roleId) //TODO: MINA Add safety check pls
+        public IActionResult AccountEditPanel(AccountViewModel accountVM) //TODO: MINA Add safety check pls
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -129,7 +129,6 @@ namespace NotificationApp.Controllers
                 Account creatorAccount = _accountService.GetById(id);
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
-
                 foreach (var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -146,12 +145,11 @@ namespace NotificationApp.Controllers
 
                 return View(vm);
             }
-            
             throw new NotImplementedException("TODO");
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
+        public IActionResult EditAccount(AccountCreateEditPanelViewModel accountVM)
         {
             if (ModelState.IsValid == false)
             {
