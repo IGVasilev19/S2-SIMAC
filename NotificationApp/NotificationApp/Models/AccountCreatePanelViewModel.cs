@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NotificationApp.Models
 {
-    public class AccountCreateEditPanelViewModel
+    public class AccountCreatePanelViewModel
     {
         [Required(ErrorMessage = "Name is required")]
         public string Name {get; set;}

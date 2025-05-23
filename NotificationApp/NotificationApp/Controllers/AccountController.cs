@@ -82,7 +82,7 @@ namespace NotificationApp.Controllers
             {
                 Account creatorAccount = _accountService.GetById(id);
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
-                AccountCreateEditPanelViewModel vm = new();
+                AccountCreatePanelViewModel vm = new();
                 foreach(var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -98,7 +98,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(AccountCreateEditPanelViewModel accountVM, int SelectedRole)
+        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM, int SelectedRole)
         {
             if (ModelState.IsValid == false)
             {
@@ -124,11 +124,12 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                AccountCreateEditPanelViewModel vm = new();
+                AccountEditPanelViewModel vm = new();
 
                 Account creatorAccount = _accountService.GetById(id);
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId);
+
                 foreach (var role in allRoles)
                 {
                     RoleViewModel rVM = new();
@@ -145,11 +146,12 @@ namespace NotificationApp.Controllers
 
                 return View(vm);
             }
+            
             throw new NotImplementedException("TODO");
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountCreateEditPanelViewModel accountVM)
+        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
         {
             if (ModelState.IsValid == false)
             {
