@@ -66,6 +66,48 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+        public IActionResult SearchAccounts(AccountPanelViewModel vm) //TODO: Connect ;P
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                Account acc = _accountService.GetById(id);
+                var accounts = _accountService.SearchAccounts(vm.Search, acc.OrganizationId);
+                List<AccountViewModel> vmAccounts = new();
+
+                foreach (var account in accounts)
+                {
+                    if (account.AccountId != id)
+                    {
+                        var role = _roleService.GetById(account.RoleId);
+                        var vmRole = new RoleViewModel
+                        {
+                            RoleId = role.RoleId,
+                            Name = role.Name
+                        };
+                        vmAccounts.Add(new AccountViewModel
+                        {
+                            AccountId = account.AccountId,
+                            Name = account.Name,
+                            Email = account.Email,
+                            Password = account.Password,
+                            Role = vmRole
+                        });
+                    }
+                }
+
+                vm.Accounts = vmAccounts;
+
+                return View("AccountPanel", vm);
+            }
+            else
+            {
+                return View("AccountPanel", vm);
+            }
+        }
+
+        [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
             _accountService.DeleteById(id);
@@ -131,6 +173,7 @@ namespace NotificationApp.Controllers
 
                 vm.Name = selectedAccount.Name;
                 vm.Email = selectedAccount.Email;
+                vm.Role = _roleService.GetById(selectedAccount.RoleId);
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
@@ -144,11 +187,15 @@ namespace NotificationApp.Controllers
                 Role roleOfSelectedAccount = _roleService.GetById(selectedAccount.RoleId); // Get the role of the selected account
 
                 RoleViewModel roleVM = new();
-                roleVM.RoleId = selectedAccount.RoleId;
+                roleVM.RoleId = roleOfSelectedAccount.RoleId;
+                roleVM.Name = roleOfSelectedAccount.Name;
 
                 vm.SelectedRole = roleVM; // Set the selected role to the the selected account
+                
+                return View(vm);
             }
-            throw new NotImplementedException("TODO");
+
+            return View();
         }
 
         [HttpPost]
