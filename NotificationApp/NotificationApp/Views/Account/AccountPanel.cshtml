@@ -47,9 +47,9 @@
                                     <td class="px-6 py-3">@Model.Accounts[i].Name</td>
                                     <td class="px-6 py-3">@Model.Accounts[i].Role.Name</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
-                                        <form asp-action="DeleteAccount" asp-controller="Account" method="post">
+                                        <form asp-action="DeleteAccount" aps-controller="Account" method="post">
                                             <input type="hidden" name="id" value="@Model.Accounts[i].AccountId" />
-                                            <a asp-action="AccountEditPanel" asp-controller="Account" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@Model.Accounts[i].AccountId" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
                                             <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                         </form>
                                     </td>
