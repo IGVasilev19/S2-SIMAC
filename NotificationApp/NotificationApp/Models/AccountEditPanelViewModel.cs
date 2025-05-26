@@ -12,7 +12,7 @@ namespace NotificationApp.Models
         public string Name {get; set;}
         public string Email { get; set; }
         public string? Password { get; set; }
-        public RoleViewModel Role { get; set; }
+        public Role Role { get; set; }
         public List<RoleViewModel> Roles { get; set; } = new();
         public RoleViewModel SelectedRole {get; set;}
     }
