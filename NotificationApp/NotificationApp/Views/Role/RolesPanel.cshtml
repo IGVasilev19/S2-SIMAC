@@ -1,32 +1,32 @@
-@{
+﻿@{
     ViewData["Title"] = "Roles Panel";
 }
 @model RolesPanelViewModel
 
-<div class="w-full h-full flex">
+<div class="flex h-full w-full">
     @Html.Partial("_Navbar")
-    <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
+    <div class="flex h-full w-full flex-col items-center gap-8 bg-gray-300">
         @if (TempData["Error"] != null)
         {
-            <div class="absolute w-[85%] max-w-116 p-3 top-4 right-4 text-sm text-red-800 bg-red-100 border border-red-400 rounded-lg flex justify-between items-center z-10 " role="alert">
+            <div class="absolute top-4 right-4 z-10 flex w-[85%] max-w-116 items-center justify-between rounded-lg border border-red-400 bg-red-100 p-3 text-sm text-red-800" role="alert">
                 <span class="text-sm">@TempData["Error"]</span>
-                <button onclick="this.parentElement.remove()" class="text-red-800 hover:text-red-900 font-bold text-lg leading-none">&times;</button>
+                <button onclick="this.parentElement.remove()" class="text-lg leading-none font-bold text-red-800 hover:text-red-900">&times;</button>
             </div>
         }
-        <div class="w-[94%] flex items-center justify-between bg-white shadow-md p-4 mt-8">   
-            <div class="flex items-center gap-2 w-full max-w-md">
-                <input type="text" placeholder="Search" class="w-full px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
-                <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
+        <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">   
+            <div class="flex w-full max-w-md items-center gap-2">
+                <input type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
+                <button class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </div>
-            <div class="w-1/2 h-full flex justify-end gap-3"> 
-                <a asp-action="RolesCreatePanel" asp-controller="Role" class="bg-white hover:bg-gray-100 text-black font-semibold rounded-lg shadow-sm px-5 border border-gray-300 hover:cursor-pointer">Create</a>
+            <div class="flex h-full w-1/2 justify-end gap-3"> 
+                <a asp-action="RolesCreatePanel" asp-controller="Role" class="rounded-lg border border-gray-300 bg-white px-5 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Create</a>
             </div>
         </div>
-        <div class="w-[94%] h-[82%] flex flex-col gap-2 bg-white shadow-md p-4 mx-5">
-            <p class="text-left text-md font-bold text-black">Role Name</p>
-            <div class="overflow-y-auto max-h-[93%]">
+        <div class="mx-5 flex h-[82%] w-[94%] flex-col gap-2 bg-white p-4 shadow-md">
+            <p class="text-md text-left font-bold text-black">Role Name</p>
+            <div class="max-h-[93%] overflow-y-auto">
                 <table class="min-w-full">
-                    <tbody class="font-semibold text-gray-700 text-sm">
+                    <tbody class="text-sm font-semibold text-gray-700">
                         @for (int i = 0; i < Model.Roles.Count(); i++)
                         {
                             var roles = Model.Roles[i];
@@ -36,11 +36,11 @@
 
                                 <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
                                     <td class="px-6 py-3">@roles.Name</td>
-                                    <td class="px-6 py-3 space-x-2 text-right">
+                                    <td class="space-x-2 px-6 py-3 text-right">
                                         <form asp-action="DeleteRole" asp-controller="Role" method="post">
                                             <input type="hidden" name="roleId" value="@roles.RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                            <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] rounded-lg border border-gray-300 bg-white px-6 py-0.75 text-sm font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Edit</a>
+                                            <button type="submit" class="rounded-lg border border-gray-300 bg-white px-4 py-0.75 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
