@@ -204,9 +204,9 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountEditPanelViewModel accountVM, int roleId)
+        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
         {
-            if (ModelState.IsValid == false)
+            if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
                 return RedirectToAction("AccountEditPanel"); //TODO: MINA add validation it is an order
@@ -220,14 +220,14 @@ namespace NotificationApp.Controllers
 
                 Account selectedAccount = _accountService.GetByEmail(accountVM.Email);
 
-                if (string.IsNullOrEmpty(selectedAccount.Password))
+                if (string.IsNullOrEmpty(accountVM.Password))
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, roleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
                     return RedirectToAction("AccountPanel");
                 }
                 else
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, roleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
                     return RedirectToAction("AccountPanel");
                 }
             }
