@@ -231,11 +231,13 @@ namespace NotificationApp.Controllers
 
         public IActionResult DeleteRole(int roleId)
         {
-            if (_roleService.Delete(roleId))
+            try
             {
+                _roleService.Delete(roleId);
+
                 return RedirectToAction("RolesPanel", "Role");
             }
-            else
+            catch (Exception ex) //TODO: Make the ViewBagError appear on the webpage
             {
                 ViewBag.ErrorMessage = "This role is being used by 1 or more accounts and can't be deleted.";
                 return RedirectToAction("RolesPanel", "Role");

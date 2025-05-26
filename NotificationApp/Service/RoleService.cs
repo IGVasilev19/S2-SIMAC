@@ -27,14 +27,16 @@ namespace Service
             _roleRepository.AssignPermission(roleId, permissions);
         }
 
-        public bool Delete(int roleId)
+        public void Delete(int roleId)
         {
-            if(!_roleRepository.CheckIfRoleOccupied(roleId))
+            if(_roleRepository.CheckIfRoleOccupied(roleId))
             {
                 _roleRepository.Delete(roleId);
-                return true;
             }
-            return false;
+            else
+            {
+                throw new Exception("The role was not deleted");
+            }
         }
 
         public IEnumerable<Role> GetAll()
