@@ -1,43 +1,43 @@
-@{
+﻿@{
     ViewData["Title"] = "Account Edit Panel";
 }
 @model AccountEditPanelViewModel
 
-<div class="w-full h-full flex">
+<div class="flex h-full w-full">
     @Html.Partial("_Navbar")
-    <div class="w-full h-full flex items-center justify-center bg-gray-300">
-        <form asp-action="EditAccount" asp-controller="Account" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
+    <div class="flex h-full w-full items-center justify-center bg-gray-300">
+        <form asp-action="EditAccount" asp-controller="Account" method="post" class="flex h-[92%] w-[94%] flex-col items-center justify-center gap-8 bg-white shadow-md">
             <p class="text-4xl font-semibold">Edit account</p>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+            <div class="flex h-[60px] w-[800px] flex-col justify-center gap-2">
                 <p class="select-none">Name*</p>
-                <input asp-for="Name" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Name" class="h-[40px] w-[800px] rounded-md border border-gray-300 bg-white p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+            <div class="flex h-[60px] w-[800px] flex-col justify-center gap-2">
                 <p class="select-none">Email*</p>
-                <input asp-for="Email" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Email" class="h-[40px] w-[800px] rounded-md border border-gray-300 bg-white p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+            <div class="flex h-[60px] w-[800px] flex-col justify-center gap-2">
                 <p class="select-none">Password*</p>
-                <input asp-for="Password" type="password" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Password" type="password" class="h-[40px] w-[800px] rounded-md border border-gray-300 bg-white p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+            <div class="flex h-[60px] w-[800px] flex-col justify-center gap-2">
                 <div class="flex gap-3">
                     <p class="select-none">Role*</p>
-                    <span asp-validation-for="SelectedRole" class="text-red-500 text-lg"></span>
+                    <span asp-validation-for="SelectedRole" class="text-lg text-red-500"></span>
                 </div>
-                <div class="relative dropdown-group">
-                    <div onclick="toggleRoleDropdown()" class="toggle-roledropdown select-none flex items-center justify-between rounded-lg w-[800px] h-[40px] bg-white border border-gray-300 px-4 cursor-pointer">
-                        <p id="selectedRole" class="font-semibold m-0">
-                            @(Model.SelectedRole != null ? Model.Role.Name : Model.SelectedRole.Name)
+                <div class="dropdown-group relative">
+                    <div onclick="toggleRoleDropdown()" class="toggle-roledropdown flex h-[40px] w-[800px] cursor-pointer items-center justify-between rounded-lg border border-gray-300 bg-white px-4 select-none">
+                        <p id="selectedRole" class="m-0 font-semibold">
+                            @Model.SelectedRole.Name
                         </p>
-                        <img id="dropdownArrow" src="~/images/Arrow.svg" class="h-[50%] transition-transform duration-100 rotate-0" />
+                        <img id="dropdownArrow" src="~/images/Arrow.svg" class="h-[50%] rotate-0 transition-transform duration-100" />
                     </div>
 
-                    <div id="dropdownRoleContent" class="dropdown-content absolute mt-2 rounded-xl shadow-lg hidden z-50 w-[800px] h-[60px] bg-white border border-gray-300 overflow-y-auto">
+                    <div id="dropdownRoleContent" class="dropdown-content absolute z-50 mt-2 hidden h-[60px] w-[800px] overflow-y-auto rounded-xl border border-gray-300 bg-white shadow-lg">
                         @foreach (var item in Model.Roles)
                         {
                             <div onclick="selectRole('@item.RoleId','@item.Name')" 
-                                class="px-6 py-3 hover:bg-gray-100 hover:first:rounded-t-xl hover:last:rounded-b-xl text-[#2C3E50] text-lg font-semibold cursor-pointer">
+                                class="cursor-pointer px-6 py-3 text-lg font-semibold text-[#2C3E50] hover:bg-gray-100 hover:first:rounded-t-xl hover:last:rounded-b-xl">
                                 @item.Name
                             </div>
                         }
@@ -45,7 +45,7 @@
                 </div>
                 <input asp-for="SelectedRole" type="hidden" id="SelectedRole" name="SelectedRole" />
             </div>
-            <button type="submit" class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button> 
+            <button type="submit" class="h-[40px] w-[800px] rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Save</button> 
         </form>
     </div>
 </div>

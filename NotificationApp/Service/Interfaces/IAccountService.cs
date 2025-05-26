@@ -16,5 +16,6 @@ namespace Service.Interfaces
         Account GetByEmail(string email);
         public IEnumerable<Account> GetByOrganization(int organizationId);
         public IEnumerable<Account> SearchAccounts(string filter, int organizationId);
+        public IEnumerable<Account> GetManager(int organizationId);
     }
 }

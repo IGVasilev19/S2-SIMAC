@@ -125,5 +125,9 @@ SELECT * FROM RolePermission
 
 SELECT * FROM Permission
 
-INSERT INTO RolePermission([RoleId], PermissionId)
-VALUES ('2', '2')
+UPDATE [Role]
+SET [Name] = 'Admin', OrganizationId = 0
+WHERE RoleId = 1;
+
+INSERT INTO Organization([Name])
+VALUES('System')

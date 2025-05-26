@@ -30,7 +30,7 @@ namespace NotificationApp.Controllers
             {
                 var accounts = _accountService.GetAll();
                 List<AccountViewModel> vmAccounts = new();
-                
+
                 foreach (var account in accounts)
                 {
                     if (account.AccountId != id)
@@ -56,7 +56,7 @@ namespace NotificationApp.Controllers
                 {
                     Accounts = vmAccounts
                 };
-                
+
                 return View(viewmodel);
             }
             else
@@ -173,7 +173,12 @@ namespace NotificationApp.Controllers
 
                 vm.Name = selectedAccount.Name;
                 vm.Email = selectedAccount.Email;
-                vm.Role = _roleService.GetById(selectedAccount.RoleId);
+                Role currentRole = _roleService.GetById(selectedAccount.RoleId);
+
+                //vm.Role = new();
+                //vm.Role.RoleId = currentRole.RoleId;
+                //vm.Role.Name = currentRole.Name;
+
 
                 List<Role> allRoles = (List<Role>)_roleService.GetAllRolesByOrganisationId(creatorAccount.OrganizationId); // Add all roles to the edit view for display purposes
                 foreach (var role in allRoles)
@@ -199,12 +204,12 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
+        public IActionResult EditAccount(AccountEditPanelViewModel accountVM, int roleId)
         {
             if (ModelState.IsValid == false)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View("AccountEditPanel", accountVM); //TODO: MINA add validation it is an order
+                return RedirectToAction("AccountEditPanel"); //TODO: MINA add validation it is an order
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -217,12 +222,12 @@ namespace NotificationApp.Controllers
 
                 if (string.IsNullOrEmpty(selectedAccount.Password))
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, roleId);
                     return RedirectToAction("AccountPanel");
                 }
                 else
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, roleId);
                     return RedirectToAction("AccountPanel");
                 }
             }
