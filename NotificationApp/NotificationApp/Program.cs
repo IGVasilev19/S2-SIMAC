@@ -1,4 +1,5 @@
 using BLL;
+using DAL;
 using Service;
 using Service.Interfaces;
 using Service.Utility;
@@ -46,6 +47,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Access}/{action=Index}/{id?}");
+
+//AccountRepository accRepo = new();
+//AccountService accService = new(accRepo);
+//accService.SignUp("Manager", "managerone@gmail.com", "manager", 2, 2);
+
+//accService.SignUp("Manager", "managertwo@gmail.com", "manager", 3, 3);
 
 app.Run();
 
