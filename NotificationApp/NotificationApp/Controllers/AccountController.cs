@@ -204,7 +204,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditAccount(AccountEditPanelViewModel accountVM)
+        public IActionResult EditAccount(AccountEditPanelViewModel accountVM, int roleId)
         {
             if (ModelState.IsValid == false)
             {
@@ -222,12 +222,12 @@ namespace NotificationApp.Controllers
 
                 if (string.IsNullOrEmpty(selectedAccount.Password))
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, selectedAccount.Password, creator.OrganizationId, roleId);
                     return RedirectToAction("AccountPanel");
                 }
                 else
                 {
-                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                    _accountService.Update(selectedAccount.AccountId, accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, roleId);
                     return RedirectToAction("AccountPanel");
                 }
             }
