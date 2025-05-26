@@ -28,7 +28,7 @@
                             <th class="px-6 py-3"></th>
                         </tr>
                     </thead>
-                    <tbody class="font-semibold text-gray-700 text-sm">
+                    <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Organizations != null && Model.Organizations.Any()) 
                         {
                             @for (int i = 0; i < Model.Organizations.Count(); i++) 
@@ -47,7 +47,11 @@
                         }
                         else 
                         {
-                            <p class="pl-6 pt-1 font-semibold">No organizations found</p>
+                            <tr>
+                                <td colspan="3" class="px-6 py-4 text-left font-semibold text-gray-500">
+                                    No organizations found
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
