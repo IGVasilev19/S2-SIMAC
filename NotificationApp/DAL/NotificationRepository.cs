@@ -177,8 +177,8 @@ namespace DAL
         {
             List<Notification> notifications = new();
 
-            //if (permissionIds == null || permissionIds.Count == 0)
-            //    permissionIds = new List<int> { -1 }; // Avoid empty IN clause
+            if (permissionIds == null || permissionIds.Count == 0)
+                permissionIds = new List<int> { -1 }; // Avoid empty IN clause
 
             using (SqlConnection conn = DBConnection.GetConnection())
             {
