@@ -281,6 +281,9 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .inline-flex {
     display: inline-flex;
   }
@@ -307,6 +310,9 @@
   }
   .h-\[50\%\] {
     height: 50%;
+  }
+  .h-\[54px\] {
+    height: 54px;
   }
   .h-\[60px\] {
     height: 60px;
@@ -635,6 +641,9 @@
   }
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
+  }
+  .py-\[0\.1875rem\] {
+    padding-block: 0.1875rem;
   }
   .py-\[5px\] {
     padding-block: 5px;

@@ -29,24 +29,26 @@
                     <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Roles != null && Model.Roles.Any()) 
                         {
-                            @for (int i = 0; i < Model.Roles.Count(); i++)
-                            {
-                                var roles = Model.Roles[i];
-                                @if (roles.Name != "Manager")
-                                {
-                                    var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                            int visibleRowIndex = 0;
 
-                                    <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
-                                        <td class="px-6 py-3">@roles.Name</td>
-                                        <td class="px-6 py-3 space-x-2 text-right">
-                                            <form asp-action="DeleteRole" asp-controller="Role" method="post">
-                                                <input type="hidden" name="roleId" value="@roles.RoleId" />
-                                                <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="inline-flex h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                                <button type="submit" class="inline-flex h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-5 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
+                            foreach (var role in Model.Roles)
+                            {
+                                if (role.Name == "Manager")
+                                    continue;
+
+                                var rowClass = visibleRowIndex % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                                visibleRowIndex++;
+
+                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
+                                    <td class="px-6 py-3">@role.Name</td>
+                                    <td class="px-6 py-3 space-x-2 text-right">
+                                        <form asp-action="DeleteRole" asp-controller="Role" method="post" class="inline">
+                                            <input type="hidden" name="roleId" value="@role.RoleId" />
+                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@role.RoleId" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <button type="submit" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             }
                         }
                         else
