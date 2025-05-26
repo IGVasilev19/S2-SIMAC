@@ -178,17 +178,15 @@ namespace DAL
             List<Notification> notifications = new();
 
             if (permissionIds == null || permissionIds.Count == 0)
-            {
-                return notifications; // Return empty list if no permissions
-            }
+                permissionIds = new List<int> { -1 }; // Avoid empty IN clause
 
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 string query = $@"
             SELECT NotificationID, Title, Content, Important, OrganizationId, Date
             FROM Notification
-            WHERE OrganizationId = @orgId
-              AND PermissionId IN ({string.Join(",", permissionIds)})
+            WHERE (OrganizationId = @orgId OR OrganizationId IS NULL)
+              AND (PermissionId IN ({string.Join(",", permissionIds)}) OR PermissionId IS NULL)
             ORDER BY Important DESC, Date DESC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -198,19 +196,18 @@ namespace DAL
                 {
                     while (reader.Read())
                     {
-                        Notification n = new Notification(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
-                            reader.GetString(2),
-                            reader.GetBoolean(3),
-                            reader.GetInt32(4),
-                            reader.GetDateTime(5)
-                        );
-                        notifications.Add(n);
+                        int id = reader.GetInt32(0);
+                        string title = reader.GetString(1);
+                        string content = reader.GetString(2);
+                        bool important = reader.GetBoolean(3);
+                        int orgId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4); // fallback to 0 if null
+                        DateTime date = reader.GetDateTime(5);
+
+                        Notification notification = new Notification(id, title, content, important, orgId, date);
+                        notifications.Add(notification);
                     }
                 }
             }
-
             return notifications;
         }
     }

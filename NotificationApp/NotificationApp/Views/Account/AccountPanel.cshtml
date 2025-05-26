@@ -2,6 +2,7 @@
     ViewData["Title"] = "Account Panel";
 }
 @using NotificationApp.Models
+@using System.Security.Claims
 @model AccountPanelViewModel
 
 <div class="w-full h-full flex">
@@ -27,9 +28,9 @@
                     <tbody class="font-semibold text-gray-700 text-sm">
                         @if (Model.Accounts != null && Model.Accounts.Any()) 
                         {
-                            @for(int i = 0; i < Model.Accounts.Count(); i++) 
+                            var accounts = Model.Accounts[i];
+                            @if (accounts.AccountId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0"))
                             {
-                                var accounts = Model.Accounts[i];
                                 var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
                                 <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
@@ -44,10 +45,10 @@
                                     </td>
                                 </tr>
                             }
-                        }
-                        else 
-                        {
-                            <p class="pl-6 pt-1 font-semibold">No accounts found</p>
+                            else 
+                            {
+                                <p class="pl-6 pt-1 font-semibold">No accounts found</p>
+                            }
                         }
                     </tbody>
                 </table>

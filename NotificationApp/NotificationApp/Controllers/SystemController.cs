@@ -38,7 +38,6 @@ namespace NotificationApp.Controllers
                 if (int.TryParse(accountId, out int id))
                 {
                     var account = _accountService.GetById(id);
-                    //OLD//var notifications = _notificationService.GetByPermission(account.RoleId); //shows hardcoded notifications
 
                     var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
                     var permissionIds = permissions.Select(p => p.PermissionId).ToList();

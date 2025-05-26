@@ -28,7 +28,8 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                var accounts = _accountService.GetAll();
+                Account currentAccount = _accountService.GetById(id);
+                var accounts = _accountService.GetByOrganization(currentAccount.OrganizationId);
                 List<AccountViewModel> vmAccounts = new();
 
                 foreach (var account in accounts)

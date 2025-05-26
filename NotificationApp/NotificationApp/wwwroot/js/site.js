@@ -45,11 +45,14 @@ function toggleRoleDropdown() {
 function selectRole(value, text) {
   const display = document.getElementById("selectedRole");
   const hiddenInput = document.getElementById("SelectedRole");
+  const hiddenInput2 = document.getElementById("SelectedRoleId");
 
   display.textContent = text;
   hiddenInput.value = value;
+  hiddenInput2.value = text;
 
   $(hiddenInput).valid();
+  $(hiddenInput2).valid();
 
   toggleRoleDropdown();
 }
