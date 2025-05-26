@@ -237,7 +237,7 @@ namespace NotificationApp.Controllers
 
                 return RedirectToAction("RolesPanel", "Role");
             }
-            catch (Exception ex) //TODO: Make the ViewBagError appear on the webpage
+            catch (Exception ex)
             {
                 TempData["Error"] = "This role is being used by 1 or more accounts and can't be deleted.";
                 return RedirectToAction("RolesPanel", "Role");
