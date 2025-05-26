@@ -96,7 +96,7 @@ namespace NotificationApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Inbox", vm);
+                return View("Inbox");
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -10,7 +10,7 @@
         {
             <div class="absolute top-4 right-4 z-10 flex w-[85%] max-w-116 items-center justify-between rounded-lg border border-red-400 bg-red-100 p-3 text-sm text-red-800" role="alert">
                 <span class="text-sm">@TempData["Error"]</span>
-                <button onclick="this.parentElement.remove()" class="text-lg leading-none font-bold text-red-800 hover:text-red-900">&times;</button>
+                <button onclick="this.parentElement.remove()" class="text-red-800 hover:text-red-900 font-bold text-lg leading-none hover:cursor-pointer">&times;</button>
             </div>
         }
         <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">   
@@ -26,25 +26,32 @@
             <p class="text-md text-left font-bold text-black">Role Name</p>
             <div class="max-h-[93%] overflow-y-auto">
                 <table class="min-w-full">
-                    <tbody class="text-sm font-semibold text-gray-700">
-                        @for (int i = 0; i < Model.Roles.Count(); i++)
+                    <tbody class="font-semibold text-gray-700 text-sm">
+                        @if (Model.Roles != null && Model.Roles.Any()) 
                         {
-                            var roles = Model.Roles[i];
-                            @if (roles.Name != "Manager")
+                            @for (int i = 0; i < Model.Roles.Count(); i++)
                             {
-                                var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                                var roles = Model.Roles[i];
+                                @if (roles.Name != "Manager")
+                                {
+                                    var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
-                                <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
-                                    <td class="px-6 py-3">@roles.Name</td>
-                                    <td class="space-x-2 px-6 py-3 text-right">
-                                        <form asp-action="DeleteRole" asp-controller="Role" method="post">
-                                            <input type="hidden" name="roleId" value="@roles.RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] rounded-lg border border-gray-300 bg-white px-6 py-0.75 text-sm font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Edit</a>
-                                            <button type="submit" class="rounded-lg border border-gray-300 bg-white px-4 py-0.75 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
+                                        <td class="px-6 py-3">@roles.Name</td>
+                                        <td class="px-6 py-3 space-x-2 text-right">
+                                            <form asp-action="DeleteRole" asp-controller="Role" method="post">
+                                                <input type="hidden" name="roleId" value="@roles.RoleId" />
+                                                <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                                <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
                             }
+                        }
+                        else
+                        {
+                            <p class="pl-6 pt-1 font-semibold">No roles found</p>
                         }
                     </tbody>
                 </table>

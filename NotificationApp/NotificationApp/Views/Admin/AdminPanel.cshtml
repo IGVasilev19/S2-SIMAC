@@ -29,18 +29,25 @@
                         </tr>
                     </thead>
                     <tbody class="font-semibold text-gray-700 text-sm">
-                        @for (int i = 0; i < Model.Organizations.Count(); i++) 
+                        @if (Model.Organizations != null && Model.Organizations.Any()) 
                         {
-                            var organization = Model.Organizations[i];
-                            var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                            @for (int i = 0; i < Model.Organizations.Count(); i++) 
+                            {
+                                var organization = Model.Organizations[i];
+                                var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
-                            <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
-                                <td class="px-6 py-3">@organization.OrganizationName</td>
-                                <td class="px-6 py-3 space-x-2 text-right">
-                                    <button class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
-                                    <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                                </td>
-                            </tr>
+                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
+                                    <td class="px-6 py-3">@organization.OrganizationName</td>
+                                    <td class="px-6 py-3 space-x-2 text-right">
+                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
+                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else 
+                        {
+                            <p class="pl-6 pt-1 font-semibold">No organizations found</p>
                         }
                     </tbody>
                 </table>
