@@ -30,28 +30,28 @@
                         @if (Model.Roles != null && Model.Roles.Any()) 
                         {
                             @for (int i = 0; i < Model.Roles.Count(); i++)
-                        {
-                            var roles = Model.Roles[i];
-                            @if (roles.Name != "Manager")
                             {
-                                var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                                var roles = Model.Roles[i];
+                                @if (roles.Name != "Manager")
+                                {
+                                    var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
-                                <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
-                                    <td class="px-6 py-3">@roles.Name</td>
-                                    <td class="px-6 py-3 space-x-2 text-right">
-                                        <form asp-action="DeleteRole" asp-controller="Role" method="post">
-                                            <input type="hidden" name="roleId" value="@roles.RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                            <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
+                                        <td class="px-6 py-3">@roles.Name</td>
+                                        <td class="px-6 py-3 space-x-2 text-right">
+                                            <form asp-action="DeleteRole" asp-controller="Role" method="post">
+                                                <input type="hidden" name="roleId" value="@roles.RoleId" />
+                                                <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                                <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
                             }
-                        }
-                        }
-                        else 
-                        {
-                            <p class="pl-6 pt-1 font-semibold">No roles found</p>
+                            else 
+                            {
+                                <p class="pl-6 pt-1 font-semibold">No roles found</p>
+                            }
                         }
                     </tbody>
                 </table>
