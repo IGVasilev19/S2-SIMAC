@@ -41,8 +41,8 @@
                                         <td class="px-6 py-3 space-x-2 text-right">
                                             <form asp-action="DeleteRole" asp-controller="Role" method="post">
                                                 <input type="hidden" name="roleId" value="@roles.RoleId" />
-                                                <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                                <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-4 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                                <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@roles.RoleId" class="inline-flex h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                                <button type="submit" class="inline-flex h-[25px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-5 py-0.75 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
