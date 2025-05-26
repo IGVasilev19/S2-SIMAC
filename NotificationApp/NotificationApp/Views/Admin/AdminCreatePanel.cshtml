@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Admin Create panel";
+}
+@model AdminCreatePanelViewModel
+
+<div class="w-full h-full flex">
+    <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
+        <div class="flex flex-col">
+            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
+            <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mt-[150px]">Admin</button>
+        </div>
+        <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05]">Sign out</button>
+    </div>
+    <div class="w-full h-full flex items-center justify-center bg-gray-300">
+        <form asp-action="CreateOrganization" asp-controller="Admin" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
+            <p class="text-4xl font-semibold">Create Organization</p>
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+                <p class="select-none">Organization Name*</p>
+                <input asp-for="OrganizationName" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            </div>
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+                <p class="select-none">Name*</p>
+                <input asp-for="Name" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            </div>
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+                <p class="select-none">Email*</p>
+                <input asp-for="Email" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            </div>
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+                <p class="select-none">Password*</p>
+                <input asp-for="Password" type="password" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+            </div>
+            <button type="submit" class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button> 
+        </form>
+    </div>
+</div>
