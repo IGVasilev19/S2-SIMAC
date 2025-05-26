@@ -170,7 +170,14 @@ namespace DAL
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@roleId", roleId);
 
-                return Convert.ToBoolean(cmd.ExecuteScalar());
+                var result = cmd.ExecuteScalar();
+
+                if ((int)result == 0)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

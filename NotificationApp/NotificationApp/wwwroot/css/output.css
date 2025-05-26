@@ -354,6 +354,9 @@
   .w-\[250px\] {
     width: 250px;
   }
+  .w-\[375px\] {
+    width: 375px;
+  }
   .w-\[400px\] {
     width: 400px;
   }
@@ -445,6 +448,9 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
   .overflow-y-auto {
     overflow-y: auto;
   }
@@ -515,8 +521,8 @@
   .bg-\[\#7AA0FF\] {
     background-color: #7AA0FF;
   }
-  .bg-\[\#FF6F6F\] {
-    background-color: #FF6F6F;
+  .bg-\[\#FF3131\] {
+    background-color: #FF3131;
   }
   .bg-blue-300 {
     background-color: var(--color-blue-300);
@@ -772,6 +778,13 @@
       }
     }
   }
+  .hover\:rounded-md {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: var(--radius-md);
+      }
+    }
+  }
   .hover\:bg-blue-200 {
     &:hover {
       @media (hover: hover) {
@@ -783,6 +796,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-100);
+      }
+    }
+  }
+  .hover\:bg-gray-200 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-200);
       }
     }
   }

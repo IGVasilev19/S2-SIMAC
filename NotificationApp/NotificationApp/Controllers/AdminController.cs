@@ -8,40 +8,49 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Service.Interfaces;
 using NotificationApp.Models.DTO_View_Models;
+using Service;
 
 namespace NotificationApp.Controllers
 {
     public class AdminController : Controller
     {
         private readonly IOrganizationService _organizationService;
+        private readonly IAccountService _accountService;
 
-        public AdminController(IOrganizationService orgService)
+        public AdminController(IOrganizationService orgService, IAccountService accountService)
         {
             _organizationService = orgService;
+            _accountService = accountService;
         }
 
-       public IActionResult AdminPanel()
+        public IActionResult AdminPanel()
         {
-            var organizations = _organizationService.GetAll();
-            List<OrganizationViewModel> vmOrganizations = new();
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            foreach (var org in organizations)
+            if (accountId != null)
             {
-                var vmOrg = new OrganizationViewModel
+                if (int.TryParse(accountId, out int id))
                 {
-                    OrganizationId = org.OrganizationId,
-                    OrganizationName = org.Name
-                };
+                    var adminAccount = _accountService.GetById(id); // Creator's account object to get Org Id from
 
-                vmOrganizations.Add(vmOrg);
+                    AdminPanelViewModel vm = new();
+
+                    List<Organization> allOrgs = (List<Organization>)_organizationService.GetAll();
+
+                    foreach (var org in allOrgs)
+                    {
+                        OrganizationViewModel orgVm = new()
+                        {
+                            OrganizationId = org.OrganizationId,
+                            OrganizationName = org.Name,
+                            //ManagerName = TODO: Fix this
+                        };
+                        vm.Organizations.Add(orgVm);
+                    }
+                    return View(vm);
+                }
             }
-
-            var viewmodel = new AdminPanelViewModel
-            {
-                Organizations = vmOrganizations
-            };
-
-            return View(viewmodel);
+            return View();
         }
 
         //[HttpPost]

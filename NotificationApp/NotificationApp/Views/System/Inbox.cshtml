@@ -15,18 +15,18 @@
             <button class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Sort</button>
         </div>
         <div class="flex h-[82%] w-[96%] gap-3">
-            <div class="flex h-full flex-col items-center bg-white p-2">
+            <div class="flex w-[375px] h-full flex-col items-center bg-white p-2 overflow-y-auto overflow-x-hidden">
                 @foreach (var notification in Model.Notifications)
                 {
-                    <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
-                        <div class="flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-100 hover:cursor-pointer">
+                    <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
+                        <div class="notification flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:rounded-md hover:cursor-pointer">
                             @if (!notification.Important)
                             {
                                 <div class="rounded-4xl h-[25px] w-[30px] border"></div>
                             }
                             else
                             {
-                                <div class="rounded-4xl h-[25px] w-[30px] border bg-[#FF6F6F]"></div>
+                                <div class="rounded-4xl h-[25px] w-[30px] border bg-[#FF3131]"></div>
                             }
                             <div class="flex h-full w-full flex-col items-center justify-center gap-2">
                                 <p class="text-sm font-bold select-none">@notification.Title</p>
