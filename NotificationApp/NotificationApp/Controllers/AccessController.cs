@@ -48,12 +48,23 @@ namespace NotificationApp.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
+                new Claim(ClaimTypes.Email, account.Email),
             };
+
+            if (account.Email == "admin@gmail.com")
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            }
 
             var identity = new ClaimsIdentity(claims, "AuthCookie");
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync("AuthCookie", principal);
+
+            if (account.Email == "admin@gmail.com")
+            {
+                return RedirectToAction("AdminPanel", "Admin");
+            }
 
             return RedirectToAction("Inbox", "System");
         }
