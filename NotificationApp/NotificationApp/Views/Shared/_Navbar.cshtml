@@ -1,7 +1,11 @@
-﻿
+﻿@using System.Security.Claims
+
 
 <div class="bg-custom-gradient flex h-full w-[200px] flex-col items-center justify-between px-5">
-    <img src="/images/simac-logo-removebg.png" asp-append-version="true" />
+    <div class="flex flex-col gap-2 items-center">
+        <img src="/images/simac-logo-removebg.png" asp-append-version="true" />
+        <p class="font-bold text-white text-md">@User.FindFirst(ClaimTypes.Name)?.Value</p>
+    </div>
     <div class="w-full flex flex-col">
         <div class="w-full flex flex-col gap-4">
             <a asp-action="Inbox" asp-controller="System" class="text-md flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Inbox</a>
