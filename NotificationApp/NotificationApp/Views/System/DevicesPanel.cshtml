@@ -7,58 +7,66 @@
 <div class="flex h-full w-full">
     @Html.Partial("_Navbar")
     <div class="flex h-full w-full flex-col items-center gap-8 bg-gray-300">
-        <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">   
+        <div class="mt-8 flex w-[94%] h-[62px] items-center justify-between bg-white p-4 shadow-md">   
             <form asp-controller="System" asp-action="SearchDevices" method="post" class="flex w-full max-w-md items-center gap-2">
-                <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
+                <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="w-full px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
                 <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </form>
         </div>
         <div class="mx-5 h-[82%] w-[94%] bg-white p-4 shadow-md">
-            <div class="flex w-full justify-between bg-white">
-                <div class="flex gap-60">
-                    <p class="px-6 py-3 text-left text-sm font-bold text-black">Device Name</p>
-                    <p class="px-6 py-3 text-left text-sm font-bold text-black">Location</p>
-                </div>
-                <p class="px-6 py-3 pr-25 text-right text-sm font-bold text-black">Status</p>
-            </div>
             <div class="overflow-x-auto">
-                @if(Model.Devices != null && Model.Devices.Any()) 
-                {
-                    @for (int i = 0; i < Model.Devices.Count(); i++) 
-                    {
-                        var devices = Model.Devices[i];
-                        var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                <table class="min-w-full">
+                    <thead class="bg-white">
+                        <tr>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Device Name</th>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Location</th>
+                            <th class="w-[247px] px-6 py-3 text-sm font-bold text-black">
+                                <div class="w-full h-full flex justify-center items-center">    
+                                    Status
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-semibold text-gray-700 text-md">
+                        @if (Model.Devices != null && Model.Devices.Any()) 
+                        {
+                            for (int i = 0; i < Model.Devices.Count(); i++) 
+                            {
+                                var device = Model.Devices[i];
+                                var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
-                        <table class="w-full text-sm text-left text-gray-700 font-semibold">
-                            <tbody class="group">
-                                <tr class="@rowClass h-[54px] hover:bg-gray-300 hover:cursor-pointer even:bg-white">
-                                    <td class="w-[400px] pl-6 py-3">@devices.Name</td>
-                                    <td class="w-[400px] py-3">@devices.Location</td>
-                                    <td class="w-[400px] py-3 pr-3 flex justify-end relative overflow-hidden">
-                                    @if (devices.DeviceStatus == 0)
-                                    {
-                                        <div class="flex gap-2 items-center">
-                                            <div class="bg-green-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
+                                    <td class="w-[247px] px-6 py-3">@device.Name</td>
+                                    <td class="w-[247px] px-6 py-3">@device.Location</td>
+                                    <td class="w-[247px] px-6 py-3 text-right">
+                                        @if (device.DeviceStatus == 0)
+                                        {
+                                            <div class="flex gap-2 items-center justify-center pl-15">
+                                                <div class="bg-green-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
                                                 <p class="font-bold">Online</p>
-                                        </div>
-                                    }
-                                    else 
-                                    {
-                                        <div class="flex gap-2 items-center">
-                                            <div class="bg-red-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="flex gap-2 items-center justify-center pl-15">
+                                                <div class="bg-red-500 w-[25px] h-[25px] shadow-md rounded-full"></div>
                                                 <p class="font-bold">Offline</p>
-                                        </div>
-                                    }
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table> 
-                    }
-                }
-                else 
-                {
-                    <p class="px-6 py-4 text-left text-md font-semibold text-gray-500">No devices found</p>
-                }  
+                            }
+                        }
+                        else 
+                        {
+                            <tr>
+                                <td colspan="3" class="px-6 py-4 text-left font-semibold text-gray-500">
+                                    No devices found
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
