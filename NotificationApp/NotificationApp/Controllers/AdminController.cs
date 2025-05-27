@@ -34,6 +34,7 @@ namespace NotificationApp.Controllers
                     var adminAccount = _accountService.GetById(id); // Creator's account object to get Org Id from
 
                     AdminPanelViewModel vm = new();
+                    vm.Organizations = new List<OrganizationViewModel>();
 
                     List<Organization> allOrgs = (List<Organization>)_organizationService.GetAll();
 
