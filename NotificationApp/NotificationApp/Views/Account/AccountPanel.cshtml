@@ -9,49 +9,55 @@
     @Html.Partial("_Navbar")
     <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
         <div class="w-[94%] flex items-center justify-between bg-white shadow-md p-4 mt-8">   
-            <div class="flex items-center gap-2 w-full max-w-md">
-                <input type="text" placeholder="Search" class="w-full px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
-                <button class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
-            </div>
-            <a asp-action="AccountCreatePanel" aps-controller="Account" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
+            <form asp-controller="Account" asp-action="SearchAccounts" method="post" class="flex items-center gap-2 w-full max-w-md">
+                <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="w-full px-3 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
+                <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
+            </form>
+            <a asp-action="AccountCreatePanel" aps-controller="Account" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
         </div>
         <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-white">
                         <tr>
-                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Account Name</th>
-                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Role</th>
-                            <th class="px-6 py-3"></th>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Account Name</th>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Role</th>
                         </tr>
                     </thead>
-                    <tbody class="font-semibold text-gray-700 text-sm">
+                    <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Accounts != null && Model.Accounts.Any()) 
                         {
-                            @for(int i = 0; i < Model.Accounts.Count(); i++) 
-                            {
-                                var accounts = Model.Accounts[i];
-                                @if (accounts.AccountId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0"))
-                                {
-                                    var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                            int visibleRowIndex = 0;
 
-                                    <tr class="@rowClass even:bg-white hover:bg-gray-300 hover:cursor-pointer">
-                                        <td class="px-6 py-3">@accounts.Name</td>
-                                        <td class="px-6 py-3">@accounts.Role.Name</td>
-                                        <td class="px-6 py-3 space-x-2 text-right">
-                                            <form asp-action="DeleteAccount" aps-controller="Account" method="post">
-                                                <input type="hidden" name="id" value="@Model.Accounts[i].AccountId" />
-                                                <a asp-action="AccountEditPanel" asp-controller="Account" asp-route-selectedAccountId="@Model.Accounts[i].AccountId" class="h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                                <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-1 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                                else 
-                                {
-                                    <p class="pl-6 pt-1 font-semibold">No accounts found</p>
-                                }
+                            foreach (var account in Model.Accounts)
+                            {
+                                // Skip current user
+                                if (account.AccountId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0"))
+                                    continue;
+
+                                var rowClass = visibleRowIndex % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
+                                visibleRowIndex++;
+
+                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
+                                    <td class="w-[247px] px-6 py-3">@account.Name</td>
+                                    <td class="w-[247px] px-6 py-3">@account.Role.Name</td>
+                                    <td class="w-[247px] px-6 py-3 space-x-2 text-right">
+                                        <form asp-action="DeleteAccount" asp-controller="Account" method="post" class="inline">
+                                            <input type="hidden" name="id" value="@account.AccountId" />
+                                            <a asp-action="AccountEditPanel" asp-controller="Account" asp-route-selectedAccountId="@account.AccountId" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <button type="submit" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="px-6 py-4 text-left font-semibold text-gray-500">
+                                    No accounts found
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

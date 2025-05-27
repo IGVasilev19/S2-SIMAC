@@ -10,7 +10,7 @@ namespace NotificationApp.Models
         public string AccountPassword { get; set; }
         public string AccountOrganization { get; set; }
         public string AccountRole { get; set; }
-        public List<NotificationViewModel> Notifications { get; set; }
+         public List<NotificationViewModel> Notifications { get; set; } = new List<NotificationViewModel>();
         [ValidateNever]
         public string? Search {  get; set; }
     }

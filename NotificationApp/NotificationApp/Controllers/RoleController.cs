@@ -60,6 +60,10 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult SearchRoles(RolesPanelViewModel vm) //TODO: Connect??????????? ;(
         {
+            if (string.IsNullOrEmpty(vm.Search))
+            {
+                Console.WriteLine("Search string is empty!");
+            }
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))

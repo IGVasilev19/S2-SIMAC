@@ -8,7 +8,7 @@
     @Html.Partial("_Navbar")
     <div class="flex h-full w-full flex-col items-center gap-8 bg-gray-300">
         <div class="mt-8 flex w-[96%] items-center justify-between bg-white p-4 shadow-md">   
-            <form asp-action="FilterNotifications" method="post" class="flex w-full max-w-md items-center gap-2">
+            <form asp-controller="System" asp-action="SearchNotifications" method="post" class="flex w-full max-w-md items-center gap-2">
                 <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400" />
                 <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </form>
@@ -41,7 +41,7 @@
                 }
                 else
                 {
-                    <p class="text-center text-gray-600 font-bold mt-4">No notifications found</p>
+                    <p class="text-center text-md text-gray-500 font-semibold mt-4">No notifications found</p>
                 }
             </div>
             <div class="flex h-full w-full flex-col items-center gap-5">

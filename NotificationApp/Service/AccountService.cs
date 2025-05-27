@@ -94,9 +94,13 @@ namespace Service
             return filteredAccounts;
         }
 
-        public IEnumerable<Account> GetManager(int organizationId) // TODO: Dawid implement this
+        public Account GetManagerByOrganization(int organizationId)
         {
-            throw new NotImplementedException();
+            if (organizationId <= 0)
+            {
+                throw new ArgumentNullException("Organization ID must be greater than zero."); // TODO: This is not handled 
+            }
+            return _accountRepository.GetManagerByOrganization(organizationId);
         }
     }
 }

@@ -112,10 +112,16 @@ insert into [Role] ([Name], OrganizationId) values ('Spilogale gracilis', 1);
 
 SELECT * FROM [Role]
 
+insert into Device([Name], [Location], StatusId, OrganizationId)
+values('org2Device2', 'location1', 0, 3)
 
+UPDATE Device
+SET [Name] = 'org2Device1', OrganizationId = 3
+WHERE DeviceId = 3;
 
+SELECT * FROM Device
 
-
+SELECT * FROM Organization
 
 SELECT * FROM Account
 
@@ -125,9 +131,13 @@ SELECT * FROM RolePermission
 
 SELECT * FROM Permission
 
+SELECT * FROM [Notifcation]
+
+
+
 UPDATE [Role]
-SET [Name] = 'Admin', OrganizationId = 0
+SET [Name] = 'Admin', OrganizationId = 1
 WHERE RoleId = 1;
 
-INSERT INTO Organization([Name])
-VALUES('System')
+INSERT INTO [Role]([Name], OrganizationId)
+VALUES('Manager', 3)

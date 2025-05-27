@@ -92,12 +92,12 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult FilterNotifications(InboxViewModel vm) //TODO: Connect? Idk what I'm doing! Will this work? Will it not? Ig we'll find out!
+        public IActionResult SearchNotifications(InboxViewModel vm) //TODO: Connect? Idk what I'm doing! Will this work? Will it not? Ig we'll find out!
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Inbox");
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View("Inbox", vm);
+            //}
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -124,7 +124,14 @@ namespace NotificationApp.Controllers
                             Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
                         });
                     }
-                    vm.Notifications = vmNotifications;
+
+                    //vm.AccountId = account.AccountId;
+                    //vm.AccountName = account.Name;
+                    //vm.AccountEmail = account.Email;
+                    //vm.AccountPassword = account.Password;
+                    //vm.AccountOrganization = account.OrganizationId.ToString();
+                    //vm.AccountRole = account.RoleId.ToString();
+                    vm.Notifications = vmNotifications;                
                 }
             }
 
@@ -169,7 +176,7 @@ namespace NotificationApp.Controllers
             if (int.TryParse(accountId, out int id))
             {
                 Account account = _accountService.GetById(id);
-                IEnumerable<Device> filteredDevices = _deviceService.SearchDevices(vm.Filter, account.OrganizationId);
+                IEnumerable<Device> filteredDevices = _deviceService.SearchDevices(vm.Search, account.OrganizationId);
                 
                 vm.Devices = new();
                 foreach (Device device in filteredDevices)
