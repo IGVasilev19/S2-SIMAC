@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using BLL;
 using DAL.Interfaces;
+using System.Reflection.PortableExecutable;
 
 namespace DAL
 {
@@ -167,20 +168,19 @@ namespace DAL
                     return accounts;
                 }
             }
-            return null;
         }
-        public IEnumerable<Account> GetManagers()
+        public Account GetManagerByOrganization(int organizationId)
         {
-            List<Account> accounts = new List<Account>();
-
             using (SqlConnection conn = DBConnection.GetConnection())
             {
 
-                string query = "SELECT AccountId, [Name], Email, [Password], OrganizationId, RoleId FROM Account WHERE RoleId = '1'";
+                string query = "SELECT AccountId, [Name], Email, [Password], OrganizationId, RoleId FROM Account " +
+                    "WHERE RoleId = '2' AND OrganzationId = @organizationId"; //Manager is hard coded to roleId 2
                 SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@organizationId", organizationId);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         int roleId = reader.GetInt32(4);
 
@@ -192,12 +192,11 @@ namespace DAL
                             reader.GetInt32(4),
                             reader.GetInt32(5)
                         );
-
-                        accounts.Add(account);
+                        return account;
                     }
                 }
             }
-            return accounts;
+            return null;
         }
     }
 }
