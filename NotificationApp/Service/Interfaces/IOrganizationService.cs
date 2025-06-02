@@ -13,5 +13,6 @@ namespace Service.Interfaces
         void Add(Organization organization);
         void Delete(Organization organization);
         Organization GetById(int id);
+        int AddOrganization(Organization organization);
     }
 }

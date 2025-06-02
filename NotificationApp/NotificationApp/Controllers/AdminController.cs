@@ -54,13 +54,22 @@ namespace NotificationApp.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult CreateOrginization()
-        //{                                                                                     
+        [HttpPost]
+        public IActionResult CreateOrganizationWithManager(AdminCreatePanelViewModel model)
+        {                                                                                     
+            if (!ModelState.IsValid)
+            {
+                return View("AdminCreatePanel");
+            }
 
-        //}
+            var newOrganization = new Organization(model.OrganizationName);
+            int newOrganizationId = _organizationService.AddOrganization(newOrganization);
+            _accountService.SignUp(model.Name, model.Email, model.Password, newOrganizationId, 2);
+
+            return RedirectToAction("AdminPanel", "Admin");
+        }
         
-        public IActionResult AdminCreateEditPanel()
+        public IActionResult AdminCreatePanel()
         {
             return View();
         }

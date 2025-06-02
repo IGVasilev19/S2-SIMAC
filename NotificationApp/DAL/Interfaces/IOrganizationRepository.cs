@@ -9,5 +9,6 @@ namespace DAL.Interfaces
 {
     public interface IOrganizationRepository : IRepository<Organization>
     {
+        int AddOrganization(Organization organization);
     }
 }
