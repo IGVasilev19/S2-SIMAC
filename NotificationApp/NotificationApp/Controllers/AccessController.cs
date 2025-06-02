@@ -7,6 +7,7 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Service.Interfaces;
+using Microsoft.Identity.Client;
 
 namespace NotificationApp.Controllers
 {
@@ -23,7 +24,14 @@ namespace NotificationApp.Controllers
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Inbox", "System");
+                if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id) && id !=1)
+                {
+                    return RedirectToAction("Inbox", "System");
+                }
+                else
+                {
+                    return RedirectToAction("AdminPanel", "Admin");
+                }
             }
 
             return View();
