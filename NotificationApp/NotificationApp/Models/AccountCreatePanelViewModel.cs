@@ -10,10 +10,13 @@ namespace NotificationApp.Models
     public class AccountCreatePanelViewModel
     {
         [Required(ErrorMessage = "Name is required")]
+        [MaxLength(50)]
         public string Name {get; set;}
         [Required(ErrorMessage = "Email is required")]
+        [MaxLength(50)]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is required")]
+        [MaxLength(255)]
         public string Password {get; set;}
         [ValidateNever]
         [BindNever]
