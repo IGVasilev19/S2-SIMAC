@@ -242,7 +242,7 @@ namespace NotificationApp.Controllers
             {
                 var accounts = _accountService.GetByRoleId(roleId);
                 var accountNames = string.Join(", ", accounts.Select(a => a.Name));
-                TempData["Error"] = $"This role is being used by these accounts: {accountNames}";
+                TempData["Error"] = $"This role is being used by these accounts: {accountNames}. In order to remove this Role, there can be no Accounts linked to it.";
                 return RedirectToAction("RolesPanel", "Role");
             }
         }
