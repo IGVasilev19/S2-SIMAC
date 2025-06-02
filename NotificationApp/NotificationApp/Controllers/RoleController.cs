@@ -241,8 +241,10 @@ namespace NotificationApp.Controllers
             catch (Exception ex)
             {
                 var accounts = _accountService.GetByRoleId(roleId);
-                var accountNames = string.Join(", ", accounts.Select(a => a.Name));
-                TempData["Error"] = $"This role is being used by these accounts: {accountNames}. In order to remove this Role, there can be no Accounts linked to it.";
+                var accountNames = accounts.Select(a => "- " + a.Name); // or Username
+                var joinedAccounts = string.Join("\n", accountNames);
+
+                TempData["Error"] = $"In order to remove this Role, there can be no Accounts linked to it\nThis role is being used by these accounts:\n{joinedAccounts}";
                 return RedirectToAction("RolesPanel", "Role");
             }
         }
