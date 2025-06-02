@@ -239,7 +239,7 @@ namespace NotificationApp.Controllers
             }
             catch (Exception ex)
             {
-                var accounts = accountService.GetByRoleId(roleId);
+                var accounts = _accountService.GetByRoleId(roleId);
                 var accountNames = string.Join(", ", accounts.Select(a => a.Name));
                 TempData["Error"] = $"This role is being used by these accounts: {accountNames}";
                 return RedirectToAction("RolesPanel", "Role");
