@@ -94,11 +94,6 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult SearchNotifications(InboxViewModel vm) //TODO: Connect? Idk what I'm doing! Will this work? Will it not? Ig we'll find out!
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View("Inbox", vm);
-            //}
-
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
@@ -110,6 +105,7 @@ namespace NotificationApp.Controllers
                     var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
                     var permissionIds = permissions.Select(p => p.PermissionId).ToList();
                     var notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds);
+                    notifications = _notificationService.FilterNotifications(account, notifications, vm.FilterRead, vm.FilterImportant);
 
                     var vmNotifications = new List<NotificationViewModel>();
 
