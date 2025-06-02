@@ -83,6 +83,25 @@ namespace DAL
             return null;
         }
 
+        public bool NameExists(string name)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT * FROM Organization WHERE [Name] = @name";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@name", name);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public void Update(Organization organization)
         {
             using (SqlConnection conn = DBConnection.GetConnection())

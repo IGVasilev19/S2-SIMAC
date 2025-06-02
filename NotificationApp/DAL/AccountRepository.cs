@@ -198,5 +198,34 @@ namespace DAL
             }
             return null;
         }
+
+        public IEnumerable<Account> GetByRoleId(int roleId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+
+                string query = "SELECT AccountId, [Name], Email, [Password], OrganizationId, RoleId FROM Account " +
+                    "WHERE RoleId = @roleId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@roleId", roleId);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<Account> accounts = new List<Account>();
+                    while (reader.Read())
+                    {
+                        Account account = new Account(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2),
+                            reader.GetString(3),
+                            reader.GetInt32(4),
+                            reader.GetInt32(5)
+                        );
+                        accounts.Add(account);
+                    }
+                    return accounts;
+                }
+            }
+        }
     }
 }

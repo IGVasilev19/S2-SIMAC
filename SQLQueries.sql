@@ -131,13 +131,18 @@ SELECT * FROM RolePermission
 
 SELECT * FROM Permission
 
-SELECT * FROM [Notifcation]
+SELECT * FROM [Notification]
 
 
 
 UPDATE [Role]
-SET [Name] = 'Admin', OrganizationId = 1
-WHERE RoleId = 1;
+SET [Name] = 'Manager', OrganizationId = 1
+WHERE RoleId = 2;
 
 INSERT INTO [Role]([Name], OrganizationId)
 VALUES('Manager', 3)
+
+DELETE FROM Account
+WHERE AccountId = 9;
+
+SELECT * FROM Account
