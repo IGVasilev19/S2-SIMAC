@@ -22,7 +22,7 @@ namespace NotificationApp.Controllers
             _roleService = roleService;
         }
 
-        [Permission("AccountManagement")]
+        //[Permission("AccountManagement")]
         public IActionResult AccountPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -26,7 +26,7 @@ namespace NotificationApp.Controllers
             _permissionService = permissionService;
         }
 
-        [Permission("AccountManagement")]
+        //[Permission("AccountManagement")]
         public IActionResult RolesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -60,10 +60,6 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult SearchRoles(RolesPanelViewModel vm) //TODO: Connect??????????? ;(
         {
-            if (string.IsNullOrEmpty(vm.Search))
-            {
-                Console.WriteLine("Search string is empty!");
-            }
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
@@ -244,7 +240,9 @@ namespace NotificationApp.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "This role is being used by 1 or more accounts and can't be deleted.";
+                var accounts = _accountService.GetByRoleId(roleId);
+                var accountNames = string.Join(", ", accounts.Select(a => a.Name));
+                TempData["Error"] = $"This role is being used by these accounts: {accountNames}. In order to remove this Role, there can be no Accounts linked to it.";
                 return RedirectToAction("RolesPanel", "Role");
             }
         }

@@ -44,7 +44,7 @@ namespace Service
             List<Permission> parentPermissions = new();
             foreach (Permission permission in allPermissions)
             {
-                if(permission.ParentId == null)
+                if(permission.ParentId == null && permission.PermissionId != 1)
                 {
                     parentPermissions.Add(permission);
                 }
@@ -53,7 +53,7 @@ namespace Service
             List<Permission> childPermissions = new();
             foreach (Permission permission in allPermissions)
             {
-                if(permission.ParentId != null)
+                if(permission.ParentId != null && permission.PermissionId != 1)
                 {
                     childPermissions.Add(permission);
                 }

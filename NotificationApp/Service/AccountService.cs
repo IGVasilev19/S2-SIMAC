@@ -102,5 +102,14 @@ namespace Service
             }
             return _accountRepository.GetManagerByOrganization(organizationId);
         }
+
+        public IEnumerable<Account> GetByRoleId(int roleId)
+        {
+            if (roleId <= 0)
+            {
+                throw new ArgumentNullException("Role ID must be greater than zero."); // TODO: This is not handled 
+            }
+            return _accountRepository.GetByRoleId(roleId);
+        }
     }
 }

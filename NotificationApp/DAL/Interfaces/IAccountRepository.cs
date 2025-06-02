@@ -13,5 +13,6 @@ namespace DAL.Interfaces
 
         public IEnumerable<Account> GetByOrganization(int organizationId);
         public Account GetManagerByOrganization(int organizationId);
+        public IEnumerable<Account> GetByRoleId(int roleId);
     }
 }

@@ -10,16 +10,15 @@
     <form asp-action="CreateRole" asp-controller="Role" method="post" class="flex h-full w-full flex-col items-center gap-4 bg-gray-300">
         <div class="flex h-[93%] w-[94%] flex-col items-center gap-6">
             <div class="mt-2 flex w-full items-center justify-center gap-2 bg-white p-4 shadow-md">   
-                <p class="text-md m-0 w-fit font-semibold text-black">Role Name:</p>
-                <input asp-for="RoleName" type="text" placeholder="Type role name" class="placeholder-gray-400 w-[600px] border border-gray-300 px-2 focus:outline-none focus:border-gray-400"/>          
+                <p class="text-2xl font-semibold">Create Role</p>
             </div>
             
             <div class="mx-5 h-full w-full bg-white p-4 shadow-md">
                 <div class="flex h-full w-full flex-col items-center gap-5">
 
                     <div class="flex w-full items-center justify-center gap-2">
-                        <input type="text" placeholder="Search permission" class="placeholder-gray-400 w-[600px] border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
-                        <button type="button" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
+                        <p class="text-md m-0 w-fit font-semibold text-black">Role Name:</p>
+                <input asp-for="RoleName" type="text" placeholder="Type role name" class="placeholder-gray-400 w-[600px] border border-gray-300 px-2 focus:outline-none focus:border-gray-400"/>
                     </div>
 
                     <table class="w-[650px]">
