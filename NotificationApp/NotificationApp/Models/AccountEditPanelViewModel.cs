@@ -9,10 +9,19 @@ namespace NotificationApp.Models
 {
     public class AccountEditPanelViewModel
     {
-        public string Name {get; set;}
+        [Required(ErrorMessage = "Name is required")]
+        [MaxLength(50)]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [MaxLength(50)]
         public string Email { get; set; }
+        [MaxLength(255)]
         public string? Password { get; set; }
+        [ValidateNever]
+        [BindNever]
         public List<RoleViewModel> Roles { get; set; } = new();
-        public RoleViewModel SelectedRole {get; set;}
+        [Required(ErrorMessage = "Role is required")]
+        [ValidateNever]
+        public RoleViewModel SelectedRole { get; set; }
     }
 }

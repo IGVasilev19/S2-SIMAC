@@ -15,5 +15,6 @@ namespace Service.Interfaces
         public bool HasUserReadNotification(int accountId, int notificationId);
         public List<Notification> GetNotificationsForUser(Account account, List<int> permissionIds);
         public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds);
+        public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important);
     }
 }

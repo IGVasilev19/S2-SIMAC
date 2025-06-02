@@ -68,5 +68,41 @@ namespace Service
             }
             return filteredNotifications;
         }
+
+        public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important)
+        {
+            IEnumerable<Notification> filtered = new List<Notification> ();
+            switch (read)
+            {
+                case true:
+                    foreach (Notification notification in notifications)
+                    {
+                        if(_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
+                        {
+                            filtered.Append(notification);
+                        }
+                    }; break;
+
+                case false:
+                    foreach (Notification notification in notifications)
+                    {
+                        if (!_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
+                        {
+                            filtered.Append(notification);
+                        }
+                    }; break;
+
+                default: filtered = notifications; break;
+            }
+            
+            switch(important)
+            {
+                case true:
+                    filtered = filtered.Where(f => f.Important); return filtered;
+                case false:
+                    filtered = filtered.Where(f => !f.Important); return filtered;
+                default: return filtered;
+            }
+        }
     }
 }

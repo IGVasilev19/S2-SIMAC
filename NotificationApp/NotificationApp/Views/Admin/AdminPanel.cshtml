@@ -17,17 +17,12 @@
                 <input type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
                 <button class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </div>
-            <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</button>
+            <a asp-action="AdminCreatePanel" asp-controller="Admin" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
         </div>
         <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
-            <div class="overflow-x-auto">
+            <p class="text-left px-6 py-3 text-sm font-bold text-black">Organization Name</p>
+            <div class="overflow-y-auto max-h-[93%]">
                 <table class="min-w-full">
-                    <thead class="bg-white">
-                        <tr>
-                            <th class="text-left px-6 py-3 text-sm font-bold text-black">Organization Name</th>
-                            <th class="px-6 py-3"></th>
-                        </tr>
-                    </thead>
                     <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Organizations != null && Model.Organizations.Any()) 
                         {

@@ -60,10 +60,6 @@ namespace NotificationApp.Controllers
         [HttpPost]
         public IActionResult SearchRoles(RolesPanelViewModel vm) //TODO: Connect??????????? ;(
         {
-            if (string.IsNullOrEmpty(vm.Search))
-            {
-                Console.WriteLine("Search string is empty!");
-            }
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(accountId, out int id))
@@ -244,7 +240,11 @@ namespace NotificationApp.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "This role is being used by 1 or more accounts and can't be deleted.";
+                var accounts = _accountService.GetByRoleId(roleId);
+                var accountNames = accounts.Select(a => "- " + a.Name); // or Username
+                var joinedAccounts = string.Join("\n", accountNames);
+
+                TempData["Error"] = $"In order to remove this Role, there can be no Accounts linked to it\nThis role is being used by these accounts:\n{joinedAccounts}";
                 return RedirectToAction("RolesPanel", "Role");
             }
         }

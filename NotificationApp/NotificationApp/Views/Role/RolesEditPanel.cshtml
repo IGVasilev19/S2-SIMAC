@@ -8,15 +8,14 @@
     <form asp-action="EditRole" asp-controller="Role" method="post" class="w-full h-full flex flex-col items-center gap-4 bg-gray-300">
         <div class="w-[94%] h-[93%] flex flex-col items-center gap-6">
             <div class="w-full flex items-center justify-center bg-white gap-2 shadow-md p-4 mt-2">   
-                <p class="w-fit text-md font-semibold m-0 text-black">Role Name:</p>
-                <input asp-for="RoleName" type="text" value="@Model.RoleName" placeholder="Type role name" class="w-[600px] px-2 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>     
+                    <p class="text-2xl font-semibold">Edit Role</p>   
             </div>
             <div class="mx-5 h-full w-full bg-white p-4 shadow-md">
                 <div class="flex h-full w-full flex-col items-center gap-5">
 
                     <div class="flex w-full items-center justify-center gap-2">
-                        <input type="text" placeholder="Search permission" class="placeholder-gray-400 w-[600px] border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
-                        <button type="button" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
+                        <p class="w-fit text-md font-semibold m-0 text-black">Role Name:</p>
+                        <input asp-for="RoleName" type="text" value="@Model.RoleName" placeholder="Type role name" class="w-[600px] px-2 placeholder-gray-400 border border-gray-300 focus:outline-none focus:border-gray-400"/>
                     </div>
 
                     <table class="w-[650px]">

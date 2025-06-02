@@ -28,7 +28,16 @@ namespace Service
 
         public void Add(Organization organization)
         {
+            if (!_organizationRepository.NameExists(organization.Name))
+            {
+                throw new Exception("Organization with this name already exists."); //TODO: Handle this exception  
+            }
             _organizationRepository.Add(organization);
+        }
+
+        public int AddOrganization(Organization organization)
+        {
+            return _organizationRepository.AddOrganization(organization);
         }
 
         public void Delete(Organization organization)
