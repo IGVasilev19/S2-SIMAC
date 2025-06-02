@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DAL.Interfaces
 {
@@ -14,6 +15,7 @@ namespace DAL.Interfaces
         public void MarkAsRead(int notificationId, int accountId);
         public bool IsRead(int notificationId, int accountId);
         public List<Notification> GetNotificationsForUser(int organizationId, List<int> permissionIds);
+        public List<Notification> GetByDeviceID(int DeviceID);
 
     }
 }

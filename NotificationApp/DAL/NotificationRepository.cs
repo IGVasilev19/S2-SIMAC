@@ -210,5 +210,36 @@ namespace DAL
             }
             return notifications;
         }
+
+        public List<Notification> GetByDeviceID(int deviceID) 
+        {
+            List<Notification> notifications = new List<Notification>();
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "SELECT * " +
+                                "FROM Notification " +
+                                "WHERE DeviceId = @DeviceID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@DeviceID", deviceID);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Notification notification = new Notification(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2),
+                            reader.GetBoolean(3),
+                            reader.GetInt32(7),
+                            reader.GetDateTime(4)
+                        );
+                        notifications.Add(notification);
+                    }
+                }
+            }
+            return notifications;
+        }
     }
 }

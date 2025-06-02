@@ -27,6 +27,7 @@ namespace Service.Utility
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<IAnalyticsService, AnalyticsService>();
             
 
             return services;

@@ -26,7 +26,7 @@ namespace NotificationApp.Controllers
             _permissionService = permissionService;
         }
 
-        [Permission("AccountManagement")]
+        //[Permission("AccountManagement")]
         public IActionResult RolesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
