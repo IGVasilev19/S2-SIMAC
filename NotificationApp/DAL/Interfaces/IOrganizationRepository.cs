@@ -10,5 +10,6 @@ namespace DAL.Interfaces
     public interface IOrganizationRepository : IRepository<Organization>
     {
         bool NameExists(string name);
+        int AddOrganization(Organization organization);
     }
 }

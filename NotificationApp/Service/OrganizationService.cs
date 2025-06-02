@@ -35,6 +35,11 @@ namespace Service
             _organizationRepository.Add(organization);
         }
 
+        public int AddOrganization(Organization organization)
+        {
+            return _organizationRepository.AddOrganization(organization);
+        }
+
         public void Delete(Organization organization)
         {
             _organizationRepository.Delete(organization.OrganizationId);

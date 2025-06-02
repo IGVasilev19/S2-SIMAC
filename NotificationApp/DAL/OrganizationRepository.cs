@@ -24,6 +24,19 @@ namespace DAL
             }
         }
 
+        public int AddOrganization(Organization organization)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "INSERT INTO Organization (Name) VALUES (@name); SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@name", organization.Name);
+
+                int newId = (int)cmd.ExecuteScalar();
+                return newId;
+            }
+        }
+
         public void Delete(int id)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
