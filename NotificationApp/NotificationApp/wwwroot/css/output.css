@@ -10,6 +10,7 @@
     --color-red-100: oklch(93.6% 0.032 17.717);
     --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-800: oklch(44.4% 0.177 26.899);
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-green-500: oklch(72.3% 0.219 149.579);
@@ -40,6 +41,7 @@
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
+    --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --leading-relaxed: 1.625;
@@ -725,6 +727,10 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
@@ -752,6 +758,9 @@
   }
   .text-red-500 {
     color: var(--color-red-500);
+  }
+  .text-red-700 {
+    color: var(--color-red-700);
   }
   .text-red-800 {
     color: var(--color-red-800);
