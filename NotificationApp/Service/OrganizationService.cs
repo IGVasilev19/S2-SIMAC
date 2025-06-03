@@ -55,5 +55,15 @@ namespace Service
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Organization> SearchOrganizations(string filter)
+        {
+            IEnumerable<Organization> filteredOrganizations = _organizationRepository.GetAll();
+            if(filter != null)
+            {
+                filteredOrganizations = filteredOrganizations.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
+            }
+            return filteredOrganizations;
+        }
     }
 }
