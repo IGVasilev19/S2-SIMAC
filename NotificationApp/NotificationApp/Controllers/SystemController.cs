@@ -54,6 +54,7 @@ namespace NotificationApp.Controllers
                             Title = notification.Title,
                             Content = notification.Content,
                             Important = notification.Important,
+                            Read = _notificationService.HasUserReadNotification(id, notification.NotificationID),
                             Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
                         });
                     }
@@ -117,6 +118,7 @@ namespace NotificationApp.Controllers
                             Title = notification.Title,
                             Content = notification.Content,
                             Important = notification.Important,
+                            Read = _notificationService.HasUserReadNotification(id, notification.NotificationID),
                             Date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss")
                         });
                     }
@@ -132,6 +134,21 @@ namespace NotificationApp.Controllers
             }
 
             return View("Inbox", vm);
+        }
+
+        [HttpPost]
+        public IActionResult MarkNotificationAsRead(int notificationId) //TODO: Connect to front-end (I am unsure, if this will work)
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                if(!_notificationService.HasUserReadNotification(id, notificationId))
+                {
+                    _notificationService.MarkNotificationAsRead(id, notificationId);
+                }
+            }
+            return RedirectToAction("Inbox");
         }
 
         public IActionResult DevicesPanel()

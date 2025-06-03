@@ -24,7 +24,11 @@ namespace Service
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var device = _deviceRepository.GetById(id);
+            if (device == null)
+                throw new KeyNotFoundException("Device not found.");
+
+            _deviceRepository.Delete(id);
         }
 
         public IEnumerable<Device> GetAll()

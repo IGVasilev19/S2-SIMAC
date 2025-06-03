@@ -155,7 +155,7 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "SELECT FROM UserReadNotification WHERE NotificationID = @notificationId AND AccountID = @accountId";
+                string query = "SELECT * FROM UserReadNotification WHERE NotificationID = @notificationId AND AccountID = @accountId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@notificationId", notificationId);
                 cmd.Parameters.AddWithValue("@accountId", accountId);

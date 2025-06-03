@@ -94,7 +94,7 @@ namespace Service
             return filteredAccounts;
         }
 
-        public Account GetManagerByOrganization(int organizationId)
+        public Account GetManagerByOrganizationId(int organizationId)
         {
             if (organizationId <= 0)
             {

@@ -22,7 +22,11 @@ namespace Service
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var notification = _notificationRepository.GetById(id);
+            if (notification == null)
+                throw new KeyNotFoundException("Notification not found.");
+
+            _notificationRepository.Delete(id);
         }
 
         public IEnumerable<Notification> GetAll()

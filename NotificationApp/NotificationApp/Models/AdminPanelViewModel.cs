@@ -6,6 +6,6 @@ namespace NotificationApp.Models
     {
         public string AdminRoleName { get; set; } = "Admin";
         public List<OrganizationViewModel> Organizations {  get; set; }
-
+        public string? Search {  get; set; }
     }
 }

@@ -1,18 +1,25 @@
 ﻿function showNotificationPreview(el) {
-  const title = el.dataset.title;
-  const date = el.dataset.date;
-  const body = el.dataset.body;
+  console.log("DATA ATTRIBUTES:", el.dataset);
 
-  document.getElementById("preview-title").innerText = title;
-  document.getElementById("preview-date").innerText = date;
-  document.getElementById("preview-body").innerText = body;
+  const title = el.dataset.title?.trim();
+  const date = el.dataset.date?.trim();
+  const body = el.dataset.body?.trim();
 
+  const displayTitle = title ? title : "Title";
+  const displayDate = date ? date : "Date";
+  const displayBody = body ? body : "Notification details";
+
+  document.getElementById("preview-title").innerText = displayTitle;
+  document.getElementById("preview-date").innerText = displayDate;
+  document.getElementById("preview-body").innerText = displayBody;
+
+  // Highlight selected notification
   document.querySelectorAll(".notification").forEach((div) => {
     div.classList.remove("bg-gray-200", "rounded");
   });
-
   el.querySelector(".notification").classList.add("bg-gray-200", "rounded");
 }
+
 
 document.querySelectorAll(".parent-checkbox").forEach((parent) => {
   parent.addEventListener("change", function () {
