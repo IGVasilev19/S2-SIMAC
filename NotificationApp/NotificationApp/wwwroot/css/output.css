@@ -645,6 +645,9 @@
   .pl-6 {
     padding-left: calc(var(--spacing) * 6);
   }
+  .pl-10 {
+    padding-left: calc(var(--spacing) * 10);
+  }
   .pl-15 {
     padding-left: calc(var(--spacing) * 15);
   }
@@ -691,6 +694,10 @@
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
   }
+  .\!font-normal {
+    --tw-font-weight: var(--font-weight-normal) !important;
+    font-weight: var(--font-weight-normal) !important;
+  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -698,6 +705,9 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
+  }
+  .\!text-black {
+    color: var(--color-black) !important;
   }
   .text-\[\#2C3E50\] {
     color: #2C3E50;

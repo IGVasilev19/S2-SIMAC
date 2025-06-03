@@ -1,20 +1,20 @@
 @{
-    ViewData["Title"] = "Admin panel";
+    ViewData["Title"] = "Admin Panel";
 }
 @model AdminPanelViewModel
 
 <div class="w-full h-full flex">
     <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
         <div class="flex flex-col gap-20">
-            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
+            <img src="/images/simac-logo-removebg.png" asp-append-version="true" />
             <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mt-[150px]">Admin</button>
         </div>
-        <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05]">Sign out</button>
+        <a asp-action="LogOut" asp-controller="Access" class="text-md mb-[10%] flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Sign out</a>
     </div>
     <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
-        <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">   
+        <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">
             <div class="flex w-full max-w-md items-center gap-2">
-                <input type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
+                <input type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400" />
                 <button class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </div>
             <a asp-action="AdminCreatePanel" asp-controller="Admin" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
@@ -24,23 +24,32 @@
             <div class="overflow-y-auto max-h-[93%]">
                 <table class="min-w-full">
                     <tbody class="font-semibold text-gray-700 text-md">
-                        @if (Model.Organizations != null && Model.Organizations.Any()) 
+                        @if (Model.Organizations != null && Model.Organizations.Any())
                         {
-                            @for (int i = 0; i < Model.Organizations.Count(); i++) 
+                            @for (int i = 0; i < Model.Organizations.Count(); i++)
                             {
                                 var organization = Model.Organizations[i];
+
                                 var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
                                 <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
                                     <td class="px-6 py-3">@organization.OrganizationName</td>
+                                    <td class="px-6 py-3">@organization.ManagerName</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        <a asp-action="AdminEditPanel" asp-controller="Admin" asp-route-organizationId="@organization.OrganizationId"
+                                           class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
+                                            Edit
+                                        </a>
+                                        <form asp-action="DeleteOrganization" asp-controller="Admin" asp-route-organizationId="@organization.OrganizationId" method="post" style="display:inline;">
+                                            <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
                         }
-                        else 
+                        else
                         {
                             <tr>
                                 <td colspan="3" class="px-6 py-4 text-left font-semibold text-gray-500">

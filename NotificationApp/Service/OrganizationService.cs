@@ -53,7 +53,32 @@ namespace Service
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var organization = _organizationRepository.GetById(id);
+            if (organization == null)
+            {
+                throw new KeyNotFoundException("Organization not found.");
+            }
+            _organizationRepository.Delete(id);
+        }
+
+        public void Update(Organization organization)
+        {
+            if (organization == null || organization.OrganizationId <= 0)
+            {
+                throw new ArgumentException("Invalid organization data.");
+            }
+
+            var existingOrg = _organizationRepository.GetById(organization.OrganizationId);
+
+            if (existingOrg != null)
+            {
+                existingOrg.Name = organization.Name;
+                _organizationRepository.Update(existingOrg);
+            }
+            else
+            {
+                throw new KeyNotFoundException("Organization not found.");
+            }
         }
 
         public IEnumerable<Organization> SearchOrganizations(string filter)
