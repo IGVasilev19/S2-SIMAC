@@ -36,7 +36,7 @@ namespace NotificationApp.Controllers
                     AdminPanelViewModel vm = new();
                     vm.Organizations = new List<OrganizationViewModel>();
 
-                    List<Organization> allOrgs = (List<Organization>)_organizationService.GetAll();
+                    var allOrgs = _organizationService.GetAll();
 
                     foreach (var org in allOrgs)
                     {
@@ -67,7 +67,7 @@ namespace NotificationApp.Controllers
 
                     vm.Organizations = new List<OrganizationViewModel>();
 
-                    List<Organization> filteredOrgs = (List<Organization>)_organizationService.SearchOrganizations(vm.Search);
+                    var filteredOrgs = _organizationService.SearchOrganizations(vm.Search);
 
                     foreach (var org in filteredOrgs)
                     {
