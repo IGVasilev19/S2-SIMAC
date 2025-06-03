@@ -14,9 +14,14 @@
             <a asp-action="AdminCreatePanel" asp-controller="Admin" class="inline-flex h-[30px] items-center justify-center text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
         </div>
         <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
-            <p class="text-left px-6 py-3 text-sm font-bold text-black">Organization Name</p>
             <div class="overflow-y-auto max-h-[93%]">
                 <table class="min-w-full">
+                    <thead class="bg-white">
+                        <tr>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Organization Name</th>
+                            <th class="w-[247px] text-left px-6 py-3 text-sm font-bold text-black">Manager</th>
+                        </tr>
+                    </thead>
                     <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Organizations != null && Model.Organizations.Any())
                         {
@@ -27,15 +32,15 @@
                                 var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
                                 <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
-                                    <td class="px-6 py-3">@organization.OrganizationName</td>
-                                    <td class="px-6 py-3">@organization.ManagerName</td>
-                                    <td class="px-6 py-3 space-x-2 text-right">
+                                    <td class="w-[247px] px-6 py-3">@organization.OrganizationName</td>
+                                    <td class="w-[247px] px-6 py-3">@organization.ManagerName</td>
+                                    <td class="w-[247px] px-6 py-3 text-right">
                                         <a asp-action="AdminEditPanel" asp-controller="Admin" asp-route-organizationId="@organization.OrganizationId"
-                                           class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
+                                           class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
                                             Edit
                                         </a>
                                         <form asp-action="DeleteOrganization" asp-controller="Admin" asp-route-organizationId="@organization.OrganizationId" method="post" style="display:inline;">
-                                            <button type="submit" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
+                                            <button type="submit" class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">
                                                 Delete
                                             </button>
                                         </form>
