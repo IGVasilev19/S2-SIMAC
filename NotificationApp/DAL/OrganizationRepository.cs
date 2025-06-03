@@ -119,8 +119,9 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "UPDATE Organization SET Name = @name";
+                string query = "UPDATE Organization SET Name = @name WHERE OrganizationId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", organization.OrganizationId);
                 cmd.Parameters.AddWithValue("@name", organization.Name);
 
                 cmd.ExecuteNonQuery();
