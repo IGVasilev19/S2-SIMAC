@@ -212,5 +212,38 @@ namespace DAL
             return notifications;
         }
 
+        public List<Notification> GetNotificationsByOrganization(int organizationId)
+        {
+            List<Notification> notifications = new();
+
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = $@"
+            SELECT NotificationID, Title, Content, Important, OrganizationId, Date
+            FROM Notification
+            WHERE OrganizationId = @orgId
+            ORDER BY Important DESC, Date DESC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@orgId", organizationId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string title = reader.GetString(1);
+                        string content = reader.GetString(2);
+                        bool important = reader.GetBoolean(3);
+                        int orgId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4); // fallback to 0 if null
+                        DateTime date = reader.GetDateTime(5);
+
+                        Notification notification = new Notification(id, title, content, important, orgId, date);
+                        notifications.Add(notification);
+                    }
+                }
+            }
+            return notifications;
+        }
     }
 }

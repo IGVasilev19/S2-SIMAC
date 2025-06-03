@@ -113,5 +113,7 @@ namespace Service
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
         }
+
+        public void GetNotificationsByOrganization(int organizationId) => _notificationRepository.GetNotificationsByOrganization(organizationId);
     }
 }

@@ -9,18 +9,14 @@
         <div class="w-[96%] h-[96%] flex items-center justify-center gap-5">
             <div class="h-full w flex flex-col gap-5">
                 <div class="h-full w-full bg-white">
-                    <img src="../images/graph1.svg" class="w-full h-full" />
+                    <canvas id="eventFrequencyChart" class="w-full h-full"></canvas>
                 </div>
                 <div class="h-full w-full bg-white">
-                    <img src="../images/graph2.svg" class="w-full h-full" />
+                    <canvas id="eventsPerDeviceChart" class="w-full h-full"></canvas>
                 </div>
             </div>
             <div class="w-full h-full bg-white flex flex-col items-center justify-center gap-10">
-                <img src="../images/graph3.svg" class="w-full h-[500px]" />
-                <div class="flex flex-col gap-2 items-center justify-center">
-                    <p class="text-black text-2xl font-bold">DESCRIPTION</p>
-                    <p class="text-black text-lg font-semibold">Some description about the graph here</p>
-                </div>
+                <canvas id="eventTypePieChart" class="w-full h-full"></canvas>
             </div>
         </div>
     </div>
