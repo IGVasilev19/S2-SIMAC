@@ -14,6 +14,7 @@ namespace Service.Interfaces
         void Delete(Organization organization);
         Organization GetById(int id);
         int AddOrganization(Organization organization);
+        void Update(Organization organization);
         public IEnumerable<Organization> SearchOrganizations(string filter);
     }
 }

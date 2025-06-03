@@ -169,13 +169,14 @@ namespace DAL
                 }
             }
         }
+
         public Account GetManagerByOrganization(int organizationId)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
 
                 string query = "SELECT AccountId, [Name], Email, [Password], OrganizationId, RoleId FROM Account " +
-                    "WHERE RoleId = '2' AND OrganzationId = @organizationId"; //Manager is hard coded to roleId 2
+                    "WHERE RoleId = '2' AND OrganizationId = @organizationId";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@organizationId", organizationId);
                 using (SqlDataReader reader = cmd.ExecuteReader())
