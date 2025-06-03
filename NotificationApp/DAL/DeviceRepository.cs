@@ -75,7 +75,7 @@ namespace DAL
             //    cmd.ExecuteNonQuery();
             //}
         }
-    
+
         public IEnumerable<Device> GetAll()
         {
             List<Device> devices = new List<Device>();
@@ -105,8 +105,8 @@ namespace DAL
                 return devices;
             }
         }
-        
-        
+
+
         public Status GetStatus(Device device)
         {
             Status status = new Status();
@@ -123,7 +123,7 @@ namespace DAL
                     {
                         int statusId = reader.GetInt32(0);
                         return (Status)statusId; // cast int to Status enum
-                        
+
                     }
                     else
                     {
@@ -133,7 +133,7 @@ namespace DAL
             }
         }
 
-        public IEnumerable<Device> GetByOrganization(int organizationID) 
+        public IEnumerable<Device> GetByOrganization(int organizationID)
         {
             List<Device> devices = new List<Device>();
 
@@ -162,6 +162,5 @@ namespace DAL
                 return devices;
             }
         }
-
     }
 }
