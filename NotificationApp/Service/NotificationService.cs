@@ -104,5 +104,14 @@ namespace Service
                 default: return filtered;
             }
         }
+        public void AddNotification(Notification notification)
+        {
+            if (notification == null)
+            {
+                throw new ArgumentNullException(nameof(notification), "Notification cannot be null");
+            }
+            notification.Date = DateTime.UtcNow;
+            _notificationRepository.Add(notification);
+        }
     }
 }

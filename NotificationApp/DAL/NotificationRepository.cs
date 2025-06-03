@@ -66,14 +66,15 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "INSERT INTO Notification (Title, Content, Important, OrganizationId, Date) VALUES (@title, @content, @important, @organizationId, @date)";
+                string query = "INSERT INTO Notification (Title, Content, Important, Date, PermissionId, DeviceId, OrganizationId) VALUES (@title, @content, @important, @date, @permissionId, @deviceId, @organizationId)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@title", entity.Title);
                 cmd.Parameters.AddWithValue("@content", entity.Content);
                 cmd.Parameters.AddWithValue("@important", entity.Important);
-                cmd.Parameters.AddWithValue("@organizationId", entity.OrganizationId);
                 cmd.Parameters.AddWithValue("@date", entity.Date);
-
+                cmd.Parameters.AddWithValue("@permissionId", entity.PermissionId.HasValue ? entity.PermissionId.Value : (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@deviceId", entity.DeviceId.HasValue ? entity.DeviceId.Value : (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@organizationId", entity.OrganizationId.HasValue ? entity.OrganizationId.Value : (object)DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -211,35 +212,5 @@ namespace DAL
             return notifications;
         }
 
-        public List<Notification> GetByDeviceID(int deviceID) 
-        {
-            List<Notification> notifications = new List<Notification>();
-            using (SqlConnection conn = DBConnection.GetConnection())
-            {
-                string query = "SELECT * " +
-                                "FROM Notification " +
-                                "WHERE DeviceId = @DeviceID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@DeviceID", deviceID);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Notification notification = new Notification(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
-                            reader.GetString(2),
-                            reader.GetBoolean(3),
-                            reader.GetInt32(7),
-                            reader.GetDateTime(4)
-                        );
-                        notifications.Add(notification);
-                    }
-                }
-            }
-            return notifications;
-        }
     }
 }

@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 builder.Services.AddSession();
 
 builder.Services.AddAuthentication("AuthCookie") //Implement this
@@ -24,6 +25,7 @@ builder.Services.AddAuthentication("AuthCookie") //Implement this
 
 builder.Services.AddAuthorization();
 builder.Services.AddServices();
+
 
 var app = builder.Build();
 
@@ -43,6 +45,7 @@ app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
