@@ -4,20 +4,14 @@
 @model AdminPanelViewModel
 
 <div class="w-full h-full flex">
-    <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
-        <div class="flex flex-col gap-20">
-            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
-            <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mt-[150px]">Admin</button>
-        </div>
-        <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mb-[10%] hover:cursor-pointer transition duration-100 ease-in-out hover:scale-[1.05]">Sign out</button>
-    </div>
+    @Html.Partial("_AdminNavbar")
     <div class="w-full h-full flex flex-col items-center gap-8 bg-gray-300">
         <div class="mt-8 flex w-[94%] items-center justify-between bg-white p-4 shadow-md">   
             <form asp-controller="Admin" asp-action="SearchOrganizations" method="post" class="flex w-full max-w-md items-center gap-2">
                 <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400"/>
                 <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </form>
-            <a asp-action="AdminCreatePanel" asp-controller="Admin" class="bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
+            <a asp-action="AdminCreatePanel" asp-controller="Admin" class="inline-flex h-[30px] items-center justify-center text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
         </div>
         <div class="w-[94%] h-[82%] bg-white shadow-md p-4 mx-5">
             <p class="text-left px-6 py-3 text-sm font-bold text-black">Organization Name</p>
@@ -34,8 +28,8 @@
                                 <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
                                     <td class="px-6 py-3">@organization.OrganizationName</td>
                                     <td class="px-6 py-3 space-x-2 text-right">
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
-                                        <button class="bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[5px] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                        <button class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</button>
+                                        <button class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                     </td>
                                 </tr>
                             }

@@ -114,6 +114,11 @@ namespace NotificationApp.Controllers
             return View();
         }
 
+        public IActionResult AdminEditPanel() 
+        {
+            return View();
+        }
+
         public IActionResult AdminEditPanel()
         {
             return View();
