@@ -146,3 +146,10 @@ DELETE FROM Account
 WHERE AccountId = 9;
 
 SELECT * FROM Account
+
+
+
+SELECT * FROM [Notification] 
+
+DELETE FROM [Notification]
+WHERE NotificationId IN (46, 47, 48)

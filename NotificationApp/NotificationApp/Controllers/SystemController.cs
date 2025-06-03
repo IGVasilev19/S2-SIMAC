@@ -18,7 +18,6 @@ namespace NotificationApp.Controllers
         private readonly IRoleService _roleService;
         private readonly IPermissionService _permissionService;
         private readonly IDeviceService _deviceService;
-
         public SystemController(IAccountService accountService, INotificationService notificationService, IRoleService roleService, IPermissionService permissionService, IDeviceService deviceService)
         {
             _accountService = accountService;
@@ -31,6 +30,7 @@ namespace NotificationApp.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
+
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (accountId != null)
