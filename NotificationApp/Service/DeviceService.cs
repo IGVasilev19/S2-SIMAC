@@ -14,15 +14,21 @@ namespace Service
     public class DeviceService : IDeviceService
     {
         private readonly IDeviceRepository _deviceRepository;
+        private readonly INotificationService _notificationRepository;
 
-        public DeviceService(IDeviceRepository deviceRepository)
+        public DeviceService(IDeviceRepository deviceRepository, INotificationService notificationRepository)
         {
             this._deviceRepository = deviceRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var device = _deviceRepository.GetById(id);
+            if (device == null)
+                throw new KeyNotFoundException("Device not found.");
+
+            _deviceRepository.Delete(id);
         }
 
         public IEnumerable<Device> GetAll()
@@ -54,6 +60,18 @@ namespace Service
                 filteredDevices = filteredDevices.Where(s => s.Name.ToUpper().Contains(filter.ToUpper()));
             }
             return filteredDevices;
+        }
+
+        public void ChangeStatus(int deviceId, Status status) //0 = Online, 1 = Offline
+        {
+            if(deviceId <= 0 || (int)status > 1)
+            {
+                throw new ArgumentException("Invalid device ID.", nameof(deviceId));
+            }
+            Device device = _deviceRepository.GetById(deviceId);
+            device.DeviceStatus = status;
+            _deviceRepository.Update(device);
+            _notificationRepository.BuildDeviceStatusNotification(device);
         }
     }
 }

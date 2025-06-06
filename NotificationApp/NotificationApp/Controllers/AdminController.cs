@@ -36,7 +36,7 @@ namespace NotificationApp.Controllers
                     AdminPanelViewModel vm = new();
                     vm.Organizations = new List<OrganizationViewModel>();
 
-                    List<Organization> allOrgs = (List<Organization>)_organizationService.GetAll();
+                    var allOrgs = _organizationService.GetAll();
 
                     foreach (var org in allOrgs)
                     {
@@ -57,8 +57,6 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-<<<<<<< Updated upstream
-=======
         public IActionResult SearchOrganizations(AdminPanelViewModel vm) //TODO: Connect search to front-end
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -93,7 +91,6 @@ namespace NotificationApp.Controllers
 
 
         [HttpPost]
->>>>>>> Stashed changes
         public IActionResult CreateOrganizationWithManager(AdminCreatePanelViewModel model)
         {
             if (!ModelState.IsValid)

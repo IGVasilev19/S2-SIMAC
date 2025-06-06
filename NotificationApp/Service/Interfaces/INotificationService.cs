@@ -17,5 +17,6 @@ namespace Service.Interfaces
         public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds);
         public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important);
         public void AddNotification(Notification notification);
+        public void BuildDeviceStatusNotification(Device device);
     }
 }

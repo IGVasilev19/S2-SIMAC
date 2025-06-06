@@ -149,7 +149,10 @@ SELECT * FROM Account
 
 
 
-SELECT * FROM [Notification] 
+x	
 
 DELETE FROM [Notification]
 WHERE NotificationId IN (46, 47, 48)
+
+UPDATE [Notification]
+SET OrganizationId = 2

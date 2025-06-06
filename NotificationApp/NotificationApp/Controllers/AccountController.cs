@@ -173,6 +173,7 @@ namespace NotificationApp.Controllers
 
                 AccountEditPanelViewModel vm = new();
 
+                vm.Id = selectedAccount.AccountId;
                 vm.Name = selectedAccount.Name;
                 vm.Email = selectedAccount.Email;
                 Role currentRole = _roleService.GetById(selectedAccount.RoleId);
@@ -220,7 +221,7 @@ namespace NotificationApp.Controllers
             {
                 Account creator = _accountService.GetById(id);
 
-                Account selectedAccount = _accountService.GetByEmail(accountVM.Email);
+                Account selectedAccount = _accountService.GetById(accountVM.Id);
 
                 if (string.IsNullOrEmpty(accountVM.Password))
                 {

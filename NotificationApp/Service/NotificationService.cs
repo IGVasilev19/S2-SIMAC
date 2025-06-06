@@ -7,6 +7,7 @@ using BLL;
 using Service.Interfaces;
 using DAL.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 
 namespace Service
 {
@@ -21,7 +22,11 @@ namespace Service
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var notification = _notificationRepository.GetById(id);
+            if (notification == null)
+                throw new KeyNotFoundException("Notification not found.");
+
+            _notificationRepository.Delete(id);
         }
 
         public IEnumerable<Notification> GetAll()
@@ -112,6 +117,21 @@ namespace Service
             }
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
+        }
+
+        public void BuildDeviceStatusNotification(Device device)
+        {
+            Notification notification = new Notification
+            {
+                DeviceId = device.DeviceID,
+                Title = $"{device.Name} Status Update",
+                Content = $"{device.Name} is now {device.DeviceStatus}.",
+                Important = false,
+                OrganizationId = device.OrganizationID,
+                PermissionId = 3, //HARDCODED to Permissions
+                Date = DateTime.UtcNow
+            };
+            AddNotification(notification);
         }
     }
 }

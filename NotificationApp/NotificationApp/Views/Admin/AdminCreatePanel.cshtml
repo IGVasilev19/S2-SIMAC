@@ -4,13 +4,7 @@
 @model AdminCreatePanelViewModel
 
 <div class="w-full h-full flex">
-    <div class="h-full bg-custom-gradient flex flex-col items-center justify-between px-5 w-[200px]">
-        <div class="flex flex-col">
-            <img src="/images/simac-logo-removebg.png" asp-append-version="true"/>
-            <button class="w-full h-[40px] bg-white/20 backdrop-blur-md rounded-sm shadow-xl border border-white/10 flex items-center justify-center text-md text-gray-200 font-semibold mt-[150px]">Admin</button>
-        </div>
-        <a asp-action="LogOut" asp-controller="Access" class="text-md mb-[10%] flex h-[40px] w-full items-center justify-center rounded-sm border border-white/10 bg-white/20 font-semibold text-gray-200 shadow-xl backdrop-blur-md transition duration-100 ease-in-out hover:cursor-pointer hover:scale-[1.05] hover:bg-white/40">Sign out</a>
-    </div>
+    @Html.Partial("_AdminNavbar")
     <div class="w-full h-full flex items-center justify-center bg-gray-300">
         <form asp-action="CreateOrganizationWithManager" asp-controller="Admin" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
             <p class="text-4xl font-semibold">Create Organization</p>

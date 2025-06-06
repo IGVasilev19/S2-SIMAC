@@ -14,10 +14,18 @@ namespace Service
     public class OrganizationService : IOrganizationService
     {
         IOrganizationRepository _organizationRepository;
+        IAccountService _accountService;
+        IDeviceService _deviceService;
+        IRoleService _roleService;
+        INotificationService _notificationService;
 
-        public OrganizationService(IOrganizationRepository organizationRepository)
+        public OrganizationService(IOrganizationRepository organizationRepository, IAccountService accountService, IDeviceService deviceService, IRoleService roleService, INotificationService notificationService)
         {
             _organizationRepository = organizationRepository;
+            _accountService = accountService;
+            _deviceService = deviceService;
+            _roleService = roleService;
+            _notificationService = notificationService;
         }
 
         public IEnumerable<Organization> GetAll()
@@ -51,15 +59,44 @@ namespace Service
             return organization;
         }
 
-        public void DeleteById(int id)
+        public void DeleteById(int organizationId)
         {
-            var organization = _organizationRepository.GetById(id);
+            var organization = _organizationRepository.GetById(organizationId);
             if (organization == null)
-            {
                 throw new KeyNotFoundException("Organization not found.");
+
+            // Step 1: Delete notifications
+            var notifications = _notificationService.GetAll().Where(n => n.OrganizationId == organizationId);
+            foreach (var notification in notifications)
+            {
+                _notificationService.DeleteById(notification.NotificationID);
             }
-            _organizationRepository.Delete(id);
+
+            // Step 2: Delete devices
+            var devices = _deviceService.GetByOrganization(organizationId);
+            foreach (var device in devices)
+            {
+                _deviceService.DeleteById(device.DeviceID);
+            }
+
+            // Step 3: Delete accounts
+            var accounts = _accountService.GetByOrganization(organizationId);
+            foreach (var account in accounts)
+            {
+                _accountService.DeleteById(account.AccountId);
+            }
+
+            // Step 4: Delete roles
+            var roles = _roleService.GetAllRolesByOrganisationId(organizationId);
+            foreach (var role in roles)
+            {
+                _roleService.Delete(role.RoleId);
+            }
+
+            // Step 5: Delete organization
+            _organizationRepository.Delete(organizationId);
         }
+
 
         public void Update(Organization organization)
         {

@@ -50,18 +50,18 @@ namespace DAL
 
         public void Update(Device entity)
         {
-            //using (SqlConnection conn = DBConnection.GetConnection())
-            //{
-            //    string query = "UPDATE Device SET Name = @name, Location = @location, StatusId = @StatusID, OrganizationId = @OrganizationID WHERE DeviceID = @id";
-            //    SqlCommand cmd = new SqlCommand(query, conn);
-            //    cmd.Parameters.AddWithValue("@name", entity.Name);
-            //    cmd.Parameters.AddWithValue("@location", entity.Location);
-            //    cmd.Parameters.AddWithValue("@id", entity.DeviceID);
-            //    cmd.Parameters.AddWithValue("@OrganizationID", entity.OrganizationID);
-            //    cmd.Parameters.AddWithValue("@StatusID", (int)entity.DeviceStatus);
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "UPDATE Device SET Name = @name, Location = @location, StatusId = @StatusID, OrganizationId = @OrganizationID WHERE DeviceID = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@name", entity.Name);
+                cmd.Parameters.AddWithValue("@location", entity.Location);
+                cmd.Parameters.AddWithValue("@id", entity.DeviceID);
+                cmd.Parameters.AddWithValue("@OrganizationID", entity.OrganizationID);
+                cmd.Parameters.AddWithValue("@StatusID", (int)entity.DeviceStatus);
 
-            //    cmd.ExecuteNonQuery();
-            //}
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public void Delete(int id)
