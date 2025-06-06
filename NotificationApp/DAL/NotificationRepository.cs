@@ -219,10 +219,10 @@ namespace DAL
             using (SqlConnection conn = DBConnection.GetConnection())
             {
                 string query = $@"
-            SELECT NotificationID, Title, Content, Important, OrganizationId, Date
-            FROM Notification
-            WHERE OrganizationId = @orgId
-            ORDER BY Important DESC, Date DESC";
+                SELECT NotificationID, Title, Content, Important, OrganizationId, Date, PermissionId, DeviceId
+                FROM Notification
+                WHERE OrganizationId = @orgId
+                ORDER BY Important DESC, Date DESC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@orgId", organizationId);
@@ -235,10 +235,17 @@ namespace DAL
                         string title = reader.GetString(1);
                         string content = reader.GetString(2);
                         bool important = reader.GetBoolean(3);
-                        int orgId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4); // fallback to 0 if null
+                        int orgId = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                         DateTime date = reader.GetDateTime(5);
+                        int permissionId = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
+                        int? deviceId = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7);
 
-                        Notification notification = new Notification(id, title, content, important, orgId, date);
+                        var notification = new Notification(id, title, content, important, orgId, date)
+                        {
+                            PermissionId = permissionId,
+                            DeviceId = deviceId
+                        };
+
                         notifications.Add(notification);
                     }
                 }

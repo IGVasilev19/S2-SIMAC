@@ -59,7 +59,7 @@ namespace Service
             return _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
         }
 
-        public IEnumerable<Notification> SearchNotifications(string  filter, Account account, List<int> permissionIds)
+        public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds)
         {
             IEnumerable<Notification> filteredNotifications = _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
             if (!string.IsNullOrEmpty(filter))
@@ -71,13 +71,13 @@ namespace Service
 
         public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important)
         {
-            IEnumerable<Notification> filtered = new List<Notification> ();
+            IEnumerable<Notification> filtered = new List<Notification>();
             switch (read)
             {
                 case true:
                     foreach (Notification notification in notifications)
                     {
-                        if(_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
+                        if (_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
                         {
                             filtered.Append(notification);
                         }
@@ -94,8 +94,8 @@ namespace Service
 
                 default: filtered = notifications; break;
             }
-            
-            switch(important)
+
+            switch (important)
             {
                 case true:
                     filtered = filtered.Where(f => f.Important); return filtered;
@@ -114,6 +114,9 @@ namespace Service
             _notificationRepository.Add(notification);
         }
 
-        public void GetNotificationsByOrganization(int organizationId) => _notificationRepository.GetNotificationsByOrganization(organizationId);
+        public List<Notification> GetNotificationsByOrganization(int organizationId)
+        {
+            return _notificationRepository.GetNotificationsByOrganization(organizationId);
+        }
     }
 }
