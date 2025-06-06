@@ -20,6 +20,19 @@
   el.querySelector(".notification").classList.add("bg-gray-200", "rounded");
 }
 
+function markNotificationAsRead(notificationId) {
+    fetch('/System/MarkNotificationAsRead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(notificationId)
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.error('Failed to mark notification as read');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
 
 document.querySelectorAll(".parent-checkbox").forEach((parent) => {
   parent.addEventListener("change", function () {

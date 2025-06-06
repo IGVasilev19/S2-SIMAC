@@ -137,7 +137,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult MarkNotificationAsRead(int notificationId) //TODO: Connect to front-end (I am unsure, if this will work)
+        public IActionResult MarkNotificationAsRead([FromBody] int notificationId) //TODO: Connect to front-end (I am unsure, if this will work)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -148,7 +148,7 @@ namespace NotificationApp.Controllers
                     _notificationService.MarkNotificationAsRead(id, notificationId);
                 }
             }
-            return RedirectToAction("Inbox");
+            return Ok();
         }
 
         public IActionResult DevicesPanel()

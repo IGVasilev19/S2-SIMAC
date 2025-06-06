@@ -20,7 +20,7 @@
                 {
                     foreach (var notification in Model.Notifications)
                     {
-                        <a href="#" data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this)" class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
+                        <a href="#" data-id="@notification.NotificationID"data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this); markNotificationAsRead(@notification.NotificationID); return false" class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
                             <div class="notification flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:rounded-md hover:cursor-pointer">
                                 @if (!notification.Important)
                                 {
@@ -35,7 +35,14 @@
                                     <p class="text-[12px] !text-black !font-normal select-none">@notification.Date</p>
                                 </div>
                             </div>
-                            <div class="h-[8px] w-full rounded-b-md border bg-[#7AA0FF]"></div>     
+                            @if(notification.Read == true)
+                            {
+                                <div class="h-[8px] w-full rounded-b-md border bg-gray-200"></div>
+                            }
+                            else
+                            {
+                                <div class="h-[8px] w-full rounded-b-md border bg-[#7AA0FF]"></div>
+                            }  
                         </a>
                     }
                 }
@@ -46,12 +53,12 @@
             </div>
             <div class="flex h-full w-full flex-col items-center gap-5">
                 <div class="flex w-full items-center justify-between bg-white p-4 shadow-md">
-                    <h1 id="preview-title" class="text-xl font-semibold text-black"></h1>
-                    <p id="preview-date"></p>
+                    <h1 id="preview-title" class="text-xl font-semibold justify-left pl-5 text-black">Title</h1>
+                    <p id="preview-date">Date</p>
                 </div>
                 <div class="flex h-full w-full bg-white p-4 shadow-md">
                     <div class="px-6 py-4 text-justify leading-relaxed text-gray-800">
-                        <p id="preview-body"></p>
+                        <p id="preview-body">Details</p>
                     </div>
                 </div>
             </div>

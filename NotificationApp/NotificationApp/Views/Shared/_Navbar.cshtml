@@ -3,7 +3,9 @@
 
 <div class="bg-custom-gradient flex h-full w-[200px] flex-col items-center justify-between px-5">
     <div class="flex flex-col gap-2 items-center">
-        <img src="/images/simac-logo-removebg.png" asp-append-version="true" />
+    <a asp-action="Inbox" asp-controller="System">
+        <img src="~/images/simac-logo-removebg.png" asp-append-version="true" class="hover:cursor-pointer" />
+    </a>
         <p class="font-bold text-white text-md">@User.FindFirst(ClaimTypes.Name)?.Value</p>
     </div>
     <div class="w-full flex flex-col">
