@@ -58,7 +58,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchRoles(RolesPanelViewModel vm) //TODO: Connect??????????? ;(
+        public IActionResult SearchRoles(RolesPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -127,7 +127,7 @@ namespace NotificationApp.Controllers
             //ModelState.Remove(nameof(RoleCreateEditPanelViewModel.RoleId));
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("RolesCreatePanel"); //TODO:
+                return RedirectToAction("RolesCreatePanel");
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -148,8 +148,6 @@ namespace NotificationApp.Controllers
             }
             throw new Exception("UserId Not Found");
         }
-          
-        //TODO: IMPLEMENT FRONT END
 
         public IActionResult RolesEditPanel(int roleId)
         {
@@ -201,7 +199,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds) //TODO: Needs to be hooked up to Front-End
+        public IActionResult EditRole(RoleCreateEditPanelViewModel vm, List<int> permissionIds)
         {
             if (!ModelState.IsValid)
             {

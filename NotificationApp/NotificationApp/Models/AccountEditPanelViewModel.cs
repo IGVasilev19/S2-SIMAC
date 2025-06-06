@@ -9,11 +9,13 @@ namespace NotificationApp.Models
 {
     public class AccountEditPanelViewModel
     {
+        public int Id { get; set; } 
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(50)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Email is required")]
         [MaxLength(50)]
+        [EmailAddress]
         public string Email { get; set; }
         [MaxLength(255)]
         public string? Password { get; set; }

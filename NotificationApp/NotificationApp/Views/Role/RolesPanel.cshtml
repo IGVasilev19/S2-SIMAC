@@ -23,7 +23,7 @@
                 <button type="submit" class="bg-blue-300 hover:bg-blue-200 text-white font-semibold px-10 rounded-lg shadow-md transition-all duration-150 hover:cursor-pointer">Search</button>
             </form>
             <div class="w-1/2 h-full flex justify-end gap-3"> 
-                <a asp-action="RolesCreatePanel" asp-controller="Role" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
+                <a asp-action="RolesCreatePanel" asp-controller="Role" class="inline-flex h-[30px] items-center justify-center text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Create</a>
             </div>
         </div>
         <div class="w-[94%] h-[82%] flex flex-col bg-white shadow-md p-4 mx-5">
@@ -48,8 +48,8 @@
                                     <td class="px-6 py-3 space-x-2 text-right">
                                         <form asp-action="DeleteRole" asp-controller="Role" method="post" class="inline">
                                             <input type="hidden" name="roleId" value="@role.RoleId" />
-                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@role.RoleId" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-8 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
-                                            <button type="submit" class="inline-flex h-[30px] text-sm bg-white hover:bg-gray-100 text-black font-semibold px-6 py-[0.1875rem] rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
+                                            <a asp-action="RolesEditPanel" asp-controller="Role" asp-route-roleId="@role.RoleId" class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-8 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Edit</a>
+                                            <button type="submit" class="inline-flex h-[30px] text-sm items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

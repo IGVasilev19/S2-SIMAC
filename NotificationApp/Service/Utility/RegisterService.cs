@@ -28,7 +28,6 @@ namespace Service.Utility
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDeviceService, DeviceService>();
             
-
             return services;
         }
     }

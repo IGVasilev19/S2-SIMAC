@@ -7,6 +7,8 @@ using BLL;
 using Service.Interfaces;
 using DAL.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
+using Microsoft.Data.SqlClient;
 
 namespace Service
 {
@@ -21,7 +23,11 @@ namespace Service
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var notification = _notificationRepository.GetById(id);
+            if (notification == null)
+                throw new KeyNotFoundException("Notification not found.");
+
+            _notificationRepository.Delete(id);
         }
 
         public IEnumerable<Notification> GetAll()
@@ -47,6 +53,11 @@ namespace Service
         public void MarkNotificationAsRead(int accountId, int notificationId)
         {
             _notificationRepository.MarkAsRead(notificationId, accountId);
+        }
+
+        public void MarkNotificationAsUnread(int notificationId, int accountId)
+        {
+            _notificationRepository.MarkAsUnread(notificationId, accountId);
         }
 
         public bool HasUserReadNotification(int accountId, int notificationId)
@@ -104,11 +115,11 @@ namespace Service
                 default: return filtered;
             }
         }
-        public void AddNotification(Notification notification)
+        public void AddNotification(Notification notification) 
         {
             if (notification == null)
             {
-                throw new ArgumentNullException(nameof(notification), "Notification cannot be null");
+                throw new ArgumentNullException(nameof(notification), "Notification cannot is null");
             }
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
@@ -117,6 +128,21 @@ namespace Service
         public List<Notification> GetNotificationsByOrganization(int organizationId)
         {
             return _notificationRepository.GetNotificationsByOrganization(organizationId);
+        }
+        
+        public void BuildDeviceStatusNotification(Device device)
+        {
+            Notification notification = new Notification
+            {
+                DeviceId = device.DeviceID,
+                Title = $"{device.Name} Status Update",
+                Content = $"{device.Name} is now {device.DeviceStatus}.",
+                Important = false,
+                OrganizationId = device.OrganizationID,
+                PermissionId = 3, //HARDCODED to Permissions
+                Date = DateTime.UtcNow
+            };
+            AddNotification(notification);
         }
     }
 }
