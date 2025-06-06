@@ -73,11 +73,13 @@ namespace NotificationApp.Controllers
 
                     foreach (var org in filteredOrgs)
                     {
+                        var manager = _accountService.GetManagerByOrganizationId(org.OrganizationId);
+
                         OrganizationViewModel orgVm = new()
                         {
                             OrganizationId = org.OrganizationId,
                             OrganizationName = org.Name,
-                            //ManagerName = TODO: Fix this
+                            ManagerName = manager?.Name
                         };
                         vm.Organizations.Add(orgVm);
                     }
