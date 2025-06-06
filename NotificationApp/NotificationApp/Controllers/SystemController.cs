@@ -152,14 +152,21 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult MarkNotificationAsUnread(int notificationId) //TODO: Connect to front-end 
+        public IActionResult MarkNotificationAsUnread(int notificationId)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine($"MarkNotificationAsUnread called with notificationId: {notificationId}, accountId: {accountId}");
 
             if (int.TryParse(accountId, out int id))
             {
                 _notificationService.MarkNotificationAsUnread(id, notificationId);
+                Console.WriteLine("Marked as unread successfully.");
             }
+            else
+            {
+                Console.WriteLine("Invalid accountId");
+            }
+
             return RedirectToAction("Inbox");
         }
 
