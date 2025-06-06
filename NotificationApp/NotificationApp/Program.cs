@@ -58,5 +58,3 @@ app.MapControllerRoute(
 //accService.SignUp("Manager", "managertwo@gmail.com", "manager", 3, 3);
 
 app.Run();
-
-
