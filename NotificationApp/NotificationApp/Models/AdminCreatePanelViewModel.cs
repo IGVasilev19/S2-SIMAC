@@ -14,6 +14,7 @@ namespace NotificationApp.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Manager email is required!")]
         [MaxLength(50)]
+        [EmailAddress]
         public string Email { get; set; }
         [Required(ErrorMessage = "Manager password is required!")]
         [MaxLength(255)]

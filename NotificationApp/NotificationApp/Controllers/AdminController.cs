@@ -57,6 +57,43 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
+<<<<<<< Updated upstream
+=======
+        public IActionResult SearchOrganizations(AdminPanelViewModel vm) //TODO: Connect search to front-end
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (accountId != null)
+            {
+                if (int.TryParse(accountId, out int id))
+                {
+                    var adminAccount = _accountService.GetById(id); // Creator's account object to get Org Id from
+
+                    vm.Organizations = new List<OrganizationViewModel>();
+
+                    var filteredOrgs = _organizationService.SearchOrganizations(vm.Search);
+
+                    foreach (var org in filteredOrgs)
+                    {
+                        var manager = _accountService.GetManagerByOrganizationId(org.OrganizationId);
+
+                        OrganizationViewModel orgVm = new()
+                        {
+                            OrganizationId = org.OrganizationId,
+                            OrganizationName = org.Name,
+                            ManagerName = manager?.Name
+                        };
+                        vm.Organizations.Add(orgVm);
+                    }
+                    return View("AdminPanel", vm);
+                }
+            }
+            return View("AdminPanel");
+        }
+
+
+        [HttpPost]
+>>>>>>> Stashed changes
         public IActionResult CreateOrganizationWithManager(AdminCreatePanelViewModel model)
         {
             if (!ModelState.IsValid)
