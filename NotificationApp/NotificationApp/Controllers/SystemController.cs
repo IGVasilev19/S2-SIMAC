@@ -151,6 +151,18 @@ namespace NotificationApp.Controllers
             return RedirectToAction("Inbox");
         }
 
+        [HttpPost]
+        public IActionResult MarkNotificationAsUnread(int notificationId) //TODO: Connect to front-end 
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                _notificationService.MarkNotificationAsUnread(id, notificationId);
+            }
+            return RedirectToAction("Inbox");
+        }
+
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

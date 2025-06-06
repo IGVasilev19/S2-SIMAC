@@ -151,6 +151,19 @@ namespace DAL
             }
         }
 
+        public void MarkAsUnread(int notificationId, int accountId)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "DELETE FROM UserReadNotification WHERE NotificationID = @notificationId AND AccountID = @accountId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@notificationId", notificationId);
+                cmd.Parameters.AddWithValue("@accountId", accountId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public bool IsRead(int notificationId, int accountId)
         {
             using (SqlConnection conn = DBConnection.GetConnection())

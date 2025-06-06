@@ -13,6 +13,7 @@ namespace DAL.Interfaces
     {
         public List<Notification> GetByPermission(int permissionId);
         public void MarkAsRead(int notificationId, int accountId);
+        public void MarkAsUnread(int notificationId, int accountId);
         public bool IsRead(int notificationId, int accountId);
         public List<Notification> GetNotificationsForUser(int organizationId, List<int> permissionIds);
 

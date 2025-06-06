@@ -55,6 +55,11 @@ namespace Service
             _notificationRepository.MarkAsRead(notificationId, accountId);
         }
 
+        public void MarkNotificationAsUnread(int notificationId, int accountId)
+        {
+            _notificationRepository.MarkAsUnread(notificationId, accountId);
+        }
+
         public bool HasUserReadNotification(int accountId, int notificationId)
         {
             return _notificationRepository.IsRead(notificationId, accountId);
