@@ -12,7 +12,7 @@
                 <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400" />
                 <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </form>
-            <button class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Sort</button>
+            <a class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Sort by Newest</a>
         </div>
         <div class="flex h-[82%] w-[96%] gap-3">
             <div class="flex w-[375px] h-full flex-col items-center bg-white p-2 overflow-y-auto overflow-x-hidden">
@@ -57,8 +57,18 @@
                     <p id="preview-date">Date</p>
                 </div>
                 <div class="flex h-full w-full bg-white p-4 shadow-md">
-                    <div class="px-6 py-4 text-justify leading-relaxed text-gray-800">
-                        <p id="preview-body">Details</p>
+                    <div class="relative w-full text-justify text-gray-800">
+                        <div id="notification-action-container" class="hidden absolute top-4 right-6 z-10">
+                            <form id="notification-action-form" method="post" asp-controller="System" asp-action="MarkNotificationAsUnread">
+                                <input type="hidden" name="notificationId" id="selected-notification-id" />
+                                <button type="submit" class="rounded-lg bg-red-500 px-4 py-2 text-white font-semibold shadow hover:bg-red-600">
+                                    Mark as Unread
+                                </button>
+                            </form>
+                        </div>
+                        <div class="mt-4 px-6 py-4">
+                            <p id="preview-body">Details</p>
+                        </div>
                     </div>
                 </div>
             </div>

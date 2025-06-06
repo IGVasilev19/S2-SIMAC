@@ -13,6 +13,8 @@
   document.getElementById("preview-date").innerText = displayDate;
   document.getElementById("preview-body").innerText = displayBody;
 
+  document.getElementById('notification-action-container').classList.remove('hidden');
+
   // Highlight selected notification
   document.querySelectorAll(".notification").forEach((div) => {
     div.classList.remove("bg-gray-200", "rounded");
