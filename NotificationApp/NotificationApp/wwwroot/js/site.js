@@ -1,6 +1,7 @@
 ﻿function showNotificationPreview(el) {
   console.log("DATA ATTRIBUTES:", el.dataset);
 
+  const id = el.dataset.id?.trim();
   const title = el.dataset.title?.trim();
   const date = el.dataset.date?.trim();
   const body = el.dataset.body?.trim();
@@ -13,13 +14,15 @@
   document.getElementById("preview-date").innerText = displayDate;
   document.getElementById("preview-body").innerText = displayBody;
 
+  document.getElementById("selected-notification-id").value = id;
+
   document.getElementById('notification-action-container').classList.remove('hidden');
 
   // Highlight selected notification
-  document.querySelectorAll(".notification").forEach((div) => {
+  document.querySelectorAll("a.notification").forEach((div) => {
     div.classList.remove("bg-gray-200", "rounded");
   });
-  el.querySelector(".notification").classList.add("bg-gray-200", "rounded");
+  el.classList.add("bg-gray-200", "rounded");
 }
 
 function markNotificationAsRead(notificationId) {
