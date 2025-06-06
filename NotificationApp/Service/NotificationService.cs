@@ -8,6 +8,7 @@ using Service.Interfaces;
 using DAL.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using Microsoft.Data.SqlClient;
 
 namespace Service
 {
@@ -109,11 +110,11 @@ namespace Service
                 default: return filtered;
             }
         }
-        public void AddNotification(Notification notification)
+        public void AddNotification(Notification notification) 
         {
             if (notification == null)
             {
-                throw new ArgumentNullException(nameof(notification), "Notification cannot be null");
+                throw new ArgumentNullException(nameof(notification), "Notification cannot is null");
             }
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);

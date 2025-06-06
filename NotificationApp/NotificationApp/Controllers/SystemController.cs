@@ -182,7 +182,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchDevices(DevicePanelViewModel vm) //TODO: Connect with front-end?????????
+        public IActionResult SearchDevices(DevicePanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
