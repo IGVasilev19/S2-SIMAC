@@ -62,14 +62,21 @@ namespace Service
             return filteredDevices;
         }
 
-        public void ChangeStatus(int deviceId, Status status) //0 = Online, 1 = Offline
+        public void ChangeStatus(int deviceId, int status) //0 = Online, 1 = Offline  
         {
-            if(deviceId <= 0 || (int)status > 1)
+            if (deviceId <= 0 || !Enum.IsDefined(typeof(Status), status))
             {
-                throw new ArgumentException("Invalid device ID.", nameof(deviceId));
+                throw new ArgumentException("Invalid device ID or status value.");
             }
+
             Device device = _deviceRepository.GetById(deviceId);
-            device.DeviceStatus = status;
+
+            if (device == null)
+            {
+                throw new KeyNotFoundException("Device not found.");
+            }
+
+            device.DeviceStatus = (Status)status;
             _deviceRepository.Update(device);
             _notificationRepository.BuildDeviceStatusNotification(device);
         }

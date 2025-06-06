@@ -57,7 +57,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchOrganizations(AdminPanelViewModel vm) //TODO: Connect search to front-end
+        public IActionResult SearchOrganizations(AdminPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

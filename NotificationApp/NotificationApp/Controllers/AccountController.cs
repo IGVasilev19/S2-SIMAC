@@ -68,7 +68,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchAccounts(AccountPanelViewModel vm) //TODO: Connect ;P
+        public IActionResult SearchAccounts(AccountPanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -118,7 +118,7 @@ namespace NotificationApp.Controllers
         }
 
         // [Permission("Manager", "Admin")]
-        public IActionResult AccountCreatePanel() //TODO: MINA Add safety check pls
+        public IActionResult AccountCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -147,7 +147,7 @@ namespace NotificationApp.Controllers
             if (ModelState.IsValid == false)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View(accountVM); //TODO: MINA add validation it is an order
+                return View(accountVM);
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -162,7 +162,7 @@ namespace NotificationApp.Controllers
             return View(accountVM);
         }
 
-        public IActionResult AccountEditPanel(int selectedAccountId) //TODO: MINA Add safety check pls
+        public IActionResult AccountEditPanel(int selectedAccountId)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -212,7 +212,7 @@ namespace NotificationApp.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return RedirectToAction("AccountEditPanel"); //TODO: MINA add validation it is an order
+                return RedirectToAction("AccountEditPanel");
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

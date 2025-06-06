@@ -151,6 +151,18 @@ namespace NotificationApp.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult MarkNotificationAsUnread(int notificationId) //TODO: Connect to front-end 
+        {
+            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(accountId, out int id))
+            {
+                _notificationService.MarkNotificationAsUnread(id, notificationId);
+            }
+            return RedirectToAction("Inbox");
+        }
+
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -182,7 +194,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchDevices(DevicePanelViewModel vm) //TODO: Connect with front-end?????????
+        public IActionResult SearchDevices(DevicePanelViewModel vm)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

@@ -8,6 +8,7 @@ using Service.Interfaces;
 using DAL.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using Microsoft.Data.SqlClient;
 
 namespace Service
 {
@@ -54,6 +55,11 @@ namespace Service
             _notificationRepository.MarkAsRead(notificationId, accountId);
         }
 
+        public void MarkNotificationAsUnread(int notificationId, int accountId)
+        {
+            _notificationRepository.MarkAsUnread(notificationId, accountId);
+        }
+
         public bool HasUserReadNotification(int accountId, int notificationId)
         {
             return _notificationRepository.IsRead(notificationId, accountId);
@@ -64,7 +70,7 @@ namespace Service
             return _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
         }
 
-        public IEnumerable<Notification> SearchNotifications(string  filter, Account account, List<int> permissionIds)
+        public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds)
         {
             IEnumerable<Notification> filteredNotifications = _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
             if (!string.IsNullOrEmpty(filter))
@@ -76,13 +82,13 @@ namespace Service
 
         public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important)
         {
-            IEnumerable<Notification> filtered = new List<Notification> ();
+            IEnumerable<Notification> filtered = new List<Notification>();
             switch (read)
             {
                 case true:
                     foreach (Notification notification in notifications)
                     {
-                        if(_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
+                        if (_notificationRepository.IsRead(notification.NotificationID, account.AccountId))
                         {
                             filtered.Append(notification);
                         }
@@ -99,8 +105,8 @@ namespace Service
 
                 default: filtered = notifications; break;
             }
-            
-            switch(important)
+
+            switch (important)
             {
                 case true:
                     filtered = filtered.Where(f => f.Important); return filtered;
@@ -109,16 +115,21 @@ namespace Service
                 default: return filtered;
             }
         }
-        public void AddNotification(Notification notification)
+        public void AddNotification(Notification notification) 
         {
             if (notification == null)
             {
-                throw new ArgumentNullException(nameof(notification), "Notification cannot be null");
+                throw new ArgumentNullException(nameof(notification), "Notification cannot is null");
             }
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
         }
 
+        public List<Notification> GetNotificationsByOrganization(int organizationId)
+        {
+            return _notificationRepository.GetNotificationsByOrganization(organizationId);
+        }
+        
         public void BuildDeviceStatusNotification(Device device)
         {
             Notification notification = new Notification

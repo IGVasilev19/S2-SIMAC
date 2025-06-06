@@ -98,7 +98,7 @@ namespace Service
         {
             if (organizationId <= 0)
             {
-                throw new ArgumentNullException("Organization ID must be greater than zero."); // TODO: This is not handled 
+                throw new ArgumentNullException("Organization ID must be greater than zero.");
             }
             return _accountRepository.GetManagerByOrganization(organizationId);
         }
@@ -107,7 +107,7 @@ namespace Service
         {
             if (roleId <= 0)
             {
-                throw new ArgumentNullException("Role ID must be greater than zero."); // TODO: This is not handled 
+                throw new ArgumentNullException("Role ID must be greater than zero.");
             }
             return _accountRepository.GetByRoleId(roleId);
         }

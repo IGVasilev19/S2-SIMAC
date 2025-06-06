@@ -25,7 +25,7 @@
                     <tbody class="font-semibold text-gray-700 text-md">
                         @if (Model.Organizations != null && Model.Organizations.Any())
                         {
-                            @for (int i = 0; i < Model.Organizations.Count(); i++)
+                            @for (int i = 1; i < Model.Organizations.Count(); i++)
                             {
                                 var organization = Model.Organizations[i];
 
