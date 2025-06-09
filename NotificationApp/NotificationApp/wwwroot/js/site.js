@@ -41,13 +41,20 @@
 }
 
 // Copies search bar value for sort button
+// Re-enable sort button without affecting dropdowns
 document
   .getElementById("sortButton")
-  .addEventListener("click", function (event) {
+  ?.addEventListener("click", function (event) {
     event.preventDefault();
-    var searchValue = document.getElementById("searchInput").value;
-    document.getElementById("sortSearchInput").value = searchValue;
-    document.getElementById("sortForm").submit();
+
+    const searchInput = document.getElementById("searchInput");
+    const sortSearchInput = document.getElementById("sortSearchInput");
+    const sortForm = document.getElementById("sortForm");
+
+    if (searchInput && sortSearchInput && sortForm) {
+      sortSearchInput.value = searchInput.value;
+      sortForm.submit();
+    }
   });
 
 function markNotificationAsRead(notificationId) {

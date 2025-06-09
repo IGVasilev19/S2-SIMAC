@@ -30,21 +30,25 @@ function renderEventFrequencyChart() {
         return;
       }
 
+      // ✅ Reverse the labels and dataset data so newest dates are on the right
+      const reversedLabels = [...data.labels].reverse();
+      const reversedDatasets = data.datasets.map((ds) => ({
+        ...ds,
+        data: [...ds.data].reverse(),
+        borderColor: getColor(ds.label),
+        backgroundColor: getColor(ds.label),
+        tension: 0.3,
+        fill: false,
+        borderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      }));
+
       new Chart(ctx, {
         type: "line",
         data: {
-          labels: data.labels,
-          datasets: data.datasets.map((ds) => ({
-            label: ds.label,
-            data: ds.data,
-            borderColor: getColor(ds.label),
-            backgroundColor: getColor(ds.label),
-            tension: 0.3,
-            fill: false,
-            borderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-          })),
+          labels: reversedLabels,
+          datasets: reversedDatasets,
         },
         options: {
           responsive: true,
