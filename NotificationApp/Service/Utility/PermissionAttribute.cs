@@ -17,17 +17,16 @@ public class PermissionAttribute : Attribute, IAuthorizationFilter
 
         if (!int.TryParse(userIdString, out int userId))
         {
-            context.Result = new ForbidResult();
+            context.Result = new RedirectToActionResult("AccessDenied", "System", null);
             return;
         }
 
-        // Get required services (repository/service) via DI
         var accountService = context.HttpContext.RequestServices.GetService(typeof(IAccountService)) as IAccountService;
         var permissionService = context.HttpContext.RequestServices.GetService(typeof(IPermissionService)) as IPermissionService;
 
         if (accountService == null || permissionService == null)
         {
-            context.Result = new ForbidResult();
+            context.Result = new RedirectToActionResult("AccessDenied", "System", null);
             return;
         }
 
@@ -38,7 +37,7 @@ public class PermissionAttribute : Attribute, IAuthorizationFilter
 
         if (!hasAccess)
         {
-            context.Result = new ForbidResult();
+            context.Result = new RedirectToActionResult("AccessDenied", "System", null);
         }
     }
 }
