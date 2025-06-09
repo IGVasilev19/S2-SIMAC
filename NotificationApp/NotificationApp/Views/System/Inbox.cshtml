@@ -15,12 +15,20 @@
             <a class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Sort by Newest</a>
         </div>
         <div class="flex h-[82%] w-[96%] gap-3">
-            <div class="flex w-[375px] h-full flex-col items-center bg-white p-2 overflow-y-auto overflow-x-hidden">
+           <input type="hidden" id="orgId" value="@Model.OrganizationId" />
+            <div id="notificationList" class="flex w-[375px] h-full flex-col items-center bg-white p-2 overflow-y-auto overflow-x-hidden">
                 @if (Model.Notifications != null && Model.Notifications.Any())
                 {
                     foreach (var notification in Model.Notifications)
                     {
-                        <a href="#" data-id="@notification.NotificationID"data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this); markNotificationAsRead(@notification.NotificationID); return false" class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
+                        <a href="#"
+                        data-id="@notification.NotificationID"
+                        data-title="@notification.Title"
+                        data-date="@notification.Date"
+                        data-body="@notification.Content"
+                        onclick="showNotificationPreview(this); markNotificationAsRead(@notification.NotificationID); return false"
+                        class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
+
                             <div class="notification flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:rounded-md hover:cursor-pointer">
                                 @if (!notification.Important)
                                 {
@@ -30,19 +38,21 @@
                                 {
                                     <div class="rounded-4xl h-[25px] w-[30px] border bg-[#FF3131]"></div>
                                 }
+
                                 <div class="flex h-full w-full flex-col items-center justify-center gap-2">
                                     <p class="text-sm font-bold select-none">@notification.Title</p>
                                     <p class="text-[12px] !text-black !font-normal select-none">@notification.Date</p>
                                 </div>
                             </div>
-                            @if(notification.Read)
+
+                            @if (notification.Read)
                             {
                                 <div class="h-[8px] w-full rounded-b-md border bg-gray-200"></div>
                             }
                             else
                             {
                                 <div class="h-[8px] w-full rounded-b-md border bg-[#7AA0FF]"></div>
-                            }  
+                            }
                         </a>
                     }
                 }
@@ -51,6 +61,7 @@
                     <p class="text-center text-md text-gray-500 font-semibold mt-4">No notifications found</p>
                 }
             </div>
+
             <div class="flex h-full w-full flex-col items-center gap-5">
                 <div class="flex w-full items-center justify-between bg-white p-4 shadow-md">
                     <h1 id="preview-title" class="text-xl font-semibold justify-left pl-5 text-black">Title</h1>

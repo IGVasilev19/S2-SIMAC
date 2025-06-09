@@ -1,43 +1,57 @@
 ﻿function showNotificationPreview(el) {
-  console.log("DATA ATTRIBUTES:", el.dataset);
+  // Fallback if el is a child (like a div or p tag inside <a>)
+  const anchor = el.closest("a.notification");
+  if (!anchor) return;
 
-  const id = el.dataset.id?.trim();
-  const title = el.dataset.title?.trim();
-  const date = el.dataset.date?.trim();
-  const body = el.dataset.body?.trim();
+  console.log("DATA ATTRIBUTES:", anchor.dataset);
 
-  const displayTitle = title ? title : "Title";
-  const displayDate = date ? date : "Date";
-  const displayBody = body ? body : "Notification details";
+  const id = anchor.dataset.id?.trim();
+  const title = anchor.dataset.title?.trim();
+  const date = anchor.dataset.date?.trim();
+  const body = anchor.dataset.body?.trim();
+
+  const displayTitle = title || "Title";
+  const displayDate = date || "Date";
+  const displayBody = body || "Notification details";
 
   document.getElementById("preview-title").innerText = displayTitle;
   document.getElementById("preview-date").innerText = displayDate;
   document.getElementById("preview-body").innerText = displayBody;
 
   console.log("Setting hidden input to notification id:", id);
-  document.getElementById("selected-notification-id").value = id;
+  const hiddenInput = document.getElementById("selected-notification-id");
+  if (hiddenInput) hiddenInput.value = id;
 
-  document.getElementById('notification-action-container').classList.remove('hidden');
+  const actionContainer = document.getElementById(
+    "notification-action-container"
+  );
+  if (actionContainer) actionContainer.classList.remove("hidden");
 
   // Highlight selected notification
   document.querySelectorAll("a.notification").forEach((div) => {
     div.classList.remove("bg-gray-200", "rounded");
   });
-  el.classList.add("bg-gray-200", "rounded");
+  anchor.classList.add("bg-gray-200", "rounded");
+
+  const bottomBar = anchor.querySelector("div.h-\\[8px\\]");
+  if (bottomBar) {
+    bottomBar.classList.remove("bg-[#7AA0FF]");
+    bottomBar.classList.add("bg-gray-200");
+  }
 }
 
 function markNotificationAsRead(notificationId) {
-    fetch('/System/MarkNotificationAsRead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(notificationId)
+  fetch("/System/MarkNotificationAsRead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(notificationId),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.error("Failed to mark notification as read");
+      }
     })
-    .then(response => {
-        if (!response.ok) {
-            console.error('Failed to mark notification as read');
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    .catch((error) => console.error("Error:", error));
 }
 
 document.querySelectorAll(".parent-checkbox").forEach((parent) => {

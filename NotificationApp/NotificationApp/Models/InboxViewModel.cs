@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace NotificationApp.Models
 {
@@ -15,5 +16,8 @@ namespace NotificationApp.Models
         public string? Search {  get; set; }
         public bool? FilterImportant { get; set; }
         public bool? FilterRead { get; set; }
+        [ValidateNever]
+        [BindNever]
+        public int? OrganizationId { get; set; }
     }
 }

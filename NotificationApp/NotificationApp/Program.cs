@@ -3,6 +3,7 @@ using DAL;
 using Service;
 using Service.Interfaces;
 using Service.Utility;
+using NotificationApp.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddAuthentication("AuthCookie") //Implement this
 
 builder.Services.AddAuthorization();
 builder.Services.AddServices();
+builder.Services.AddSignalR();
 
 
 var app = builder.Build();
@@ -46,6 +48,7 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllerRoute(
     name: "default",

@@ -68,7 +68,8 @@ namespace NotificationApp.Controllers
                         AccountPassword = account.Password,
                         AccountOrganization = account.OrganizationId.ToString(),
                         AccountRole = account.RoleId.ToString(),
-                        Notifications = vmNotifications
+                        Notifications = vmNotifications,
+                        OrganizationId = account.OrganizationId
                     };
                     //DATABASE TESTING---------------------------------------------
 
