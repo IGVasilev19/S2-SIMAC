@@ -15,10 +15,12 @@ namespace Service
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository _notificationRepository;
+        private readonly IDeviceService _deviceService;
 
-        public NotificationService(INotificationRepository notificationRepository)
+        public NotificationService(INotificationRepository notificationRepository, IDeviceService deviceService)
         {
             _notificationRepository = notificationRepository;
+            _deviceService = deviceService;
         }
 
         public void DeleteById(int id)
@@ -115,12 +117,21 @@ namespace Service
                 default: return filtered;
             }
         }
-        public void AddNotification(Notification notification) 
+        public void AddNotification(Notification notification)
         {
             if (notification == null)
             {
                 throw new ArgumentNullException(nameof(notification), "Notification cannot is null");
             }
+            if (notification.DeviceId > 0)
+            {
+                int deviceId = Convert.ToInt32(notification.DeviceId);
+                Device device = _deviceService.GetById(deviceId);
+
+                // Add the requested line at the top of the content
+                notification.Content = $"This notification links to {device.Name}\n\n{notification.Content}";
+            }
+
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
         }

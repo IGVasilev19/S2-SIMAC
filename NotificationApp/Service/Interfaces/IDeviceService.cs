@@ -14,6 +14,6 @@ namespace Service.Interfaces
         void Update(Device device);
         IEnumerable<Device> GetByOrganization(int organizationID);
         public IEnumerable<Device> SearchDevices(string filter, int organizationId);
-        void ChangeStatus(int deviceId, int status);
+        Device ChangeStatus(int deviceId, int status);
     }
 }
