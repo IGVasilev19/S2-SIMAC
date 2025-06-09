@@ -105,8 +105,23 @@ namespace NotificationApp.Controllers
 
                     var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
                     var permissionIds = permissions.Select(p => p.PermissionId).ToList();
-                    var notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds);
-                    notifications = _notificationService.FilterNotifications(account, notifications, vm.FilterRead, vm.FilterImportant);
+                    IEnumerable<Notification> notifications;
+
+                    if (vm.SortByDate != null)
+                    {
+                        notifications = _notificationService.GetNotificationsOrderedByDate(account, permissionIds);
+                    }
+                    else
+                    {
+                        notifications = _notificationService.GetNotificationsForUser(account, permissionIds);
+                    }
+
+                    notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds, notifications);
+
+                    if (vm.FilterRead != null)
+                    {
+                        notifications = _notificationService.FilterNotificationsRead(notifications, vm.FilterRead, account);
+                    }
 
                     var vmNotifications = new List<NotificationViewModel>();
 
