@@ -21,7 +21,7 @@
                     foreach (var notification in Model.Notifications)
                     {
                         <a href="#" data-id="@notification.NotificationID"data-title="@notification.Title" data-date="@notification.Date" data-body="@notification.Content" onclick="showNotificationPreview(this); markNotificationAsRead(@notification.NotificationID); return false" class="notification mx-2 mt-2 flex h-[100px] w-[250px] flex-col items-center justify-between rounded-md border-t border-r border-l cursor-pointer">
-                            <div class="notification flex h-full w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:rounded-md hover:cursor-pointer">
+                            <div class="notification h-[75px] flex w-full items-center justify-center gap-2 p-2 hover:bg-gray-200 hover:rounded-md hover:cursor-pointer">
                                 @if (!notification.Important)
                                 {
                                     <div class="rounded-4xl h-[25px] w-[30px] border"></div>
@@ -30,9 +30,11 @@
                                 {
                                     <div class="rounded-4xl h-[25px] w-[30px] border bg-[#FF3131]"></div>
                                 }
-                                <div class="flex h-full w-full flex-col items-center justify-center gap-2">
-                                    <p class="text-sm font-bold select-none">@notification.Title</p>
-                                    <p class="text-[12px] !text-black !font-normal select-none">@notification.Date</p>
+                                <div class="flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden">
+                                    <div class="max-w-[200px] px-2 overflow-hidden">
+                                        <p class="text-center text-sm font-bold select-none whitespace-nowrap overflow-hidden text-ellipsis">@notification.Title</p>
+                                    </div>
+                                    <p class="text-center text-[12px] !text-black !font-normal select-none">@notification.Date</p>
                                 </div>
                             </div>
                             @if(notification.Read)
