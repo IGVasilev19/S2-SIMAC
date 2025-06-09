@@ -25,6 +25,7 @@ namespace NotificationApp.Controllers
             _deviceService = deviceService;
         }
 
+        [Permission("Analytics Access")]
         public IActionResult Analytics()
         {
             return View();

@@ -14,7 +14,6 @@
   document.getElementById("preview-date").innerText = displayDate;
   document.getElementById("preview-body").innerText = displayBody;
 
-  console.log("Setting hidden input to notification id:", id);
   document.getElementById("selected-notification-id").value = id;
 
   document.getElementById('notification-action-container').classList.remove('hidden');
@@ -25,6 +24,14 @@
   });
   el.classList.add("bg-gray-200", "rounded");
 }
+
+// Copies search bar value for sort button
+document.getElementById('sortButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    var searchValue = document.getElementById('searchInput').value;
+    document.getElementById('sortSearchInput').value = searchValue;
+    document.getElementById('sortForm').submit();
+});
 
 function markNotificationAsRead(notificationId) {
     fetch('/System/MarkNotificationAsRead', {

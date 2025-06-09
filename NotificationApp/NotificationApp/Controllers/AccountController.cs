@@ -22,7 +22,7 @@ namespace NotificationApp.Controllers
             _roleService = roleService;
         }
 
-        //[Permission("AccountManagement")]
+        [Permission("Accounts Access")]
         public IActionResult AccountPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -109,6 +109,7 @@ namespace NotificationApp.Controllers
             }
         }
 
+        [Permission("Delete Accounts")]
         [HttpPost]
         public IActionResult DeleteAccount(int id)
         {
@@ -117,7 +118,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("AccountPanel");
         }
 
-        // [Permission("Manager", "Admin")]
+        [Permission("Create Accounts")]
         public IActionResult AccountCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -162,6 +163,7 @@ namespace NotificationApp.Controllers
             return View(accountVM);
         }
 
+        [Permission("Edit Accounts")]
         public IActionResult AccountEditPanel(int selectedAccountId)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

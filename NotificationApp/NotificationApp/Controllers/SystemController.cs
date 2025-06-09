@@ -27,6 +27,7 @@ namespace NotificationApp.Controllers
             _deviceService = deviceService;
         }
 
+        [Permission("Inbox Access")]
         [Authorize]
         public IActionResult Inbox()
         {
@@ -105,8 +106,23 @@ namespace NotificationApp.Controllers
 
                     var permissions = _permissionService.GetPermissionsByRoleId(account.RoleId);
                     var permissionIds = permissions.Select(p => p.PermissionId).ToList();
-                    var notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds);
-                    notifications = _notificationService.FilterNotifications(account, notifications, vm.FilterRead, vm.FilterImportant);
+                    IEnumerable<Notification> notifications;
+
+                    if (vm.SortByDate != null)
+                    {
+                        notifications = _notificationService.GetNotificationsOrderedByDate(account, permissionIds);
+                    }
+                    else
+                    {
+                        notifications = _notificationService.GetNotificationsForUser(account, permissionIds);
+                    }
+
+                    notifications = _notificationService.SearchNotifications(vm.Search, account, permissionIds, notifications);
+
+                    if (vm.FilterRead != null)
+                    {
+                        notifications = _notificationService.FilterNotificationsRead(notifications, vm.FilterRead, account);
+                    }
 
                     var vmNotifications = new List<NotificationViewModel>();
 
@@ -152,24 +168,19 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult MarkNotificationAsUnread(int notificationId)
+        public IActionResult MarkNotificationAsUnread(int notificationId) //TODO: Connect to front-end 
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Console.WriteLine($"MarkNotificationAsUnread called with notificationId: {notificationId}, accountId: {accountId}");
 
             if (int.TryParse(accountId, out int id))
             {
                 _notificationService.MarkNotificationAsUnread(notificationId, id);
                 Console.WriteLine("Marked as unread successfully.");
             }
-            else
-            {
-                Console.WriteLine("Invalid accountId");
-            }
-
             return RedirectToAction("Inbox");
         }
 
+        [Permission("Device Access")]
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -230,12 +241,11 @@ namespace NotificationApp.Controllers
             return View("DevicesPanel");
         }
 
-        public IActionResult DevicesCreateEditPanel()
+        public IActionResult Analytics()
         {
             return View();
         }
-
-        public IActionResult Analytics()
+        public IActionResult AccessDenied()
         {
             return View();
         }
