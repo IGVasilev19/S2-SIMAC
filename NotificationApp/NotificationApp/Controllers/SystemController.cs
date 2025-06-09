@@ -158,7 +158,8 @@ namespace NotificationApp.Controllers
 
             if (int.TryParse(accountId, out int id))
             {
-                _notificationService.MarkNotificationAsUnread(id, notificationId);
+                _notificationService.MarkNotificationAsUnread(notificationId, id);
+                Console.WriteLine("Marked as unread successfully.");
             }
             return RedirectToAction("Inbox");
         }
