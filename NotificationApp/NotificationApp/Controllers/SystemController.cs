@@ -27,6 +27,7 @@ namespace NotificationApp.Controllers
             _deviceService = deviceService;
         }
 
+        [Permission("Inbox Access")]
         [Authorize]
         public IActionResult Inbox()
         {
@@ -164,6 +165,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("Inbox");
         }
 
+        [Permission("Device Access")]
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -224,12 +226,11 @@ namespace NotificationApp.Controllers
             return View("DevicesPanel");
         }
 
-        public IActionResult DevicesCreateEditPanel()
+        public IActionResult Analytics()
         {
             return View();
         }
-
-        public IActionResult Analytics()
+        public IActionResult AccessDenied()
         {
             return View();
         }

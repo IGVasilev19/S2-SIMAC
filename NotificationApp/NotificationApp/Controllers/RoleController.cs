@@ -26,7 +26,7 @@ namespace NotificationApp.Controllers
             _permissionService = permissionService;
         }
 
-        //[Permission("AccountManagement")]
+        [Permission("Roles Access")]
         public IActionResult RolesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -88,7 +88,7 @@ namespace NotificationApp.Controllers
         }
 
 
-        
+        [Permission("Create Roles")]
         public IActionResult RolesCreatePanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -149,6 +149,7 @@ namespace NotificationApp.Controllers
             throw new Exception("UserId Not Found");
         }
 
+        [Permission("Edit Roles")]
         public IActionResult RolesEditPanel(int roleId)
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -226,8 +227,8 @@ namespace NotificationApp.Controllers
             throw new Exception("UserId Not Found");
         }
 
+        [Permission("Delete Roles")]
         [HttpPost]
-
         public IActionResult DeleteRole(int roleId)
         {
             try
