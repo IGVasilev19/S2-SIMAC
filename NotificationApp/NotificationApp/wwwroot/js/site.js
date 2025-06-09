@@ -14,7 +14,6 @@
   document.getElementById("preview-date").innerText = displayDate;
   document.getElementById("preview-body").innerText = displayBody;
 
-  console.log("Setting hidden input to notification id:", id);
   document.getElementById("selected-notification-id").value = id;
 
   document.getElementById('notification-action-container').classList.remove('hidden');
