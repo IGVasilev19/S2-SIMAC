@@ -8,11 +8,17 @@
     @Html.Partial("_Navbar")
     <div class="flex h-full w-full flex-col items-center gap-8 bg-gray-300">
         <div class="mt-8 flex w-[96%] items-center justify-between bg-white p-4 shadow-md">   
-            <form asp-controller="System" asp-action="SearchNotifications" method="post" class="flex w-full max-w-md items-center gap-2">
-                <input name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400" />
+            <form id="searchForm" asp-controller="System" asp-action="SearchNotifications" method="post" class="flex w-full max-w-md items-center gap-2">
+                <input id="searchInput" name="Search" value="@Model.Search" type="text" placeholder="Search" class="placeholder-gray-400 w-full border border-gray-300 px-3 focus:outline-none focus:border-gray-400" />
                 <button type="submit" class="rounded-lg bg-blue-300 px-10 font-semibold text-white shadow-md transition-all duration-150 hover:bg-blue-200 hover:cursor-pointer">Search</button>
             </form>
-            <a class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">Sort by Newest</a>
+            <form id="sortForm" asp-controller="System" asp-action="SearchNotifications" method="post">
+                <input type="hidden" id="sortSearchInput" name="Search" value="" />
+                <input type="hidden" name="SortByDate" value="true" />
+                <button type="submit" id="sortButton" class="rounded-lg border border-gray-300 bg-white px-6 font-semibold text-black shadow-sm hover:bg-gray-100 hover:cursor-pointer">
+                    Sort by Newest
+                </button>
+            </form>
         </div>
         <div class="flex h-[82%] w-[96%] gap-3">
            <input type="hidden" id="orgId" value="@Model.OrganizationId" />

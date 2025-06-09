@@ -14,12 +14,10 @@ namespace Service
     public class DeviceService : IDeviceService
     {
         private readonly IDeviceRepository _deviceRepository;
-        private readonly INotificationService _notificationRepository;
 
-        public DeviceService(IDeviceRepository deviceRepository, INotificationService notificationRepository)
+        public DeviceService(IDeviceRepository deviceRepository)
         {
             this._deviceRepository = deviceRepository;
-            _notificationRepository = notificationRepository;
         }
 
         public void DeleteById(int id)
@@ -62,7 +60,7 @@ namespace Service
             return filteredDevices;
         }
 
-        public void ChangeStatus(int deviceId, int status) //0 = Online, 1 = Offline  
+        public Device ChangeStatus(int deviceId, int status) //0 = Online, 1 = Offline  
         {
             if (deviceId <= 0 || !Enum.IsDefined(typeof(Status), status))
             {
@@ -78,7 +76,7 @@ namespace Service
 
             device.DeviceStatus = (Status)status;
             _deviceRepository.Update(device);
-            _notificationRepository.BuildDeviceStatusNotification(device);
+            return device;
         }
     }
 }

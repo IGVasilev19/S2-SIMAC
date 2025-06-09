@@ -16,6 +16,7 @@ namespace DAL.Interfaces
         public void MarkAsUnread(int notificationId, int accountId);
         public bool IsRead(int notificationId, int accountId);
         public List<Notification> GetNotificationsForUser(int organizationId, List<int> permissionIds);
+        public List<Notification> GetNotificationsOrderedByDate(int organizationId, List<int> permissionIds);
         public List<Notification> GetNotificationsByOrganization(int organizationId);
     }
 }

@@ -63,7 +63,8 @@ namespace NotificationApp.Controllers
         {
             try
             {
-                _deviceService.ChangeStatus(id, status);
+                Device device = _deviceService.ChangeStatus(id, status);
+                _notificationService.BuildDeviceStatusNotification(device);
             }
             catch(Exception ex)
             {

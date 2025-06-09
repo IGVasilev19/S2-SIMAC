@@ -15,10 +15,12 @@ namespace Service
     public class NotificationService : INotificationService
     {
         private readonly INotificationRepository _notificationRepository;
+        private readonly IDeviceService _deviceService;
 
-        public NotificationService(INotificationRepository notificationRepository)
+        public NotificationService(INotificationRepository notificationRepository, IDeviceService deviceService)
         {
             _notificationRepository = notificationRepository;
+            _deviceService = deviceService;
         }
 
         public void DeleteById(int id)
@@ -65,14 +67,14 @@ namespace Service
             return _notificationRepository.IsRead(notificationId, accountId);
         }
 
-        public List<Notification> GetNotificationsForUser(Account account, List<int> permissionIds)
+        public IEnumerable<Notification> GetNotificationsForUser(Account account, List<int> permissionIds)
         {
             return _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
         }
 
-        public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds)
+        public IEnumerable<Notification> SearchNotifications(string filter, Account account, List<int> permissionIds, IEnumerable<Notification> notifications)
         {
-            IEnumerable<Notification> filteredNotifications = _notificationRepository.GetNotificationsForUser(account.OrganizationId, permissionIds);
+            IEnumerable<Notification> filteredNotifications = notifications;
             if (!string.IsNullOrEmpty(filter))
             {
                 filteredNotifications = filteredNotifications.Where(s => s.Title.ToUpper().Contains(filter.ToUpper()) || s.Content.ToUpper().Contains(filter.ToUpper()));
@@ -80,7 +82,7 @@ namespace Service
             return filteredNotifications;
         }
 
-        public IEnumerable<Notification> FilterNotifications(Account account, IEnumerable<Notification> notifications, bool? read, bool? important)
+        public IEnumerable<Notification> FilterNotificationsRead(IEnumerable<Notification> notifications, bool? read, Account account)
         {
             IEnumerable<Notification> filtered = new List<Notification>();
             switch (read)
@@ -102,25 +104,30 @@ namespace Service
                             filtered.Append(notification);
                         }
                     }; break;
-
-                default: filtered = notifications; break;
             }
-
-            switch (important)
-            {
-                case true:
-                    filtered = filtered.Where(f => f.Important); return filtered;
-                case false:
-                    filtered = filtered.Where(f => !f.Important); return filtered;
-                default: return filtered;
-            }
+            return filtered;
         }
+
+        public IEnumerable<Notification> GetNotificationsOrderedByDate(Account account, List<int> permissionIds)
+        {
+            return _notificationRepository.GetNotificationsOrderedByDate(account.OrganizationId, permissionIds);
+        }
+
         public void AddNotification(Notification notification) 
         {
             if (notification == null)
             {
                 throw new ArgumentNullException(nameof(notification), "Notification cannot is null");
             }
+            if (notification.DeviceId > 0)
+            {
+                int deviceId = Convert.ToInt32(notification.DeviceId);
+                Device device = _deviceService.GetById(deviceId);
+
+                // Add the requested line at the top of the content
+                notification.Content = $"This notification links to {device.Name}\n\n{notification.Content}";
+            }
+
             notification.Date = DateTime.UtcNow;
             _notificationRepository.Add(notification);
         }

@@ -14,7 +14,7 @@ namespace NotificationApp.Models
          public List<NotificationViewModel> Notifications { get; set; } = new List<NotificationViewModel>();
         [ValidateNever]
         public string? Search {  get; set; }
-        public bool? FilterImportant { get; set; }
+        public bool? SortByDate { get; set; }
         public bool? FilterRead { get; set; }
         [ValidateNever]
         [BindNever]
