@@ -41,6 +41,29 @@ if (orgId) {
       }"></div>
     `;
 
+      if (notification.important) {
+          container.prepend(a);
+      }
+      else
+      {
+          const allNotifications = container.querySelectorAll("a.notification");
+          let insertAfter = null;
+
+          for (let node of allNotifications) {
+              const isImportant = node.querySelector(".rounded-4xl")?.classList.contains("bg-[#FF3131]");
+              if (!isImportant) break;
+              insertAfter = node;
+          }
+
+          if (insertAfter) {
+              insertAfter.after(a);
+          }
+          else
+          {
+              container.prepend(a); 
+          }
+      }
+
     container.prepend(a);
   });
 
