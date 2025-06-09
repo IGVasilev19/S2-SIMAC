@@ -180,7 +180,7 @@ namespace NotificationApp.Controllers
             return RedirectToAction("Inbox");
         }
 
-        [Permission("Device Access")]
+        [Permission("Devices Access")]
         public IActionResult DevicesPanel()
         {
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
