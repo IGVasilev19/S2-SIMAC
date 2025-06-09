@@ -106,7 +106,8 @@ namespace DAL
         {
             using (SqlConnection conn = DBConnection.GetConnection())
             {
-                string query = "DELETE FROM Account WHERE AccountId = @id";
+                string query = "DELETE FROM UserReadNotification WHERE AccountId = @id; " +
+                    "DELETE FROM Account WHERE AccountId = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
 
