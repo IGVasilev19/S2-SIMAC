@@ -20,7 +20,7 @@ builder.Services.AddAuthentication("AuthCookie") //Implement this
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.LoginPath = "/access/sign-in";
         options.LogoutPath = "/access/sign-out";
-        options.AccessDeniedPath = "/access/denied";
+        options.AccessDeniedPath = "/System/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromDays(1);
     });
 
@@ -51,7 +51,7 @@ app.MapControllers();
 app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllerRoute(
-    name: "default",
+    name: "default",    
     pattern: "{controller=Access}/{action=Index}/{id?}");
 
 //AccountRepository accRepo = new();
