@@ -9,11 +9,13 @@ using System.Security.Claims;
 using Service.Interfaces;
 using NotificationApp.Models.DTO_View_Models;
 using Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NotificationApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
-    {
+    {   
         private readonly IOrganizationService _organizationService;
         private readonly IAccountService _accountService;
 
