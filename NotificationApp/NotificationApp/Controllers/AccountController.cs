@@ -143,7 +143,7 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM)
+        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM, int selectedRole)
         {
             if (!ModelState.IsValid)
             {
@@ -161,7 +161,7 @@ namespace NotificationApp.Controllers
             if (int.TryParse(creatorAccountId, out int creatorId))
             {
                 Account creator = _accountService.GetById(creatorId);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, selectedRole);
                 return RedirectToAction("AccountPanel");
             }
 
