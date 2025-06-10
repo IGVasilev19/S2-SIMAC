@@ -113,7 +113,7 @@ namespace Service
             return _notificationRepository.GetNotificationsOrderedByDate(account.OrganizationId, permissionIds);
         }
 
-        public void AddNotification(Notification notification) 
+        public int AddNotification(Notification notification) 
         {
             if (notification == null)
             {
@@ -129,7 +129,7 @@ namespace Service
             }
 
             notification.Date = DateTime.Now;
-            _notificationRepository.Add(notification);
+            return _notificationRepository.AddNotification(notification);
         }
 
         public List<Notification> GetNotificationsByOrganization(int organizationId)

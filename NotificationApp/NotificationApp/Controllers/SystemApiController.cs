@@ -36,7 +36,7 @@ namespace NotificationApp.Controllers
 
             try
             {
-                _notificationService.AddNotification(notification);
+                notification.NotificationID = _notificationService.AddNotification(notification);
 
                 Console.WriteLine($"Sending to group {notification.OrganizationId}");
 

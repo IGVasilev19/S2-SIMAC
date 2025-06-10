@@ -79,6 +79,26 @@ namespace DAL
             }
         }
 
+        public int AddNotification(Notification entity)
+        {
+            using (SqlConnection conn = DBConnection.GetConnection())
+            {
+                string query = "INSERT INTO Notification (Title, Content, Important, Date, PermissionId, DeviceId, OrganizationId) VALUES (@title, @content, @important, @date, @permissionId, @deviceId, @organizationId); " +
+                    "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@title", entity.Title);
+                cmd.Parameters.AddWithValue("@content", entity.Content);
+                cmd.Parameters.AddWithValue("@important", entity.Important);
+                cmd.Parameters.AddWithValue("@date", entity.Date);
+                cmd.Parameters.AddWithValue("@permissionId", entity.PermissionId.HasValue ? entity.PermissionId.Value : (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@deviceId", entity.DeviceId.HasValue ? entity.DeviceId.Value : (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@organizationId", entity.OrganizationId.HasValue ? entity.OrganizationId.Value : (object)DBNull.Value);
+
+                int newId = (int)cmd.ExecuteScalar();
+                return newId;
+            }
+        }
+
         public void Update(Notification entity)
         {
             using (SqlConnection conn = DBConnection.GetConnection())
