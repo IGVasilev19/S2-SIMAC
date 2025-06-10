@@ -59,30 +59,43 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost("devicestatus/{id}/{status}")]
-        public IActionResult ChangeDeviceStatus(int id, int status)
+        public async Task<IActionResult> ChangeDeviceStatus(int id, int status)
         {
             try
             {
                 Device device = _deviceService.ChangeStatus(id, status);
-                _notificationService.BuildDeviceStatusNotification(device);
+
+                var notification = _notificationService.BuildDeviceStatusNotification(device);
+
+                await _hubContext.Clients
+                    .Group($"org_{device.OrganizationID}")
+                    .SendAsync("ReceiveNotification", new
+                    {
+                        notificationId = notification.NotificationID,
+                        title = notification.Title,
+                        date = notification.Date.ToString("yyyy-MM-dd HH:mm:ss"),
+                        content = notification.Content,
+                        important = notification.Important
+                    });
+
+                await _hubContext.Clients
+                    .Group($"org_{device.OrganizationID}")
+                    .SendAsync("DeviceStatusUpdated", new
+                    {
+                        deviceId = device.DeviceID,
+                        status = device.DeviceStatus
+                    });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex is ArgumentException || ex is KeyNotFoundException)
                 {
                     return BadRequest(ex.Message);
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            if (status == 0)
-            {
-                return Ok($"Device {id} status changed to ONLINE");
-            }
-            return Ok($"Device {id} status changed to OFFLINE");
+            return Ok($"Device {id} status changed to {(status == 0 ? "ONLINE" : "OFFLINE")}");
         }
     }
 }

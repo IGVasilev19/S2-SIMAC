@@ -33,9 +33,10 @@
                             for (int i = 0; i < Model.Devices.Count(); i++) 
                             {
                                 var device = Model.Devices[i];
+                                <input type="hidden" id="orgId" value="device.OrganizationId" />
                                 var rowClass = i % 2 == 0 ? "bg-gray-200" : "bg-gray-100";
 
-                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer">
+                                <tr class="@rowClass hover:bg-gray-300 hover:cursor-pointer" data-device-id="@device.DeviceID">
                                     <td class="w-[247px] px-6 py-3">@device.Name</td>
                                     <td class="w-[247px] px-6 py-3">@device.Location</td>
                                     <td class="w-[247px] px-6 py-3 text-right">

@@ -137,7 +137,7 @@ namespace Service
             return _notificationRepository.GetNotificationsByOrganization(organizationId);
         }
         
-        public void BuildDeviceStatusNotification(Device device)
+        public Notification BuildDeviceStatusNotification(Device device)
         {
             Notification notification = new Notification
             {
@@ -150,6 +150,8 @@ namespace Service
                 Date = DateTime.UtcNow
             };
             AddNotification(notification);
+
+            return notification;
         }
     }
 }

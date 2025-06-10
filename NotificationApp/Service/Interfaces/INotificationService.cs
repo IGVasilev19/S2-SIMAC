@@ -20,6 +20,6 @@ namespace Service.Interfaces
         public IEnumerable<Notification> FilterNotificationsRead(IEnumerable<Notification> notifications, bool? read, Account account);
         public IEnumerable<Notification> GetNotificationsOrderedByDate(Account account, List<int> permissionIds);
         public int AddNotification(Notification notification);
-        public void BuildDeviceStatusNotification(Device device);
+        public Notification BuildDeviceStatusNotification(Device device);
     }
 }
