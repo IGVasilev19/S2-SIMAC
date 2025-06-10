@@ -128,7 +128,7 @@ namespace Service
                 notification.Content = $"This notification links to {device.Name}\n\n{notification.Content}";
             }
 
-            notification.Date = DateTime.UtcNow;
+            notification.Date = DateTime.Now;
             _notificationRepository.Add(notification);
         }
 
