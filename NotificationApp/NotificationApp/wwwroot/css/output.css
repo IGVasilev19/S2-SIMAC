@@ -292,6 +292,9 @@
   .inline-flex {
     display: inline-flex;
   }
+  .table {
+    display: table;
+  }
   .h-\[8\%\] {
     height: 8%;
   }
@@ -351,6 +354,9 @@
   }
   .max-h-\[93\%\] {
     max-height: 93%;
+  }
+  .max-h-\[500px\] {
+    max-height: 500px;
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -441,6 +447,9 @@
   }
   .min-w-full {
     min-width: 100%;
+  }
+  .table-fixed {
+    table-layout: fixed;
   }
   .rotate-0 {
     rotate: 0deg;

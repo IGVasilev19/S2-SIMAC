@@ -6,25 +6,39 @@
 <div class="w-full h-full flex">
     @Html.Partial("_AdminNavbar")
     <div class="w-full h-full flex items-center justify-center bg-gray-300">
-        <form asp-action="CreateOrganizationWithManager" asp-controller="Admin" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8  ">
+        <form asp-action="CreateOrganizationWithManager" asp-controller="Admin" method="post" class="w-[94%] h-[92%] bg-white shadow-md flex flex-col justify-center items-center gap-8">
+
             <p class="text-4xl font-semibold">Create Organization</p>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+            
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-1">
                 <p class="select-none">Organization Name*</p>
-                <input asp-for="OrganizationName" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="OrganizationName" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none" />
+                <span asp-validation-for="OrganizationName" class="text-red-500 text-sm"></span>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-1">
                 <p class="select-none">Name*</p>
-                <input asp-for="Name" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Name" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none" />
+                <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-1">
                 <p class="select-none">Email*</p>
-                <input asp-for="Email" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Email" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none" />
+                <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
             </div>
-            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-2">
+
+            <div class="flex flex-col w-[800px] h-[60px] justify-center gap-1">
                 <p class="select-none">Password*</p>
-                <input asp-for="Password" type="password" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none"/>
+                <input asp-for="Password" type="password" class="w-[800px] h-[40px] bg-white border border-gray-300 rounded-md p-2 transition duration-300 ease-in-out focus:scale-[1.02] focus:outline-none" />
+                <span asp-validation-for="Password" class="text-red-500 text-sm"></span>
             </div>
-            <button type="submit" class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button> 
+
+            <button type="submit" class="w-[800px] h-[40px] bg-white hover:bg-gray-100 text-black font-semibold px-6 rounded-lg shadow-sm border border-gray-300 hover:cursor-pointer">Save</button>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
