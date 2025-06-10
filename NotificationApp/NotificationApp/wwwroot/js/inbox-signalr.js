@@ -41,20 +41,22 @@ if (orgId) {
             }"></div>
     `;
 
+        const notifications = Array.from(container.querySelectorAll("a.notification"));
+
         if (notification.important) {
             container.prepend(a);
         } else {
-            const notifications = container.querySelectorAll("a.notification");
-            const firstNonImportant = Array.from(notifications).find(
-                (el) => el.dataset.important === "false"
-            );
+            const lastImportant = [...notifications]
+                .reverse()
+                .find(el => el.dataset.important === "true");
 
-            if (firstNonImportant) {
-                firstNonImportant.before(a);
+            if (lastImportant) {
+                lastImportant.after(a);
             } else {
-                container.prependChild(a); // Fix this!!!!
+                container.prepend(a);
             }
         }
+
     });
 
     connection
