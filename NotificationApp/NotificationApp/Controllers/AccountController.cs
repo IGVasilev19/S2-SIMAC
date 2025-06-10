@@ -143,24 +143,29 @@ namespace NotificationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM, int SelectedRole)
+        public IActionResult CreateAccount(AccountCreatePanelViewModel accountVM)
         {
-            if (ModelState.IsValid == false)
+            if (!ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return View(accountVM);
+                var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (int.TryParse(accountId, out int id))
+                {
+                    Account creator = _accountService.GetById(id);
+                    var allRoles = _roleService.GetAllRolesByOrganisationId(creator.OrganizationId);
+                    accountVM.Roles = allRoles.Select(role => new RoleViewModel { RoleId = role.RoleId, Name = role.Name }).ToList();
+                }
+                return View("AccountCreatePanel", accountVM);
             }
 
-            var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (int.TryParse(accountId, out int id))
+            var creatorAccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (int.TryParse(creatorAccountId, out int creatorId))
             {
-                Account creator = _accountService.GetById(id);
-                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, SelectedRole);
+                Account creator = _accountService.GetById(creatorId);
+                _accountService.SignUp(accountVM.Name, accountVM.Email, accountVM.Password, creator.OrganizationId, accountVM.SelectedRole.RoleId);
                 return RedirectToAction("AccountPanel");
             }
 
-            return View(accountVM);
+            return View("AccountCreatePanel", accountVM);
         }
 
         [Permission("Edit Accounts")]
@@ -214,7 +219,7 @@ namespace NotificationApp.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = "Please fill in all required fields.";
-                return RedirectToAction("AccountEditPanel");
+                return View("AccountEditPanel", accountVM);
             }
 
             var accountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
